@@ -26,6 +26,7 @@ void	file_check(t_cub *cub, char *filename)
 	fd = open(filename, O_RDONLY);
 	err_msg(fd < 0, "File error");
 	joined = NULL;
+	//check check
 	//check datark file
 	//check symbols in map
 	while (1)
