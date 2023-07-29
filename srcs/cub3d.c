@@ -45,7 +45,7 @@ void	file_check(t_cub *cub, char *filename)
 		while (cub->map[i][++j])
 			if (cub->map[i][j] == 'N' || cub->map[i][j] == 'S' \
 			|| cub->map[i][j] == 'E' || cub->map[i][j] == 'W')
-				player = cub->map[i][j];
+			player = cub->map[i][j];
 	}
 	printf ("player char: %c\n", player);
 	find_player(cub, player);
@@ -104,18 +104,17 @@ void	find_player(t_cub *cub, char player)
 	int	j;
 	
 	i = -1;
-	//arden stugac a mapi symbolneri qanaky
+	//arden stugac pti lini mapi symbolneri qanaky
 	while (cub->map[++i])
 	{
 		j = -1;
 		while (cub->map[i][++j])
 		{
-			// if (cub->map[i][j] == 'N' || cub->map[i][j] == 'S' \
-			// || cub->map[i][j] == 'W' || cub->map[i][j] == 'E')
 			if (cub->map[i][j] == player)
 			{
 				cub->player.posX = i;
 				cub->player.posY = j;
+				cub->map[i][j] = '0';
 				break ;
 			}
 		}

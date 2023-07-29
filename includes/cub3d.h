@@ -43,9 +43,16 @@ typedef struct s_view
 
 typedef struct s_ray
 {
+	int		hit;
+	int		side;
 	double	rayX;
 	double	rayY;
 	double	cameraX;
+	double	sideDistX;
+	double	sideDistY;
+	double	deltaDistX;
+	double	deltaDistY;
+	double 	perpWallDist;
 }	t_ray;
 
 typedef struct s_player
@@ -53,8 +60,12 @@ typedef struct s_player
 	t_view	view;
 	double	posX;
 	double	posY;
+	int		mapX;
+	int		mapY;
 	double	dirX;
 	double	dirY;
+	int		stepX;
+	int		stepY;
 	double	planeX;
 	double	planeY;
 }	t_player;
@@ -98,6 +109,7 @@ int		key_down(int key, t_cub *cub);
 void	raycaster(t_cub *cub);
 int		trgb(int t, int r, int g, int b);
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
+void	draw(t_cub *cub, int beginX, int beginY, int endY, int color);
 
 
 #endif

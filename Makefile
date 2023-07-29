@@ -14,7 +14,8 @@ SRCSDIR	=	srcs
 
 SRCS	=	srcs/cub3d.c \
 			srcs/key_functions.c \
-			srcs/raycasting.c 
+			srcs/raycasting.c \
+			srcs/draw_walls.c 
 
 OBJS	=	$(SRCS:$(SRCSDIR)/%.c=$(OBJDIR)/%.o)
 

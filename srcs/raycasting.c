@@ -1,42 +1,89 @@
 #include <cub3d.h>
 
-int	check_points(t_cub *cub, int beginX, int beginY, int endY)
+void	find_step_dir(t_cub *cub)
 {
-	if (endY < beginY)
+	if (cub->ray.rayX < 0)
 	{
-		beginY += endY;
-		endY = beginY - endY;
-		beginY -= endY;
+		cub->player.stepX = -1;
+		cub->ray.sideDistX = (cub->player.posX - cub->player.mapX) * cub->ray.deltaDistX;
 	}
-	if (endY < 0 || beginY >= cub->H  || beginX < 0 || beginX >= cub->W)
-		return (1);
-	if (beginY < 0)
-		beginY = 0;
-	if (endY >= cub->W)
-		endY = cub->H - 1;
-	return (0);
+	else
+	{
+		cub->player.stepX = 1;
+		cub->ray.sideDistX = (cub->player.mapX + 1.0 - cub->player.posX) * cub->ray.deltaDistX;
+	}
+	if (cub->ray.rayY < 0)
+	{
+		cub->player.stepY = -1;
+		cub->ray.sideDistY = (cub->player.posY - cub->player.mapY) * cub->ray.deltaDistY;
+	}
+	else
+	{
+		cub->player.stepY = 1;
+		cub->ray.sideDistY = (cub->player.mapY + 1.0 - cub->player.posY) * cub->ray.deltaDistY;
+	}
 }
 
-void	draw(t_cub *cub, int beginX, int beginY, int endY, int color)
+void	DDA_algorithm(t_cub *cub)
 {
-	int		pixels;
-	double	deltaY;
-	double	pixelX;
-	double	pixelY;
-
-	pixelX = beginX;
-	pixelY = beginY;
-	deltaY = endY - beginY; // 0
-	pixels = sqrt((deltaY * deltaY));
-	if (check_points(cub, beginX, beginY, endY))
-		return ;
-	deltaY /= pixels;
-	while (pixels)
+	cub->ray.hit = 0;
+	while (cub->ray.hit == 0)
 	{
-		my_mlx_pixel_put(&cub->img, pixelX, pixelY, color);
-		pixelY += deltaY;
-		--pixels;
+		if (cub->ray.sideDistX < cub->ray.sideDistY)
+		{
+			cub->ray.sideDistX += cub->ray.deltaDistX;
+			cub->player.mapX += cub->player.stepX;
+			cub->ray.side = 0;
+		}
+		else
+		{
+			cub->ray.sideDistY += cub->ray.deltaDistY;
+			cub->player.mapY += cub->player.stepY;
+			cub->ray.side = 1;
+		}
+		if (cub->map[cub->player.mapX][cub->player.mapY] == '1') cub->ray.hit = 1;
 	}
+	if (cub->ray.side == 0)
+		cub->ray.perpWallDist = (cub->ray.sideDistX - cub->ray.deltaDistX);
+	else
+		cub->ray.perpWallDist = (cub->ray.sideDistY - cub->ray.deltaDistY);
+}
+
+void	calc_draw_ends(t_cub *cub, int x)
+{
+	int color;
+	int drawEnd;
+	int drawStart;
+	int lineHeight;
+	
+	lineHeight = (int)(cub->H / cub->ray.perpWallDist);
+	drawStart = -lineHeight / 2 + cub->H / 2;
+	drawEnd = lineHeight / 2 + cub->H / 2;
+	if (drawStart < 0)
+		drawStart = 0;
+	if (drawEnd >= cub->H)
+		drawEnd = cub->H - 1;
+	color = trgb(0, 255, 0, 0);
+	if (cub->ray.side == 1)
+		color /= 2;
+	draw(cub, x, drawStart, drawEnd, color);
+}
+
+void	calc_ray_pos(t_cub *cub, int x)
+{
+	cub->ray.cameraX = 2 * x / (double)cub->W - 1;
+	cub->ray.rayX = cub->player.dirX + cub->player.planeX * cub->ray.cameraX;
+	cub->ray.rayY = cub->player.dirY + cub->player.planeY * cub->ray.cameraX;
+	cub->player.mapX = (int)cub->player.posX;
+	cub->player.mapY = (int)cub->player.posY;
+	if (cub->ray.rayX == 0)
+		cub->ray.deltaDistX = 1e30;
+	else
+		cub->ray.deltaDistX = fabs(1 / cub->ray.rayX);
+	if (cub->ray.rayY == 0)
+		cub->ray.deltaDistY = 1e30;
+	else
+		cub->ray.deltaDistY = fabs(1 / cub->ray.rayY);
 }
 
 void	raycaster(t_cub *cub)
@@ -44,82 +91,12 @@ void	raycaster(t_cub *cub)
 	int	x;
 
 	x = -1;
-	while (x < cub->W)
-    {
-		double	cameraX;
-
-		cameraX = 2 * x / (double)cub->W - 1;
-		cub->ray.rayX = cub->player.dirX + cub->player.planeX * cameraX;
-		cub->ray.rayY = cub->player.dirY + cub->player.planeY * cameraX;
-		int mapX = (int)cub->player.posX;
-		int mapY = (int)cub->player.posY;
-		//length of ray from current position to next x or y-side
-		double sideDistX;
-		double sideDistY;
-
-		//length of ray from one x or y-side to next x or y-side
-		double deltaDistX = (cub->ray.rayX == 0) ? 1e30 : fabs(1 / cub->ray.rayX);
-		double deltaDistY = (cub->ray.rayY == 0) ? 1e30 : fabs(1 / cub->ray.rayY);
-		double perpWallDist;
-
-		//what direction to step in x or y-direction (either +1 or -1)
-		int stepX;
-		int stepY;
-
-		int hit = 0; //was there a wall hit?
-		int side; //was a NS or a EW wall hit?
-		if (cub->ray.rayX < 0)
-		{
-			stepX = -1;
-			sideDistX = (cub->player.posX - mapX) * deltaDistX;
-		}
-		else
-		{
-			stepX = 1;
-			sideDistX = (mapX + 1.0 - cub->player.posX) * deltaDistX;
-		}
-		if (cub->ray.rayY < 0)
-		{
-			stepY = -1;
-			sideDistY = (cub->player.posY - mapY) * deltaDistY;
-		}
-		else
-		{
-			stepY = 1;
-			sideDistY = (mapY + 1.0 - cub->player.posY) * deltaDistY;
-		}
-		while (hit == 0)
-		{
-			//jump to next map square, either in x-direction, or in y-direction
-			if (sideDistX < sideDistY)
-			{
-				sideDistX += deltaDistX;
-				mapX += stepX;
-				side = 0;
-			}
-			else
-			{
-				sideDistY += deltaDistY;
-				mapY += stepY;
-				side = 1;
-			}
-			//Check if ray has hit a wall
-			if (cub->map[mapX][mapY] == '1') hit = 1;
-		}
-		if(side == 0) perpWallDist = (sideDistX - deltaDistX);
-		else          perpWallDist = (sideDistY - deltaDistY);
-		int lineHeight = (int)(cub->H / perpWallDist);
-
-		//calculate lowest and highest pixel to fill in current stripe
-		int drawStart = -lineHeight / 2 + cub->H / 2;
-		if(drawStart < 0)drawStart = 0;
-		int drawEnd = lineHeight / 2 + cub->H / 2;
-		if(drawEnd >= cub->H)drawEnd = cub->H - 1;
-		int color = trgb(0, 255, 0, 0);
-		if (side == 1)
-			color /= 2;
-		draw(cub, x, drawStart, drawEnd, color);
-		x++;
+	while (++x < cub->W)
+	{
+		calc_ray_pos(cub, x);
+		find_step_dir(cub);
+		DDA_algorithm(cub);
+		calc_draw_ends(cub, x);
 	}
 	mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, cub->img.img, 0, 0);	
 }

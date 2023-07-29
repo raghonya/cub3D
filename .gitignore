@@ -2,6 +2,7 @@ cub3D
 quickcg.cpp
 quickcg.h
 *.cpp
+pics
 # Prerequisites
 *.d
 
