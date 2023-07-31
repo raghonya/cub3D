@@ -97,6 +97,7 @@ typedef struct s_cub
 	t_player	player;
 	int			map_width;
 	int			map_height;
+	void		**textures;
 }	t_cub;
 
 void	printmap(t_cub cub);

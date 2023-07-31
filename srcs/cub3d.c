@@ -146,6 +146,8 @@ void	create_img(t_cub *cub)
 
 void	initialization(t_cub *cub)
 {
+	int havai;
+
 	cub->map_width = 1200;
 	cub->map_height = 800;
 	cub->player.dirX = 0;
@@ -156,6 +158,14 @@ void	initialization(t_cub *cub)
 	err_msg(!cub->mlx.ptr, "Mlx init error");
 	cub->mlx.win = mlx_new_window(cub->mlx.ptr, cub->W, cub->H, "Cub3D");
 	err_msg(!cub->mlx.win, "Can`t open window for you");
+	mlx_xpm_file_to_image(cub->mlx.ptr, "pics/eagle.xpm", &havai, &havai);
+	mlx_xpm_file_to_image(cub->mlx.ptr, "pics/redbrick.xpm", &havai, &havai);
+	mlx_xpm_file_to_image(cub->mlx.ptr, "pics/purplestone.xpm", &havai, &havai);
+	mlx_xpm_file_to_image(cub->mlx.ptr, "pics/greystone.xpm", &havai, &havai);
+	mlx_xpm_file_to_image(cub->mlx.ptr, "pics/bluestone.xpm", &havai, &havai);
+	mlx_xpm_file_to_image(cub->mlx.ptr, "pics/mossy.xpm", &havai, &havai);
+	mlx_xpm_file_to_image(cub->mlx.ptr, "pics/wood.xpm", &havai, &havai);
+	mlx_xpm_file_to_image(cub->mlx.ptr, "pics/colorstone.xpm", &havai, &havai);
 	create_img(cub);
 
 

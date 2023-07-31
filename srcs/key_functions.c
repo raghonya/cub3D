@@ -21,10 +21,11 @@ void	change_view(t_cub *cub, int side)
 	}
 }
 
-void	step(t_cub *cub, int side)
+void	step_fwd_back(t_cub *cub, int side)
 {
 	double moveSpeed = 0.1;
 
+	printf ("dirx: %f, diry: %f\n", cub->player.dirX, cub->player.dirY);
 	if (side == KEYW)
 	{
 		if(cub->map[(int)(cub->player.posX + cub->player.dirX * moveSpeed)]\
@@ -34,13 +35,40 @@ void	step(t_cub *cub, int side)
 		[(int)(cub->player.posY + cub->player.dirY * moveSpeed)] == '0')\
 			cub->player.posY += cub->player.dirY * moveSpeed;
 	}
-	else
+	else if (side == KEYS)
 	{
 		if(cub->map[(int)(cub->player.posX - cub->player.dirX * moveSpeed)][(int)(cub->player.posY)] == '0')
 			cub->player.posX -= cub->player.dirX * moveSpeed;
 		if(cub->map[(int)(cub->player.posX)][(int)(cub->player.posY - cub->player.dirY * moveSpeed)] == '0')
 			cub->player.posY -= cub->player.dirY * moveSpeed;
     }
+	// else if (side == KEYD)
+	// {
+	// 	if (cub->player.dirX < 0 && cub->player.dirY < 0 \
+	// 	|| cub->player.dirX > 0 && cub->player.dirY > 0)
+	// 	{
+	// 		printf ("if um enq\n");
+	// 		if(cub->map[(int)(cub->player.posX + moveSpeed)]\
+	// 		[(int)(cub->player.posY)] == '0')
+	// 			cub->player.posX += moveSpeed;
+	// 		if(cub->map[(int)(cub->player.posX)]\
+	// 		[(int)(cub->player.posY - moveSpeed)] == '0')\
+	// 			cub->player.posY -= moveSpeed;
+	// 		// printf ("posx: %f, posy: %f\n", cub->player.posX, cub->player.posY);
+	// 	}
+	// 	else
+	// 	{
+	// 		printf ("else um enq\n");
+	// 		if(cub->map[(int)(cub->player.posX - moveSpeed)]\
+	// 		[(int)(cub->player.posY)] == '0')
+	// 			cub->player.posX -= moveSpeed;
+	// 		if(cub->map[(int)(cub->player.posX)]\
+	// 		[(int)(cub->player.posY + moveSpeed)] == '0')\
+	// 			cub->player.posY += moveSpeed;
+	// 	}
+		
+	// }
+			printf ("posx: %f, posy: %f\n", cub->player.posX, cub->player.posY);
 }
 
 int	quit_game(t_cub *cub)
@@ -65,13 +93,13 @@ int	key_down(int key, t_cub *cub)
 	if (key == ARRLEFT)
 		change_view(cub, ARRLEFT);
 	if (key == KEYW)
-		step(cub, KEYW);
+		step_fwd_back(cub, KEYW);
 	if (key == KEYS)
-		step(cub, KEYS);
+		step_fwd_back(cub, KEYS);
 	if (key == KEYD)
-		;// cub->player.posY += 0.1;
+		step_fwd_back(cub, KEYD);
 	if (key == KEYA)
-		;// cub->player.posY -= 0.1;
+		;
 	mlx_destroy_image(cub->mlx.ptr, cub->img.img);
 	create_img(cub);
 	raycaster(cub);
