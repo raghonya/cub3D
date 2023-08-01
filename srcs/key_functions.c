@@ -2,7 +2,7 @@
 
 void	change_view(t_cub *cub, int side)
 {
-	double rotSpeed = 0.05;
+	double rotSpeed = 0.07;
 	double oldDirX = cub->player.dirX;
 	double oldPlaneX = cub->player.planeX;
 	if (side == ARRRIGHT)
@@ -23,9 +23,8 @@ void	change_view(t_cub *cub, int side)
 
 void	step_fwd_back(t_cub *cub, int side)
 {
-	double moveSpeed = 0.1;
+	double moveSpeed = 0.16;
 
-	printf ("dirx: %f, diry: %f\n", cub->player.dirX, cub->player.dirY);
 	if (side == KEYW)
 	{
 		if(cub->map[(int)(cub->player.posX + cub->player.dirX * moveSpeed)]\
@@ -68,7 +67,7 @@ void	step_fwd_back(t_cub *cub, int side)
 	// 	}
 		
 	// }
-			printf ("posx: %f, posy: %f\n", cub->player.posX, cub->player.posY);
+			// printf ("posx: %f, posy: %f\n", cub->player.posX, cub->player.posY);
 }
 
 int	quit_game(t_cub *cub)
@@ -80,7 +79,7 @@ int	quit_game(t_cub *cub)
 
 int	key_up(int key, t_cub *cub)
 {
-	printf ("keyup: %d\n", key);
+	// printf ("keyup: %d\n", key);
 	return (0);
 }
 
