@@ -134,5 +134,6 @@ void	raycaster(t_cub *cub)
 		calc_draw_ends(cub, x, texX);
 
 	}
+	printf ("dirx: %f, diry: %f\n", cub->player.dirX, cub->player.dirY);
 	mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, cub->img.img, 0, 0);	
 }
