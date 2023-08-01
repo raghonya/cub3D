@@ -49,17 +49,8 @@ void	DDA_algorithm(t_cub *cub)
 		cub->ray.perpWallDist = (cub->ray.sideDistY - cub->ray.deltaDistY);
 }
 
-# define texWidth 64
-# define texHeight 64
-
-
-void	my_mlx_color_taker(t_img *data, int x, int y, int *color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*color = *(unsigned int*)dst;
-}
+// # define TEXWIDTH 64
+// # define TEXHEIGHT 64
 
 void	calc_draw_ends(t_cub *cub, int x, int texX)
 {
@@ -76,10 +67,9 @@ void	calc_draw_ends(t_cub *cub, int x, int texX)
 // 	if (cub->ray.side == 1)
 // 		color /= 2;
 // 	draw(cub, x, drawStart, drawEnd, color);
+	int color;
 	int drawEnd;
 	int drawStart;
-	int color;
-	int i = 100;
 	int lineHeight = (int)(cub->H / cub->ray.perpWallDist);
 	int pitch = 100;
 	//calculate lowest and highest pixel to fill in current stripe
@@ -87,16 +77,16 @@ void	calc_draw_ends(t_cub *cub, int x, int texX)
 	if(drawStart < 0) drawStart = 0;
 	drawEnd = lineHeight / 2 + cub->H / 2 + pitch;
 	if(drawEnd >= cub->H) drawEnd = cub->H - 1;
-	double step = 1.0 * texHeight / lineHeight;
+	double step = 1.0 * TEXHEIGHT / lineHeight;
 	// Starting texture coordinate
 	double texPos = (drawStart - pitch - cub->H / 2 + lineHeight / 2) * step;
 	for(int y = drawStart; y < drawEnd; y++)
 	{
-		// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
-		int texY = (int)texPos & (texHeight - 1);
+		// Cast the texture coordinate to integer, and mask with (TEXHEIGHT - 1) in case of overflow
+		int texY = (int)texPos & (TEXHEIGHT - 1);
 		texPos += step;
-		if (cub->ray.side == 1) my_mlx_color_taker(cub->textures, texX, texY, &color);
-		else					my_mlx_color_taker(cub->textures + 1, texX, texY, &color);
+		if (cub->ray.side == 1) my_mlx_color_taker(TEXS, texX, texY, &color);
+		else					my_mlx_color_taker(TEXS + 1, texX, texY, &color);
 		my_mlx_pixel_put(&cub->img, x, y, color);
 	}
 }
@@ -138,9 +128,9 @@ void	raycaster(t_cub *cub)
 		// printf ("wall: %f\n", wallX);
 
 		//x coordinate on the texture
-		int texX = (int)(wallX * (double)(texWidth));
-		if(cub->ray.side == 0 && cub->ray.rayX > 0) texX = texWidth - texX - 1;
-		if(cub->ray.side == 1 && cub->ray.rayY < 0) texX = texWidth - texX - 1;
+		int texX = (int)(wallX * (double)(TEXWIDTH));
+		if(cub->ray.side == 0 && cub->ray.rayX > 0) texX = TEXWIDTH - texX - 1;
+		if(cub->ray.side == 1 && cub->ray.rayY < 0) texX = TEXWIDTH - texX - 1;
 		calc_draw_ends(cub, x, texX);
 
 	}

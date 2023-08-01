@@ -32,6 +32,9 @@
 
 # define W map_width
 # define H map_height
+# define TEXS cub->textures
+# define TEXWIDTH TEXS[0].wd
+# define TEXHEIGHT TEXS[0].ht
 
 typedef struct s_view
 {
@@ -52,7 +55,7 @@ typedef struct s_ray
 	double	sideDistY;
 	double	deltaDistX;
 	double	deltaDistY;
-	double 	perpWallDist;
+	double	perpWallDist;
 }	t_ray;
 
 typedef struct s_player
@@ -70,8 +73,10 @@ typedef struct s_player
 	double	planeY;
 }	t_player;
 
-typedef struct	img
+typedef struct img
 {
+	int		wd;
+	int		ht;
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -90,9 +95,9 @@ typedef struct s_cub
 	t_ray		ray;
 	t_mlx		mlx;
 	t_img		img;
-	char		**map;
 	int			mapX;
 	int			mapY;
+	char		**map;
 	t_player	player;
 	int			map_width;
 	int			map_height;
@@ -100,16 +105,17 @@ typedef struct s_cub
 }	t_cub;
 
 void	printmap(t_cub cub);
-void	err_msg(int condition, char *msg);
-void	find_player(t_cub *cub, char player);
+void	raycaster(t_cub *cub);
 int		quit_game(t_cub *cub);
 void	create_img(t_cub *cub);
+void	initialization(t_cub *cub);
 int		key_up(int key, t_cub *cub);
 int		key_down(int key, t_cub *cub);
-void	raycaster(t_cub *cub);
 int		trgb(int t, int r, int g, int b);
+void	err_msg(int condition, char *msg);
+void	find_player(t_cub *cub, char player);
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
+void	my_mlx_color_taker(t_img *data, int x, int y, int *color);
 void	draw(t_cub *cub, int beginX, int beginY, int endY, int color);
-
 
 #endif

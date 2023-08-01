@@ -2,7 +2,7 @@
 
 void	change_view(t_cub *cub, int side)
 {
-	double rotSpeed = 0.07;
+	double rotSpeed = 0.04;
 	double oldDirX = cub->player.dirX;
 	double oldPlaneX = cub->player.planeX;
 	if (side == ARRRIGHT)

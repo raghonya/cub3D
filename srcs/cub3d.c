@@ -105,7 +105,7 @@ void	find_player(t_cub *cub, char player)
 	int	j;
 	
 	i = -1;
-	//arden stugac pti lini mapi symbolneri qanaky
+	//arden stugac pti lini player symbolneri qanaky
 	while (cub->map[++i])
 	{
 		j = -1;
@@ -121,65 +121,6 @@ void	find_player(t_cub *cub, char player)
 		}
 	}
 	set_dir_and_pos(cub, player);
-}
-
-int	trgb(int t, int r, int g, int b)
-{
-	return (t << 24 | r << 16 | g << 8 | b);
-}
-
-void	my_mlx_pixel_put(t_img *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
-}
-
-void	create_img(t_cub *cub)
-{
-	cub->img.img = mlx_new_image(cub->mlx.ptr, cub->W, cub->H);
-	err_msg(!cub->img.img, "Can`t create image for you");
-	cub->img.addr = mlx_get_data_addr(cub->img.img, &cub->img.bits_per_pixel, \
-	&cub->img.line_length, &cub->img.endian);
-}
-
-void	initialization(t_cub *cub)
-{
-	int havai;
-
-	cub->map_width = 1200;
-	cub->map_height = 800;
-	cub->player.dirX = 0;
-	cub->player.dirY = 0;
-	cub->player.planeX = 0;
-	cub->player.planeY = 0;
-	cub->mlx.ptr = mlx_init();
-	err_msg(!cub->mlx.ptr, "Mlx init error");
-	cub->mlx.win = mlx_new_window(cub->mlx.ptr, cub->W, cub->H, "Cub3D");
-	err_msg(!cub->mlx.win, "Can`t open window for you");
-	//dzel es mallocy
-	cub->textures = malloc(sizeof(t_img) * 5);
-	cub->textures[0].img = mlx_xpm_file_to_image(cub->mlx.ptr, "pics/eagle.xpm", &havai, &havai);
-	cub->textures[1].img = mlx_xpm_file_to_image(cub->mlx.ptr, "pics/redbrick.xpm", &havai, &havai);
-	cub->textures[2].img = mlx_xpm_file_to_image(cub->mlx.ptr, "pics/greystone.xpm", &havai, &havai);
-	cub->textures[3].img = mlx_xpm_file_to_image(cub->mlx.ptr, "pics/bluestone.xpm", &havai, &havai);
-	cub->textures[4].img = mlx_xpm_file_to_image(cub->mlx.ptr, "pics/colorstone.xpm", &havai, &havai);
-	if (!cub->textures[0].img || !cub->textures[1].img \
-	|| !cub->textures[2].img || !cub->textures[3].img \
-	|| !cub->textures[4].img)
-		exit(5);
-	int i = -1;
-	while (++i < 5)
-		cub->textures[i].addr = mlx_get_data_addr(cub->textures[i].img, \
-		&cub->textures[i].bits_per_pixel, &cub->textures[i].line_length, \
-		&cub->textures[i].endian);
-	printf ("%d, %d, %d\n", cub->textures[2].bits_per_pixel, \
-	cub->textures[2].line_length, cub->textures[2].endian);
-	// mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, cub->textures[0], 0, 0);
-	create_img(cub);
-
-
 }
 
 int	main(int argc, char **argv)
