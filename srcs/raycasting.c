@@ -57,7 +57,7 @@ void	my_mlx_color_taker(t_img *data, int x, int y, int *color)
 {
 	char	*dst;
 
-	printf ("num %u\n", (y * data->line_length + x * (data->bits_per_pixel / 8)));
+	// printf ("num %u\n", (y * data->line_length + x * (data->bits_per_pixel / 8)));
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*color = *(unsigned int*)dst;
 }
@@ -100,7 +100,9 @@ void	calc_draw_ends(t_cub *cub, int x, int texNum, int texX)
 		// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
 		int texY = (int)texPos & (texHeight - 1);
 		texPos += step;
-		color = cub->textures[0].img[texHeight * texY + texX];
+		// printf ("%d\n", texHeight * texY + texX);
+		my_mlx_color_taker(cub->textures, texX, texY, &color);
+		// color = cub->textures[0].addr[texHeight * texY + texX];
 		//make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
 		if(cub->ray.side == 1) color = (color >> 1) & 8355711;
 		// cub->buffer[y][x] = color;

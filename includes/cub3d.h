@@ -72,7 +72,7 @@ typedef struct s_player
 
 typedef struct	img
 {
-	int	*img;
+	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
