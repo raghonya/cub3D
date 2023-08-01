@@ -1,24 +1,26 @@
 #include <cub3d.h>
 
+void	rotate(t_cub *cub, double oldDirX, double oldPlaneX, int rotSpeed)
+{
+	cub->player.dirX = cub->player.dirX * cos(rotSpeed) - cub->player.dirY * sin(rotSpeed);
+	cub->player.dirY = oldDirX * sin(rotSpeed) + cub->player.dirY * cos(rotSpeed);
+	cub->player.planeX = cub->player.planeX * cos(rotSpeed) - cub->player.planeY * sin(rotSpeed);
+	cub->player.planeY = oldPlaneX * sin(rotSpeed) + cub->player.planeY * cos(rotSpeed);
+}
+
 void	change_view(t_cub *cub, int side)
 {
-	double rotSpeed = 0.04;
-	double oldDirX = cub->player.dirX;
-	double oldPlaneX = cub->player.planeX;
+	double	oldDirX;
+	double	rotSpeed;
+	double	oldPlaneX;
+
+	rotSpeed = 0.04;
+	oldDirX = cub->player.dirX;
+	oldPlaneX = cub->player.planeX;
 	if (side == ARRRIGHT)
-	{
-		cub->player.dirX = cub->player.dirX * cos(-rotSpeed) - cub->player.dirY * sin(-rotSpeed);
-		cub->player.dirY = oldDirX * sin(-rotSpeed) + cub->player.dirY * cos(-rotSpeed);
-		cub->player.planeX = cub->player.planeX * cos(-rotSpeed) - cub->player.planeY * sin(-rotSpeed);
-		cub->player.planeY = oldPlaneX * sin(-rotSpeed) + cub->player.planeY * cos(-rotSpeed);
-	}
+		rotate(cub, oldDirX, oldPlaneX, -rotSpeed);
 	else
-	{
-		cub->player.dirX = cub->player.dirX * cos(rotSpeed) - cub->player.dirY * sin(rotSpeed);
-		cub->player.dirY = oldDirX * sin(rotSpeed) + cub->player.dirY * cos(rotSpeed);
-		cub->player.planeX = cub->player.planeX * cos(rotSpeed) - cub->player.planeY * sin(rotSpeed);
-		cub->player.planeY = oldPlaneX * sin(rotSpeed) + cub->player.planeY * cos(rotSpeed);
-	}
+		rotate(cub, oldDirX, oldPlaneX, rotSpeed);
 }
 
 void	step_fwd_back(t_cub *cub, int side)

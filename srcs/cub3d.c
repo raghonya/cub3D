@@ -130,14 +130,12 @@ int	main(int argc, char **argv)
 	err_msg (argc != 2, "Invalid number of arguments, 1 required");
 	initialization(&cub);
 	file_check(&cub, argv[1]);
-	// printmap(cub);
-	// printf ("dx: %f, dy: %f, posx: %f, posy: %f, %f, %f\n", cub.player.dirX, \
-	// cub.player.dirY, cub.player.posX, cub.player.posY, cub.player.planeX, cub.player.planeY);
-	
+
 	raycaster(&cub);
+	
 	mlx_hook(cub.mlx.win, 2, 1L << 0, &key_down, &cub);
 	mlx_hook(cub.mlx.win, 3, 1L << 1, &key_up, &cub);
-	// dzel quit_game funkcian
+	// dzel quit_game funkcian, destroy all images, free all mallocs
 	mlx_hook(cub.mlx.win, 17, 1L << 15, &quit_game, &cub);
 	
 	mlx_loop(cub.mlx.ptr);
