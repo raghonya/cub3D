@@ -74,7 +74,6 @@ typedef struct	img
 {
 	void	*img;
 	char	*addr;
-	void	*black;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
@@ -97,7 +96,7 @@ typedef struct s_cub
 	t_player	player;
 	int			map_width;
 	int			map_height;
-	void		**textures;
+	t_img		*textures;
 }	t_cub;
 
 void	printmap(t_cub cub);

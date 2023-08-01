@@ -49,11 +49,10 @@ void	DDA_algorithm(t_cub *cub)
 		cub->ray.perpWallDist = (cub->ray.sideDistY - cub->ray.deltaDistY);
 }
 
-void	calc_draw_ends(t_cub *cub, int x)
+# define texWidth 64
+# define texHeight 64
+void	calc_draw_ends(t_cub *cub, int x, int texNum, int texX)
 {
-	int color;
-	int drawEnd;
-	int drawStart;
 // 	int lineHeight;
 	
 // 	lineHeight = (int)(cub->H / cub->ray.perpWallDist);
@@ -67,18 +66,33 @@ void	calc_draw_ends(t_cub *cub, int x)
 // 	if (cub->ray.side == 1)
 // 		color /= 2;
 // 	draw(cub, x, drawStart, drawEnd, color);
-
+	int color;
+	int drawEnd;
+	int drawStart;
 
 	int lineHeight = (int)(cub->H / cub->ray.perpWallDist);
-
-
 		int pitch = 100;
-
 		//calculate lowest and highest pixel to fill in current stripe
-		int drawStart = -lineHeight / 2 + cub->H / 2 + pitch;
+		drawStart = -lineHeight / 2 + cub->H / 2 + pitch;
 		if(drawStart < 0) drawStart = 0;
-		int drawEnd = lineHeight / 2 + cub->H / 2 + pitch;
+		drawEnd = lineHeight / 2 + cub->H / 2 + pitch;
 		if(drawEnd >= cub->H) drawEnd = cub->H - 1;
+		double step = 1.0 * texHeight / lineHeight;
+		// Starting texture coordinate
+		double texPos = (drawStart - pitch - cub->H / 2 + lineHeight / 2) * step;
+		for(int y = drawStart; y < drawEnd; y++)
+		{
+			// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
+			int texY = (int)texPos & (texHeight - 1);
+			texPos += step;
+			int color = cub->textures[texNum].addr[texHeight * texY + texX];
+			//make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
+			if(cub->ray.side == 1) color = (color >> 1) & 8355711;
+			// cub->buffer[y][x] = color;
+			my_mlx_pixel_put(&cub->img, x, y, color);
+		}
+		// drawBuffer(buffer[0]);
+		// for(int y = 0; y < cub->H; y++) for(int x = 0; x < cub->W; x++) cub->buffer[y][x] = 0; //clear the buffer instead of cls()
 
 }
 
@@ -99,9 +113,6 @@ void	calc_ray_pos(t_cub *cub, int x)
 		cub->ray.deltaDistY = fabs(1 / cub->ray.rayY);
 }
 
-# define texWidth 64
-# define texHeight 64
-
 void	raycaster(t_cub *cub)
 {
 	int	x;
@@ -112,7 +123,7 @@ void	raycaster(t_cub *cub)
 		calc_ray_pos(cub, x);
 		find_step_dir(cub);
 		DDA_algorithm(cub);
-		int texNum = cub->map[cub->player.mapX][cub->player.mapY] - 1; //1 subtracted from it so that texture 0 can be used!
+		int texNum = cub->map[cub->player.mapX][cub->player.mapY] - 49; //1 subtracted from it so that texture 0 can be used!
 
 		//calculate value of wallX
 		double wallX; //where exactly the wall was hit
@@ -121,27 +132,11 @@ void	raycaster(t_cub *cub)
 		wallX -= floor((wallX));
 
 		//x coordinate on the texture
-		int texX = (int)(wallX * double(texWidth));
+		int texX = (int)(wallX * (double)(texWidth));
 		if(cub->ray.side == 0 && cub->ray.rayX > 0) texX = texWidth - texX - 1;
 		if(cub->ray.side == 1 && cub->ray.rayY < 0) texX = texWidth - texX - 1;
-			// calc_draw_ends(cub, x);
+			calc_draw_ends(cub, x, texNum, texX);
 
-
-		double step = 1.0 * texHeight / lineHeight;
-		// Starting texture coordinate
-		double texPos = (drawStart - pitch - h / 2 + lineHeight / 2) * step;
-		for(int y = drawStart; y < drawEnd; y++)
-		{
-			// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
-			int texY = (int)texPos & (texHeight - 1);
-			texPos += step;
-			int color = texture[texNum][texHeight * texY + texX];
-			//make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
-			if(side == 1) color = (color >> 1) & 8355711;
-			buffer[y][x] = color;
-		}
-		drawBuffer(buffer[0]);
-		for(int y = 0; y < h; y++) for(int x = 0; x < w; x++) buffer[y][x] = 0; //clear the buffer instead of cls()
 	}
 	mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, cub->img.img, 0, 0);	
 }

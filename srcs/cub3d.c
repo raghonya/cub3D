@@ -158,14 +158,23 @@ void	initialization(t_cub *cub)
 	err_msg(!cub->mlx.ptr, "Mlx init error");
 	cub->mlx.win = mlx_new_window(cub->mlx.ptr, cub->W, cub->H, "Cub3D");
 	err_msg(!cub->mlx.win, "Can`t open window for you");
-	mlx_xpm_file_to_image(cub->mlx.ptr, "pics/eagle.xpm", &havai, &havai);
-	mlx_xpm_file_to_image(cub->mlx.ptr, "pics/redbrick.xpm", &havai, &havai);
-	mlx_xpm_file_to_image(cub->mlx.ptr, "pics/purplestone.xpm", &havai, &havai);
-	mlx_xpm_file_to_image(cub->mlx.ptr, "pics/greystone.xpm", &havai, &havai);
-	mlx_xpm_file_to_image(cub->mlx.ptr, "pics/bluestone.xpm", &havai, &havai);
-	mlx_xpm_file_to_image(cub->mlx.ptr, "pics/mossy.xpm", &havai, &havai);
-	mlx_xpm_file_to_image(cub->mlx.ptr, "pics/wood.xpm", &havai, &havai);
-	mlx_xpm_file_to_image(cub->mlx.ptr, "pics/colorstone.xpm", &havai, &havai);
+	//dzel es mallocy
+	cub->textures = malloc(sizeof(t_img) * 5);
+	cub->textures[0].img = mlx_xpm_file_to_image(cub->mlx.ptr, "pics/eagle.xpm", &havai, &havai);
+	cub->textures[1].img = mlx_xpm_file_to_image(cub->mlx.ptr, "pics/redbrick.xpm", &havai, &havai);
+	cub->textures[2].img = mlx_xpm_file_to_image(cub->mlx.ptr, "pics/greystone.xpm", &havai, &havai);
+	cub->textures[3].img = mlx_xpm_file_to_image(cub->mlx.ptr, "pics/bluestone.xpm", &havai, &havai);
+	cub->textures[4].img = mlx_xpm_file_to_image(cub->mlx.ptr, "pics/colorstone.xpm", &havai, &havai);
+	if (!cub->textures[0].img || !cub->textures[1].img \
+	|| !cub->textures[2].img || !cub->textures[3].img \
+	|| !cub->textures[4].img)
+		exit(5);
+	int i = -1;
+	while (++i < 5)
+		cub->textures[i].addr = mlx_get_data_addr(cub->textures[i].img, \
+		&cub->textures[i].bits_per_pixel, &cub->textures[i].line_length, \
+		&cub->textures[i].endian);
+	// mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, cub->textures[0], 0, 0);
 	create_img(cub);
 
 
@@ -178,7 +187,7 @@ int	main(int argc, char **argv)
 	err_msg (argc != 2, "Invalid number of arguments, 1 required");
 	initialization(&cub);
 	file_check(&cub, argv[1]);
-	printmap(cub);
+	// printmap(cub);
 	// printf ("dx: %f, dy: %f, posx: %f, posy: %f, %f, %f\n", cub.player.dirX, \
 	// cub.player.dirY, cub.player.posX, cub.player.posY, cub.player.planeX, cub.player.planeY);
 	
