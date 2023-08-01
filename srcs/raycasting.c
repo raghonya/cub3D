@@ -51,6 +51,17 @@ void	DDA_algorithm(t_cub *cub)
 
 # define texWidth 64
 # define texHeight 64
+
+
+void	my_mlx_color_taker(t_img *data, int x, int y, int *color)
+{
+	char	*dst;
+
+	printf ("num %u\n", (y * data->line_length + x * (data->bits_per_pixel / 8)));
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*color = *(unsigned int*)dst;
+}
+
 void	calc_draw_ends(t_cub *cub, int x, int texNum, int texX)
 {
 // 	int lineHeight;
@@ -66,33 +77,37 @@ void	calc_draw_ends(t_cub *cub, int x, int texNum, int texX)
 // 	if (cub->ray.side == 1)
 // 		color /= 2;
 // 	draw(cub, x, drawStart, drawEnd, color);
-	int color;
 	int drawEnd;
 	int drawStart;
+	int color;
+	int i = 100;
+	my_mlx_color_taker(cub->textures, 17, 17, &color);
 
+	while (i++ < 200)
+	my_mlx_pixel_put(&cub->img, i, 100, color);
 	int lineHeight = (int)(cub->H / cub->ray.perpWallDist);
-		int pitch = 100;
-		//calculate lowest and highest pixel to fill in current stripe
-		drawStart = -lineHeight / 2 + cub->H / 2 + pitch;
-		if(drawStart < 0) drawStart = 0;
-		drawEnd = lineHeight / 2 + cub->H / 2 + pitch;
-		if(drawEnd >= cub->H) drawEnd = cub->H - 1;
-		double step = 1.0 * texHeight / lineHeight;
-		// Starting texture coordinate
-		double texPos = (drawStart - pitch - cub->H / 2 + lineHeight / 2) * step;
-		for(int y = drawStart; y < drawEnd; y++)
-		{
-			// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
-			int texY = (int)texPos & (texHeight - 1);
-			texPos += step;
-			int color = cub->textures[texNum].addr[texHeight * texY + texX];
-			//make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
-			if(cub->ray.side == 1) color = (color >> 1) & 8355711;
-			// cub->buffer[y][x] = color;
-			my_mlx_pixel_put(&cub->img, x, y, color);
-		}
-		// drawBuffer(buffer[0]);
-		// for(int y = 0; y < cub->H; y++) for(int x = 0; x < cub->W; x++) cub->buffer[y][x] = 0; //clear the buffer instead of cls()
+	int pitch = 100;
+	//calculate lowest and highest pixel to fill in current stripe
+	drawStart = -lineHeight / 2 + cub->H / 2 + pitch;
+	if(drawStart < 0) drawStart = 0;
+	drawEnd = lineHeight / 2 + cub->H / 2 + pitch;
+	if(drawEnd >= cub->H) drawEnd = cub->H - 1;
+	double step = 1.0 * texHeight / lineHeight;
+	// Starting texture coordinate
+	double texPos = (drawStart - pitch - cub->H / 2 + lineHeight / 2) * step;
+	for(int y = drawStart; y < drawEnd; y++)
+	{
+		// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
+		int texY = (int)texPos & (texHeight - 1);
+		texPos += step;
+		color = cub->textures[0].img[texHeight * texY + texX];
+		//make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
+		if(cub->ray.side == 1) color = (color >> 1) & 8355711;
+		// cub->buffer[y][x] = color;
+		my_mlx_pixel_put(&cub->img, x, y, color);
+	}
+	// drawBuffer(buffer[0]);
+	// for(int y = 0; y < cub->H; y++) for(int x = 0; x < cub->W; x++) cub->buffer[y][x] = 0; //clear the buffer instead of cls()eybo
 
 }
 

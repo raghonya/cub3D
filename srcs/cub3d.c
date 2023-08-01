@@ -174,6 +174,8 @@ void	initialization(t_cub *cub)
 		cub->textures[i].addr = mlx_get_data_addr(cub->textures[i].img, \
 		&cub->textures[i].bits_per_pixel, &cub->textures[i].line_length, \
 		&cub->textures[i].endian);
+	printf ("%d, %d, %d\n", cub->textures[2].bits_per_pixel, \
+	cub->textures[2].line_length, cub->textures[2].endian);
 	// mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, cub->textures[0], 0, 0);
 	create_img(cub);
 
