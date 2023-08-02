@@ -21,6 +21,31 @@ void	draw_floor_n_ceil(t_cub *cub)
 
 }
 
+void	print_gun(t_img *pic, t_img *game, int w, int h)
+{
+	int	x;
+	int	y;
+	int	px;
+	int	py;
+
+	px = 0;
+	x = w / 2 - 100 - 1;
+	printf ("wd: %d\n", pic->wd);
+	while (++x < w / 2 + pic->wd - 100)
+	{
+		y = h - pic->ht - 1;
+		py = 0;
+		while (++y < h)
+		{
+			if (my_mlx_color_taker(pic, px, py) != 4278190080)
+				my_mlx_pixel_put(game, x, y, \
+				my_mlx_color_taker(pic, px, py));
+			py++;
+		}
+		px++;
+	}
+}
+
 void	calc_ray_pos(t_cub *cub, int pixel)
 {
 	cub->ray.cameraX = 2.0 * pixel / (double)cub->W - 1.0;
@@ -80,7 +105,8 @@ void	DDA_algorithm(t_cub *cub)
 			cub->player.mapY += cub->player.stepY;
 			cub->ray.side = 1;
 		}
-		if (cub->map[cub->player.mapX][cub->player.mapY] > '0') cub->ray.hit = 1;
+		if (cub->map[cub->player.mapX][cub->player.mapY] > '0')
+			cub->ray.hit = 1;
 	}
 	if (cub->ray.side == 0)
 		cub->ray.perpWallDist = (cub->ray.sideDistX - cub->ray.deltaDistX);
@@ -90,6 +116,10 @@ void	DDA_algorithm(t_cub *cub)
 
 t_img	*choose_texture(t_cub *cub)
 {
+	if (cub->map[cub->player.mapX][cub->player.mapY] == '2')
+		return (TEXS + 4);
+	else if (cub->map[cub->player.mapX][cub->player.mapY] == '3')
+		return (TEXS + 5);
 	if (cub->ray.side == 1 && cub->ray.rayY > 0)
 		return (TEXS);
 	else if (cub->ray.side == 1 &&  cub->ray.rayY <= 0)
@@ -158,9 +188,11 @@ void	raycaster(t_cub *cub)
 		|| (cub->ray.side == 1 && cub->ray.rayY < 0))
 			texX = TEXWIDTH - texX - 1;
 		calc_draw_ends(cub, pixel, texX);
+		
 
 	}
 	// printf ("dirx: %f, diry: %f\n", cub->player.dirX, cub->player.dirY);
+	print_gun(&cub->pistol->img, &cub->img, cub->W, cub->H);
+	
 	mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, cub->img.img, 0, 0);
-	// mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, TEXS[4].img, 600, 600);
 }

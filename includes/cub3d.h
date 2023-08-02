@@ -8,6 +8,13 @@
 # include <stdlib.h>
 # include <fcntl.h>
 
+/*
+Map i mej
+0 - empty space
+1 - walls with different pictures for all sides
+2 - svastika flag
+*/
+
 # ifdef __linux__
 #  define ESC 65307
 #  define ARRUP 65362
@@ -73,7 +80,7 @@ typedef struct s_player
 	double	planeY;
 }	t_player;
 
-typedef struct img
+typedef struct s_img
 {
 	int		wd;
 	int		ht;
@@ -83,6 +90,12 @@ typedef struct img
 	int		line_length;
 	int		endian;
 }	t_img;
+
+typedef struct s_list
+{
+	t_img			img;
+	struct s_list	*next;
+}	t_list;
 
 typedef struct s_mlx
 {
@@ -99,23 +112,24 @@ typedef struct s_cub
 	int			mapY;
 	char		**map;
 	t_player	player;
+	t_list		*pistol;
 	int			map_width;
 	int			map_height;
 	t_img		*textures;
 }	t_cub;
 
-void	printmap(t_cub cub);
-void	raycaster(t_cub *cub);
-int		quit_game(t_cub *cub);
-void	create_img(t_cub *cub);
-void	initialization(t_cub *cub);
-int		key_up(int key, t_cub *cub);
-int		key_down(int key, t_cub *cub);
-int		trgb(int t, int r, int g, int b);
-void	err_msg(int condition, char *msg);
-void	find_player(t_cub *cub, char player);
-void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
-int		my_mlx_color_taker(t_img *data, int x, int y);
-void	draw(t_cub *cub, int beginX, int beginY, int endY, int color);
+void			printmap(t_cub cub);
+void			raycaster(t_cub *cub);
+int				quit_game(t_cub *cub);
+void			create_img(t_cub *cub);
+void			initialization(t_cub *cub);
+int				key_up(int key, t_cub *cub);
+int				key_down(int key, t_cub *cub);
+int				trgb(int t, int r, int g, int b);
+void			err_msg(int condition, char *msg);
+void			find_player(t_cub *cub, char player);
+void			my_mlx_pixel_put(t_img *data, int x, int y, int color);
+unsigned int	my_mlx_color_taker(t_img *data, int x, int y);
+void			draw(t_cub *cub, int beginX, int beginY, int endY, int color);
 
 #endif

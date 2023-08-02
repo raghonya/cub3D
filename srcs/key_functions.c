@@ -1,5 +1,7 @@
 #include <cub3d.h>
 
+void	print_gun(t_img *pic, t_img *game, int w, int h);
+
 void	rotate(t_cub *cub, double oldDirX, double oldPlaneX, double rotSpeed)
 {
 	cub->player.dirX = cub->player.dirX * cos(rotSpeed) - cub->player.dirY * sin(rotSpeed);
@@ -99,6 +101,18 @@ void	step_fwd_back(t_cub *cub, int side)
 			// printf ("posx: %f, posy: %f\n", cub->player.posX, cub->player.posY);
 }
 
+void	gun_anim(t_cub *cub, t_list *anim)
+{
+	while (anim)
+	{
+		print_gun(&anim->img, &cub->img, cub->W, cub->H);
+		mlx_destroy_image(cub->mlx.ptr, cub->img.img);
+		create_img(cub);
+		raycaster(cub);
+		anim = anim->next;
+	}
+}
+
 int	quit_game(t_cub *cub)
 {
 	(void)cub;
@@ -114,6 +128,7 @@ int	key_up(int key, t_cub *cub)
 
 int	key_down(int key, t_cub *cub)
 {
+	printf ("key: %d\n", key);
 	if (key == ESC)
 		quit_game(cub);
 	if (key == ARRRIGHT || key == KEYD)
@@ -128,6 +143,11 @@ int	key_down(int key, t_cub *cub)
 		step_fwd_back(cub, KEYD);
 	if (key == KEYA)
 		;
+	if (key == 32)
+	{
+		gun_anim(cub, cub->pistol);
+		return (0);
+	}
 	mlx_destroy_image(cub->mlx.ptr, cub->img.img);
 	create_img(cub);
 	raycaster(cub);

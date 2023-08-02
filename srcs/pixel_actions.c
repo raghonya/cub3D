@@ -1,9 +1,10 @@
 #include <cub3d.h>
 
-int	my_mlx_color_taker(t_img *data, int x, int y)
+unsigned int	my_mlx_color_taker(t_img *data, int x, int y)
 {
 	char	*dst;
 
+	// printf ("dataaddr: %s\n", data->addr);
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	return (*(unsigned int*)dst);
 }

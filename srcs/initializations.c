@@ -10,7 +10,7 @@ void	create_img(t_cub *cub)
 
 void	textures_init(t_cub *cub)
 {
-	TEXS = malloc(sizeof(t_img) * 5);
+	TEXS = malloc(sizeof(t_img) * 6);
 	err_msg(!TEXS, "Malloc Error");
 	TEXS[0].img = mlx_xpm_file_to_image(cub->mlx.ptr, \
 	"pics/eagle.xpm", &TEXS[0].wd, &TEXS[0].ht);
@@ -21,16 +21,66 @@ void	textures_init(t_cub *cub)
 	TEXS[3].img = mlx_xpm_file_to_image(cub->mlx.ptr, \
 	"pics/bluestone.xpm", &TEXS[3].wd, &TEXS[3].ht);
 	TEXS[4].img = mlx_xpm_file_to_image(cub->mlx.ptr, \
-	"pics/pistol.xpm", &TEXS[4].wd, &TEXS[4].ht);
-	err_msg (!TEXS[0].img || !TEXS[1].img \
-	|| !TEXS[2].img || !TEXS[3].img || !TEXS[4].img \
+	"pics/flagsvastiki.xpm", &TEXS[4].wd, &TEXS[4].ht);
+	TEXS[5].img = mlx_xpm_file_to_image(cub->mlx.ptr, \
+	"pics/bantik.xpm", &TEXS[5].wd, &TEXS[5].ht);
+	// pistol animation
+	// cub->pistol = malloc(sizeof(t_list));
+	// if (!cub->pistol)
+	// 	exit(1);//error
+	// cub->pistol == NULL;
+	int	i = -1;
+	// t_list *tmp;
+
+	// tmp = cub->pistol;
+	while (++i < 4)
+	{
+		cub->pistol = malloc(sizeof(t_list));
+		err_msg(!cub->pistol, "Malloc error");
+		cub->pistol->img.img = mlx_xpm_file_to_image(cub->mlx.ptr, \
+		"pics/pistol_anim1.xpm", &cub->pistol->img.wd, &cub->pistol->img.ht);
+		err_msg(!cub->pistol->img.img, "Image initialization");
+		cub->pistol->img.addr = mlx_get_data_addr(cub->pistol->img.img, \
+		&cub->pistol->img.bits_per_pixel, &cub->pistol->img.line_length, \
+		&cub->pistol->img.endian);
+
+		cub->pistol->next = malloc(sizeof(t_list));
+		cub->pistol->next->img.img = mlx_xpm_file_to_image(cub->mlx.ptr, \
+		"pics/pistol_anim2.xpm", &cub->pistol->next->img.wd, &cub->pistol->next->img.ht);
+		cub->pistol->next->img.addr = mlx_get_data_addr(cub->pistol->next->img.img, \
+		&cub->pistol->next->img.bits_per_pixel, &cub->pistol->next->img.line_length, \
+		&cub->pistol->next->img.endian);
+		
+		cub->pistol->next->next = malloc(sizeof(t_list));
+		cub->pistol->next->next->img.img = mlx_xpm_file_to_image(cub->mlx.ptr, \
+		"pics/pistol_anim3.xpm", &cub->pistol->next->next->img.wd, &cub->pistol->next->next->img.ht);
+		cub->pistol->next->next->img.addr = mlx_get_data_addr(cub->pistol->next->next->img.img, \
+		&cub->pistol->next->next->img.bits_per_pixel, &cub->pistol->next->next->img.line_length, \
+		&cub->pistol->next->next->img.endian);
+		
+		cub->pistol->next->next->next = malloc(sizeof(t_list));
+		cub->pistol->next->next->next->img.img = mlx_xpm_file_to_image(cub->mlx.ptr, \
+		"pics/pistol_anim4.xpm", &cub->pistol->next->next->next->img.wd, &cub->pistol->next->next->next->img.ht);
+		cub->pistol->next->next->next->img.addr = mlx_get_data_addr(cub->pistol->next->next->next->img.img, \
+		&cub->pistol->next->next->next->img.bits_per_pixel, &cub->pistol->next->next->next->img.line_length, \
+		&cub->pistol->next->next->next->img.endian);
+		cub->pistol->next->next->next->next = NULL;
+	}
+	// cub->pistol = tmp;
+		// ft_lstadd_back(&cub->pistol, \
+		// ft_lstnew())
+	
+	// TEXS[6].img = mlx_xpm_file_to_image(cub->mlx.ptr, \
+	// "pics/pistol.xpm", &TEXS[6].wd, &TEXS[6].ht);
+	err_msg (!TEXS[0].img || !TEXS[1].img || !TEXS[2].img 
+	|| !TEXS[3].img || !TEXS[4].img || !TEXS[5].img \
 	|| TEXS[0].wd != TEXS[1].wd || TEXS[0].ht != TEXS[1].ht \
 	|| TEXS[0].wd != TEXS[2].wd || TEXS[0].ht != TEXS[2].ht \
-	|| TEXS[0].wd != TEXS[3].wd || TEXS[0].ht != TEXS[3].ht \
-	|| TEXS[0].wd != TEXS[4].wd || TEXS[0].ht != TEXS[4].ht, \
+	|| TEXS[0].wd != TEXS[3].wd || TEXS[0].ht != TEXS[3].ht, \
 	"Images Initialization");
-	int i = -1;
-	while (++i < 5)
+	// || TEXS[0].wd != TEXS[4].wd || TEXS[0].ht != TEXS[4].ht,
+	i = -1;
+	while (++i < 6)
 		TEXS[i].addr = mlx_get_data_addr(TEXS[i].img, \
 		&TEXS[i].bits_per_pixel, &TEXS[i].line_length, \
 		&TEXS[i].endian);
@@ -40,7 +90,7 @@ void	initialization(t_cub *cub)
 {
 	int havai;
 
-	cub->map_width = 900;
+	cub->map_width = 1200;
 	cub->map_height = 800;
 	cub->player.dirX = 0;
 	cub->player.dirY = 0;
