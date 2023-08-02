@@ -29,6 +29,7 @@ void	DDA_algorithm(t_cub *cub)
 	cub->ray.hit = 0;
 	while (cub->ray.hit == 0)
 	{
+		// printf ("sideX: %f, sideY: %f\n", cub->ray.sideDistX, cub->ray.sideDistY);
 		if (cub->ray.sideDistX < cub->ray.sideDistY)
 		{
 			cub->ray.sideDistX += cub->ray.deltaDistX;
@@ -41,7 +42,7 @@ void	DDA_algorithm(t_cub *cub)
 			cub->player.mapY += cub->player.stepY;
 			cub->ray.side = 1;
 		}
-		if (cub->map[cub->player.mapX][cub->player.mapY] == '1') cub->ray.hit = 1;
+		if (cub->map[cub->player.mapX][cub->player.mapY] > '0') cub->ray.hit = 1;
 	}
 	if (cub->ray.side == 0)
 		cub->ray.perpWallDist = (cub->ray.sideDistX - cub->ray.deltaDistX);
@@ -49,8 +50,17 @@ void	DDA_algorithm(t_cub *cub)
 		cub->ray.perpWallDist = (cub->ray.sideDistY - cub->ray.deltaDistY);
 }
 
-// # define TEXWIDTH 64
-// # define TEXHEIGHT 64
+t_img	*choose_texture(t_cub *cub)
+{
+	if (cub->ray.side == 1 && cub->ray.rayY > 0)
+		return (TEXS);
+	else if (cub->ray.side == 1 &&  cub->ray.rayY <= 0)
+		return (TEXS + 1);
+	else if (cub->ray.side == 0 && cub->ray.rayX > 0)
+		return (TEXS + 2);
+	else if (cub->ray.side == 0 &&  cub->ray.rayX <= 0)
+		return (TEXS + 3);
+}
 
 void	calc_draw_ends(t_cub *cub, int x, int texX)
 {
@@ -67,26 +77,31 @@ void	calc_draw_ends(t_cub *cub, int x, int texX)
 // 	if (cub->ray.side == 1)
 // 		color /= 2;
 // 	draw(cub, x, drawStart, drawEnd, color);
-	int color;
-	int drawEnd;
-	int drawStart;
-	int lineHeight = (int)(cub->H / cub->ray.perpWallDist);
-	int pitch = 100;
-	//calculate lowest and highest pixel to fill in current stripe
+	int		color;
+	int		drawEnd;
+	int		drawStart;
+	int		lineHeight;
+	int		pitch;
+	int		texY;
+	double	step;
+	double	texPos;
+
+	pitch = 100;
+	lineHeight = (int)(cub->H / cub->ray.perpWallDist);
 	drawStart = -lineHeight / 2 + cub->H / 2 + pitch;
-	if(drawStart < 0) drawStart = 0;
+	if (drawStart < 0)
+		drawStart = 0;
 	drawEnd = lineHeight / 2 + cub->H / 2 + pitch;
-	if(drawEnd >= cub->H) drawEnd = cub->H - 1;
-	double step = 1.0 * TEXHEIGHT / lineHeight;
-	// Starting texture coordinate
-	double texPos = (drawStart - pitch - cub->H / 2 + lineHeight / 2) * step;
+	if (drawEnd >= cub->H)
+		drawEnd = cub->H - 1;
+	step = 1.0 * TEXHEIGHT / lineHeight;
+	texPos = (drawStart - pitch - cub->H / 2 + lineHeight / 2) * step;
+	printf ("rayX: %f, rayY: %f\n", cub->ray.rayX, cub->ray.rayY);
 	for(int y = drawStart; y < drawEnd; y++)
 	{
-		// Cast the texture coordinate to integer, and mask with (TEXHEIGHT - 1) in case of overflow
-		int texY = (int)texPos & (TEXHEIGHT - 1);
+		texY = (int)texPos & (TEXHEIGHT - 1);
 		texPos += step;
-		if (cub->ray.side == 1) my_mlx_color_taker(TEXS, texX, texY, &color);
-		else					my_mlx_color_taker(TEXS + 1, texX, texY, &color);
+		my_mlx_color_taker(choose_texture(cub), texX, texY, &color);
 		my_mlx_pixel_put(&cub->img, x, y, color);
 	}
 }
@@ -122,15 +137,16 @@ void	raycaster(t_cub *cub)
 
 		//calculate value of wallX
 		double wallX; //where exactly the wall was hit
-		if(cub->ray.side == 0) wallX = cub->player.posY + cub->ray.perpWallDist * cub->ray.rayY;
-		else          wallX = cub->player.posX + cub->ray.perpWallDist * cub->ray.rayX;
+		wallX = cub->player.posX + cub->ray.perpWallDist * cub->ray.rayX;
+		if (cub->ray.side == 0)
+			wallX = cub->player.posY + cub->ray.perpWallDist * cub->ray.rayY;
 		wallX -= floor((wallX));
-		// printf ("wall: %f\n", wallX);
 
 		//x coordinate on the texture
 		int texX = (int)(wallX * (double)(TEXWIDTH));
-		if(cub->ray.side == 0 && cub->ray.rayX > 0) texX = TEXWIDTH - texX - 1;
-		if(cub->ray.side == 1 && cub->ray.rayY < 0) texX = TEXWIDTH - texX - 1;
+		if ((cub->ray.side == 0 && cub->ray.rayX > 0) \
+		|| (cub->ray.side == 1 && cub->ray.rayY < 0))
+			texX = TEXWIDTH - texX - 1;
 		calc_draw_ends(cub, x, texX);
 
 	}
