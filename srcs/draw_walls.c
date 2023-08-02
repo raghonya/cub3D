@@ -17,24 +17,24 @@ int	check_points(t_cub *cub, int beginX, int *beginY, int *endY)
 	return (0);
 }
 
-void	draw(t_cub *cub, int beginX, int beginY, int endY, int color)
-{
-	int		pixels;
-	double	deltaY;
-	double	pixelX;
-	double	pixelY;
+// void	draw(t_cub *cub, int beginX, int beginY, int endY, int color)
+// {
+// 	int		pixels;
+// 	double	deltaY;
+// 	double	pixelX;
+// 	double	pixelY;
 
-	if (check_points(cub, beginX, &beginY, &endY))
-		return ;
-	pixelX = beginX;
-	pixelY = beginY;
-	deltaY = endY - beginY;
-	pixels = deltaY;
-	deltaY /= pixels;
-	while (pixels)
-	{
-		my_mlx_pixel_put(&cub->img, pixelX, pixelY, color);
-		pixelY += deltaY;
-		--pixels;
-	}
-}
+// 	if (check_points(cub, beginX, &beginY, &endY))
+// 		return ;
+// 	pixelX = beginX;
+// 	pixelY = beginY;
+// 	deltaY = endY - beginY;
+// 	pixels = deltaY;
+// 	deltaY /= pixels;
+// 	while (pixels)
+// 	{
+// 		my_mlx_pixel_put(&cub->img, pixelX, pixelY, color);
+// 		pixelY += deltaY;
+// 		--pixels;
+// 	}
+// }

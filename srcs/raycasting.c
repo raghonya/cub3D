@@ -1,5 +1,23 @@
 #include <cub3d.h>
 
+void	calc_ray_pos(t_cub *cub, int pixel)
+{
+	cub->ray.cameraX = 2 * pixel / (double)cub->W - 1;
+	cub->ray.rayX = cub->player.dirX + cub->player.planeX * cub->ray.cameraX;
+	cub->ray.rayY = cub->player.dirY + cub->player.planeY * cub->ray.cameraX;
+	cub->player.mapX = (int)cub->player.posX;
+	cub->player.mapY = (int)cub->player.posY;
+	if (cub->ray.rayX == 0)
+		cub->ray.deltaDistX = 1e30;
+	else
+		cub->ray.deltaDistX = fabs(1 / cub->ray.rayX);
+	if (cub->ray.rayY == 0)
+		cub->ray.deltaDistY = 1e30;
+	else
+		cub->ray.deltaDistY = fabs(1 / cub->ray.rayY);
+	// printf ("rayx: %f, rayy: %f, pixel: %d\n", cub->ray.rayX, cub->ray.rayY, pixel);
+}
+
 void	find_step_dir(t_cub *cub)
 {
 	if (cub->ray.rayX < 0)
@@ -29,7 +47,6 @@ void	DDA_algorithm(t_cub *cub)
 	cub->ray.hit = 0;
 	while (cub->ray.hit == 0)
 	{
-		// printf ("sideX: %f, sideY: %f\n", cub->ray.sideDistX, cub->ray.sideDistY);
 		if (cub->ray.sideDistX < cub->ray.sideDistY)
 		{
 			cub->ray.sideDistX += cub->ray.deltaDistX;
@@ -64,19 +81,6 @@ t_img	*choose_texture(t_cub *cub)
 
 void	calc_draw_ends(t_cub *cub, int x, int texX)
 {
-// 	int lineHeight;
-	
-// 	lineHeight = (int)(cub->H / cub->ray.perpWallDist);
-// 	drawStart = -lineHeight / 2 + cub->H / 2;
-// 	drawEnd = lineHeight / 2 + cub->H / 2;
-// 	if (drawStart < 0)
-// 		drawStart = 0;
-// 	if (drawEnd >= cub->H)
-// 		drawEnd = cub->H - 1;
-// 	color = trgb(0, 255, 0, 0);
-// 	if (cub->ray.side == 1)
-// 		color /= 2;
-// 	draw(cub, x, drawStart, drawEnd, color);
 	int		color;
 	int		drawEnd;
 	int		drawStart;
@@ -87,6 +91,10 @@ void	calc_draw_ends(t_cub *cub, int x, int texX)
 	double	texPos;
 
 	pitch = 100;
+	
+	if (cub->ray.perpWallDist < 0.000001)
+		cub->ray.perpWallDist = 0.000001;
+	// printf ("perpwalldist posle: %.10f\n", cub->ray.perpWallDist);
 	lineHeight = (int)(cub->H / cub->ray.perpWallDist);
 	drawStart = -lineHeight / 2 + cub->H / 2 + pitch;
 	if (drawStart < 0)
@@ -96,7 +104,9 @@ void	calc_draw_ends(t_cub *cub, int x, int texX)
 		drawEnd = cub->H - 1;
 	step = 1.0 * TEXHEIGHT / lineHeight;
 	texPos = (drawStart - pitch - cub->H / 2 + lineHeight / 2) * step;
-	printf ("rayX: %f, rayY: %f\n", cub->ray.rayX, cub->ray.rayY);
+	// printf ("start: %d, end: %d\n", drawStart, drawEnd);
+	// if (cub->ray.rayY < 0)
+	// 	printf ("rayX: %f, rayY: %f\n", cub->ray.rayX, cub->ray.rayY);
 	for(int y = drawStart; y < drawEnd; y++)
 	{
 		texY = (int)texPos & (TEXHEIGHT - 1);
@@ -106,35 +116,16 @@ void	calc_draw_ends(t_cub *cub, int x, int texX)
 	}
 }
 
-void	calc_ray_pos(t_cub *cub, int x)
-{
-	cub->ray.cameraX = 2 * x / (double)cub->W - 1;
-	cub->ray.rayX = cub->player.dirX + cub->player.planeX * cub->ray.cameraX;
-	cub->ray.rayY = cub->player.dirY + cub->player.planeY * cub->ray.cameraX;
-	cub->player.mapX = (int)cub->player.posX;
-	cub->player.mapY = (int)cub->player.posY;
-	if (cub->ray.rayX == 0)
-		cub->ray.deltaDistX = 1e30;
-	else
-		cub->ray.deltaDistX = fabs(1 / cub->ray.rayX);
-	if (cub->ray.rayY == 0)
-		cub->ray.deltaDistY = 1e30;
-	else
-		cub->ray.deltaDistY = fabs(1 / cub->ray.rayY);
-}
-
 void	raycaster(t_cub *cub)
 {
-	int	x;
+	int	pixel;
 
-	x = -1;
-	while (++x < cub->W)
+	pixel = -1;
+	while (++pixel <= cub->W)
 	{
-		calc_ray_pos(cub, x);
+		calc_ray_pos(cub, pixel);
 		find_step_dir(cub);
 		DDA_algorithm(cub);
-		// int texNum = cub->map[cub->player.mapX][cub->player.mapY] - 49; //1 subtracted from it so that texture 0 can be used!
-
 		//calculate value of wallX
 		double wallX; //where exactly the wall was hit
 		wallX = cub->player.posX + cub->ray.perpWallDist * cub->ray.rayX;
@@ -147,9 +138,9 @@ void	raycaster(t_cub *cub)
 		if ((cub->ray.side == 0 && cub->ray.rayX > 0) \
 		|| (cub->ray.side == 1 && cub->ray.rayY < 0))
 			texX = TEXWIDTH - texX - 1;
-		calc_draw_ends(cub, x, texX);
+		calc_draw_ends(cub, pixel, texX);
 
 	}
-	printf ("dirx: %f, diry: %f\n", cub->player.dirX, cub->player.dirY);
+	// printf ("dirx: %f, diry: %f\n", cub->player.dirX, cub->player.dirY);
 	mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, cub->img.img, 0, 0);	
 }
