@@ -1,8 +1,29 @@
 #include <cub3d.h>
 
+void	draw_floor_n_ceil(t_cub *cub)
+{
+	int	x;
+	int	y;
+
+	y = -1;
+	while (++y < cub->H / 2)
+	{
+		x = -1;
+		while (++x < cub->W)
+			my_mlx_pixel_put(&cub->img, x, y, 0xFF0000);
+	}
+	while (++y < cub->H)
+	{
+		x = -1;
+		while (++x < cub->W)
+			my_mlx_pixel_put(&cub->img, x, y, 0x0000FF);
+	}
+
+}
+
 void	calc_ray_pos(t_cub *cub, int pixel)
 {
-	cub->ray.cameraX = 2 * pixel / (double)cub->W - 1;
+	cub->ray.cameraX = 2.0 * pixel / (double)cub->W - 1.0;
 	cub->ray.rayX = cub->player.dirX + cub->player.planeX * cub->ray.cameraX;
 	cub->ray.rayY = cub->player.dirY + cub->player.planeY * cub->ray.cameraX;
 	cub->player.mapX = (int)cub->player.posX;
@@ -85,25 +106,22 @@ void	calc_draw_ends(t_cub *cub, int x, int texX)
 	int		drawEnd;
 	int		drawStart;
 	int		lineHeight;
-	int		pitch;
 	int		texY;
 	double	step;
 	double	texPos;
-
-	pitch = 100;
 	
 	if (cub->ray.perpWallDist < 0.000001)
 		cub->ray.perpWallDist = 0.000001;
 	// printf ("perpwalldist posle: %.10f\n", cub->ray.perpWallDist);
 	lineHeight = (int)(cub->H / cub->ray.perpWallDist);
-	drawStart = -lineHeight / 2 + cub->H / 2 + pitch;
+	drawStart = -lineHeight / 2 + cub->H / 2;
 	if (drawStart < 0)
 		drawStart = 0;
-	drawEnd = lineHeight / 2 + cub->H / 2 + pitch;
+	drawEnd = lineHeight / 2 + cub->H / 2;
 	if (drawEnd >= cub->H)
 		drawEnd = cub->H - 1;
 	step = 1.0 * TEXHEIGHT / lineHeight;
-	texPos = (drawStart - pitch - cub->H / 2 + lineHeight / 2) * step;
+	texPos = (drawStart - cub->H / 2 + lineHeight / 2) * step;
 	// printf ("start: %d, end: %d\n", drawStart, drawEnd);
 	// if (cub->ray.rayY < 0)
 	// 	printf ("rayX: %f, rayY: %f\n", cub->ray.rayX, cub->ray.rayY);
@@ -111,8 +129,8 @@ void	calc_draw_ends(t_cub *cub, int x, int texX)
 	{
 		texY = (int)texPos & (TEXHEIGHT - 1);
 		texPos += step;
-		my_mlx_color_taker(choose_texture(cub), texX, texY, &color);
-		my_mlx_pixel_put(&cub->img, x, y, color);
+		my_mlx_pixel_put(&cub->img, x, y, \
+		my_mlx_color_taker(choose_texture(cub), texX, texY));
 	}
 }
 
@@ -121,6 +139,7 @@ void	raycaster(t_cub *cub)
 	int	pixel;
 
 	pixel = -1;
+	draw_floor_n_ceil(cub);
 	while (++pixel <= cub->W)
 	{
 		calc_ray_pos(cub, pixel);
@@ -142,5 +161,6 @@ void	raycaster(t_cub *cub)
 
 	}
 	// printf ("dirx: %f, diry: %f\n", cub->player.dirX, cub->player.dirY);
-	mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, cub->img.img, 0, 0);	
+	mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, cub->img.img, 0, 0);
+	// mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, TEXS[4].img, 600, 600);
 }

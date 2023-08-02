@@ -14,7 +14,7 @@ void	change_view(t_cub *cub, int side)
 	double	rotSpeed;
 	double	oldPlaneX;
 
-	rotSpeed = 0.04;
+	rotSpeed = 0.06;
 	oldDirX = cub->player.dirX;
 	oldPlaneX = cub->player.planeX;
 	if (side == ARRRIGHT)
@@ -116,9 +116,9 @@ int	key_down(int key, t_cub *cub)
 {
 	if (key == ESC)
 		quit_game(cub);
-	if (key == ARRRIGHT)
+	if (key == ARRRIGHT || key == KEYD)
 		change_view(cub, ARRRIGHT);
-	if (key == ARRLEFT)
+	if (key == ARRLEFT || key == KEYA)
 		change_view(cub, ARRLEFT);
 	if (key == KEYW)
 		step_fwd_back(cub, KEYW);

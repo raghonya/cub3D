@@ -115,7 +115,7 @@ int		trgb(int t, int r, int g, int b);
 void	err_msg(int condition, char *msg);
 void	find_player(t_cub *cub, char player);
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
-void	my_mlx_color_taker(t_img *data, int x, int y, int *color);
+int		my_mlx_color_taker(t_img *data, int x, int y);
 void	draw(t_cub *cub, int beginX, int beginY, int endY, int color);
 
 #endif

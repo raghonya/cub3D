@@ -113,8 +113,8 @@ void	find_player(t_cub *cub, char player)
 		{
 			if (cub->map[i][j] == player)
 			{
-				cub->player.posX = i;
-				cub->player.posY = j;
+				cub->player.posX = i + 0.5;
+				cub->player.posY = j + 0.5;
 				cub->map[i][j] = '0';
 				break ;
 			}

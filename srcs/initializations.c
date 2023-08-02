@@ -21,7 +21,7 @@ void	textures_init(t_cub *cub)
 	TEXS[3].img = mlx_xpm_file_to_image(cub->mlx.ptr, \
 	"pics/bluestone.xpm", &TEXS[3].wd, &TEXS[3].ht);
 	TEXS[4].img = mlx_xpm_file_to_image(cub->mlx.ptr, \
-	"pics/colorstone.xpm", &TEXS[4].wd, &TEXS[4].ht);
+	"pics/pistol.xpm", &TEXS[4].wd, &TEXS[4].ht);
 	err_msg (!TEXS[0].img || !TEXS[1].img \
 	|| !TEXS[2].img || !TEXS[3].img || !TEXS[4].img \
 	|| TEXS[0].wd != TEXS[1].wd || TEXS[0].ht != TEXS[1].ht \
@@ -40,7 +40,7 @@ void	initialization(t_cub *cub)
 {
 	int havai;
 
-	cub->map_width = 1200;
+	cub->map_width = 900;
 	cub->map_height = 800;
 	cub->player.dirX = 0;
 	cub->player.dirY = 0;
