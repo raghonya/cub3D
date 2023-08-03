@@ -15,7 +15,6 @@ void	calc_ray_pos(t_cub *cub, int pixel)
 		cub->ray.deltaDistY = 1e30;
 	else
 		cub->ray.deltaDistY = fabs(1 / cub->ray.rayY);
-	// printf ("rayx: %f, rayy: %f, pixel: %d\n", cub->ray.rayX, cub->ray.rayY, pixel);
 }
 
 void	find_step_dir(t_cub *cub)
@@ -23,22 +22,26 @@ void	find_step_dir(t_cub *cub)
 	if (cub->ray.rayX < 0)
 	{
 		cub->player.stepX = -1;
-		cub->ray.sideDistX = (cub->player.posX - cub->player.mapX) * cub->ray.deltaDistX;
+		cub->ray.sideDistX = \
+		(cub->player.posX - cub->player.mapX) * cub->ray.deltaDistX;
 	}
 	else
 	{
 		cub->player.stepX = 1;
-		cub->ray.sideDistX = (cub->player.mapX + 1.0 - cub->player.posX) * cub->ray.deltaDistX;
+		cub->ray.sideDistX = \
+		(cub->player.mapX + 1.0 - cub->player.posX) * cub->ray.deltaDistX;
 	}
 	if (cub->ray.rayY < 0)
 	{
 		cub->player.stepY = -1;
-		cub->ray.sideDistY = (cub->player.posY - cub->player.mapY) * cub->ray.deltaDistY;
+		cub->ray.sideDistY = \
+		(cub->player.posY - cub->player.mapY) * cub->ray.deltaDistY;
 	}
 	else
 	{
 		cub->player.stepY = 1;
-		cub->ray.sideDistY = (cub->player.mapY + 1.0 - cub->player.posY) * cub->ray.deltaDistY;
+		cub->ray.sideDistY = \
+		(cub->player.mapY + 1.0 - cub->player.posY) * cub->ray.deltaDistY;
 	}
 }
 
@@ -68,36 +71,32 @@ void	DDA_algorithm(t_cub *cub)
 		cub->ray.perpWallDist = (cub->ray.sideDistY - cub->ray.deltaDistY);
 }
 
-void	calc_draw_ends(t_cub *cub, int x, int texX)
+void	calc_draw_ends(t_cub *cub, t_draw *tex)
 {
-	int		color;
-	int		drawEnd;
-	int		drawStart;
-	int		lineHeight;
-	int		texY;
-	double	step;
-	double	texPos;
-	
-	if (cub->ray.perpWallDist < 0.000001)
-		cub->ray.perpWallDist = 0.000001;
-	// printf ("perpwalldist posle: %.10f\n", cub->ray.perpWallDist);
-	lineHeight = (int)(cub->H / cub->ray.perpWallDist);
-	drawStart = -lineHeight / 2 + cub->H / 2;
-	if (drawStart < 0)
-		drawStart = 0;
-	drawEnd = lineHeight / 2 + cub->H / 2;
-	if (drawEnd >= cub->H)
-		drawEnd = cub->H - 1;
-	step = 1.0 * TEXHEIGHT / lineHeight;
-	texPos = (drawStart - cub->H / 2 + lineHeight / 2) * step;
-	// printf ("start: %d, end: %d\n", drawStart, drawEnd);
-	// if (cub->ray.rayY < 0)
-	// 	printf ("rayX: %f, rayY: %f\n", cub->ray.rayX, cub->ray.rayY);
-	for(int y = drawStart; y < drawEnd; y++)
-	{
-		texY = (int)texPos & (TEXHEIGHT - 1);
-		texPos += step;
-		my_mlx_pixel_put(&cub->img, x, y, \
-		my_mlx_color_taker(choose_texture(cub), texX, texY));
-	}
+	tex->lineHeight = (int)(cub->H / cub->ray.perpWallDist);
+	tex->drawStart = -tex->lineHeight / 2 + cub->H / 2;
+	if (tex->drawStart < 0)
+		tex->drawStart = 0;
+	tex->drawEnd = tex->lineHeight / 2 + cub->H / 2;
+	if (tex->drawEnd >= cub->H)
+		tex->drawEnd = cub->H - 1;
+	tex->step = 1.0 * TEXHEIGHT / tex->lineHeight;
+	tex->texPos = \
+	(tex->drawStart - cub->H / 2 + tex->lineHeight / 2) * tex->step;
+}
+
+int	calc_texture_x(t_cub *cub)
+{
+	int		texX;
+	double	wallX; //where exactly the wall was hit
+
+	wallX = cub->player.posX + cub->ray.perpWallDist * cub->ray.rayX;
+	if (cub->ray.side == 0)
+		wallX = cub->player.posY + cub->ray.perpWallDist * cub->ray.rayY;
+	wallX -= floor((wallX));
+	texX = (int)(wallX * (double)(TEXWIDTH));
+	if ((cub->ray.side == 0 && cub->ray.rayX > 0) \
+	|| (cub->ray.side == 1 && cub->ray.rayY < 0))
+		texX = TEXWIDTH - texX - 1;
+	return (texX);
 }

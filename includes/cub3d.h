@@ -118,32 +118,45 @@ typedef struct s_cub
 	int			map_width;
 	int			map_height;
 	t_img		*textures;
+	int			bullet_count;
 }	t_cub;
 
+typedef struct s_draw
+{
+	int		texX;
+	int		texY;
+	double	step;
+	double	texPos;
+	int		drawEnd;
+	int		drawStart;
+	int		lineHeight;
+}	t_draw;
 void			printmap(t_cub cub);
 void			raycaster(t_cub *cub);
 int				quit_game(t_cub *cub);
 void			create_img(t_cub *cub);
+void			find_step_dir(t_cub *cub);
+void			DDA_algorithm(t_cub *cub);
 void			initialization(t_cub *cub);
+int				calc_texture_x(t_cub *cub);
+t_img			*choose_texture(t_cub *cub);
 int				key_up(int key, t_cub *cub);
 int				key_down(int key, t_cub *cub);
 int				trgb(int t, int r, int g, int b);
+void			change_view(t_cub *cub, int side);
 void			err_msg(int condition, char *msg);
+void			gun_anim(t_cub *cub, t_list *anim);
+void			right(t_cub *cub, double moveSpeed);
+void			step_fwd_back(t_cub *cub, int side);
+void			calc_ray_pos(t_cub *cub, int pixel);
 void			find_player(t_cub *cub, char player);
+void			calc_draw_ends(t_cub *cub, t_draw *tex);
+void			draw_texture(t_cub *cub, int x, int texX);
 unsigned int	my_mlx_color_taker(t_img *data, int x, int y);
 void			print_gun(t_img *pic, t_img *game, int w, int h);
 void			my_mlx_pixel_put(t_img *data, int x, int y, int color);
 void			draw(t_cub *cub, int beginX, int beginY, int endY, int color);
-void			calc_ray_pos(t_cub *cub, int pixel);
-void			find_step_dir(t_cub *cub);
-void			DDA_algorithm(t_cub *cub);
-void			calc_draw_ends(t_cub *cub, int x, int texX);
-t_img			*choose_texture(t_cub *cub);
-void			gun_anim(t_cub *cub, t_list *anim);
 void			rotate(t_cub *cub, double oDX, double oPX, double rotSpeed);
-void			change_view(t_cub *cub, int side);
-void			right(t_cub *cub, double moveSpeed);
-void			step_fwd_back(t_cub *cub, int side);
 
 
 #endif

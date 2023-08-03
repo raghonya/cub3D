@@ -13,14 +13,15 @@ OBJDIR	=	obj
 SRCSDIR	=	srcs
 
 SRCS	=	srcs/cub3d.c \
-			srcs/key_functions.c \
+			srcs/textures.c \
 			srcs/raycasting.c \
-			srcs/pixel_actions.c \
+			srcs/draw_walls.c \
 			srcs/calculations.c \
-			srcs/initializations.c \
+			srcs/key_functions.c \
+			srcs/pixel_actions.c \
 			srcs/step_and_view.c \
 			srcs/gun_animation.c \
-			srcs/draw_walls.c 
+			srcs/initializations.c
 
 OBJS	=	$(SRCS:$(SRCSDIR)/%.c=$(OBJDIR)/%.o)
 

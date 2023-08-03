@@ -98,6 +98,7 @@ void	initialization(t_cub *cub)
 	cub->player.dirY = 0;
 	cub->player.planeX = 0;
 	cub->player.planeY = 0;
+	cub->bullet_count = 10;
 	cub->mlx.ptr = mlx_init();
 	err_msg(!cub->mlx.ptr, "Mlx init error");
 	cub->mlx.win = mlx_new_window(cub->mlx.ptr, cub->W, cub->H, \

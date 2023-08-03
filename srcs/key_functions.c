@@ -34,6 +34,7 @@ int	key_down(int key, t_cub *cub)
 	{
 		gun_anim(cub, cub->pistol);
 		print_gun(&cub->pistol->img, &cub->img, cub->W, cub->H);
+		//ekranin cuyc tal bullet neri qanak
 		return (0);
 	}
 	mlx_destroy_image(cub->mlx.ptr, cub->img.img);

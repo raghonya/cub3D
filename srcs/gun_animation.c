@@ -27,7 +27,7 @@ void	print_gun(t_img *pic, t_img *game, int w, int h)
 void	gun_anim(t_cub *cub, t_list *anim)
 {
 	raycaster(cub);
-	while (anim)
+	while (anim && cub->bullet_count)
 	{
 		print_gun(&anim->img, &cub->img, cub->W, cub->H);
 		mlx_destroy_image(cub->mlx.ptr, cub->img.img);
@@ -35,4 +35,6 @@ void	gun_anim(t_cub *cub, t_list *anim)
 		raycaster(cub);
 		anim = anim->next;
 	}
+	if (cub->bullet_count > 0)
+		cub->bullet_count--;
 }
