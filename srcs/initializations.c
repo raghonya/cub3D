@@ -6,6 +6,8 @@ void	create_img(t_cub *cub)
 	err_msg(!cub->img.img, "Can`t create image for you");
 	cub->img.addr = mlx_get_data_addr(cub->img.img, &cub->img.bits_per_pixel, \
 	&cub->img.line_length, &cub->img.endian);
+	cub->img.wd = cub->W;
+	cub->img.ht = cub->H;
 }
 
 void	textures_init(t_cub *cub)

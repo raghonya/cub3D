@@ -132,7 +132,7 @@ int	main(int argc, char **argv)
 	file_check(&cub, argv[1]);
 
 	raycaster(&cub);
-	
+	print_gun(&cub.pistol->img, &cub.img, cub.W, cub.H);
 	mlx_hook(cub.mlx.win, 2, 1L << 0, &key_down, &cub);
 	mlx_hook(cub.mlx.win, 3, 1L << 1, &key_up, &cub);
 	// dzel quit_game funkcian, destroy all images, free all mallocs

@@ -16,6 +16,7 @@ SRCS	=	srcs/cub3d.c \
 			srcs/key_functions.c \
 			srcs/raycasting.c \
 			srcs/pixel_actions.c \
+			srcs/calculations.c \
 			srcs/initializations.c \
 			srcs/draw_walls.c 
 

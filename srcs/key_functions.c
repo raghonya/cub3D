@@ -103,6 +103,7 @@ void	step_fwd_back(t_cub *cub, int side)
 
 void	gun_anim(t_cub *cub, t_list *anim)
 {
+	raycaster(cub);
 	while (anim)
 	{
 		print_gun(&anim->img, &cub->img, cub->W, cub->H);
@@ -146,10 +147,12 @@ int	key_down(int key, t_cub *cub)
 	if (key == 32)
 	{
 		gun_anim(cub, cub->pistol);
+		print_gun(&cub->pistol->img, &cub->img, cub->W, cub->H);
 		return (0);
 	}
 	mlx_destroy_image(cub->mlx.ptr, cub->img.img);
 	create_img(cub);
 	raycaster(cub);
+	print_gun(&cub->pistol->img, &cub->img, cub->W, cub->H);
 	return (0);
 }

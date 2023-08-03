@@ -4,17 +4,22 @@ unsigned int	my_mlx_color_taker(t_img *data, int x, int y)
 {
 	char	*dst;
 
-	// printf ("dataaddr: %s\n", data->addr);
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	return (*(unsigned int*)dst);
+	if (x >= 0 && x <= data->wd && y >= 0 && y <= data->ht)
+	{
+		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+		return (*(unsigned int*)dst);
+	}
 }
 
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	if (x >= 0 && x <= data->wd && y >= 0 && y <= data->ht)
+	{
+		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+		*(unsigned int*)dst = color;
+	}
 }
 
 int	trgb(int t, int r, int g, int b)
