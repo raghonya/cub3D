@@ -103,6 +103,12 @@ void	find_player(t_cub *cub, char player)
 	set_dir_and_pos(cub, player);
 }
 
+int	mouse_move(int x, int y, t_cub *cub)
+{
+	printf ("x: %d, y: %d\n", x, y);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_cub	cub;
@@ -115,7 +121,7 @@ int	main(int argc, char **argv)
 	print_gun(&cub.pistol->img, &cub.img, cub.W, cub.H);
 	mlx_hook(cub.mlx.win, 2, 1L << 0, &key_down, &cub);
 	mlx_hook(cub.mlx.win, 3, 1L << 1, &key_up, &cub);
-	// mlx_hook(cub.mlx.win, 6, 1L << 4, &mouse_move, &cub);
+	mlx_hook(cub.mlx.win, 6, 1L << 4, &mouse_move, &cub);
 	// dzel quit_game funkcian, destroy all images, free all mallocs
 	mlx_hook(cub.mlx.win, 17, 1L << 15, &quit_game, &cub);
 	
