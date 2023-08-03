@@ -18,6 +18,8 @@ SRCS	=	srcs/cub3d.c \
 			srcs/pixel_actions.c \
 			srcs/calculations.c \
 			srcs/initializations.c \
+			srcs/step_and_view.c \
+			srcs/gun_animation.c \
 			srcs/draw_walls.c 
 
 OBJS	=	$(SRCS:$(SRCSDIR)/%.c=$(OBJDIR)/%.o)

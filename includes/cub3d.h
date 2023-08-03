@@ -25,6 +25,7 @@ Map i mej
 #  define KEYD 100
 #  define KEYS 115
 #  define KEYA 97
+#  define SHOOT 32
 # else
 #  define ESC 53
 #  define UP 13
@@ -35,6 +36,7 @@ Map i mej
 #  define RIGHT2 124
 #  define DOWN2 125
 #  define LEFT2 123
+#  define SHOOT 32
 # endif
 
 # define W map_width
@@ -137,6 +139,11 @@ void			find_step_dir(t_cub *cub);
 void			DDA_algorithm(t_cub *cub);
 void			calc_draw_ends(t_cub *cub, int x, int texX);
 t_img			*choose_texture(t_cub *cub);
+void			gun_anim(t_cub *cub, t_list *anim);
+void			rotate(t_cub *cub, double oDX, double oPX, double rotSpeed);
+void			change_view(t_cub *cub, int side);
+void			right(t_cub *cub, double moveSpeed);
+void			step_fwd_back(t_cub *cub, int side);
 
 
 #endif
