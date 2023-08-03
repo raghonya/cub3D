@@ -75,26 +75,6 @@ void	set_dir_and_pos(t_cub *cub, char player)
 		cub->player.dirY = -1;
 		cub->player.planeX = -0.66;
 	}
-	// if (player == 'N')
-	// {
-	// 	cub->player.dirY = 1;
-	// 	cub->player.planeY = 0.66;
-	// }
-	// else if (player == 'S')
-	// {
-	// 	cub->player.dirY = -1;
-	// 	cub->player.planeY = -0.66;
-	// }
-	// else if (player == 'E')
-	// {
-	// 	cub->player.dirX = 1;
-	// 	cub->player.planeX = 0.66;
-	// }
-	// else if (player == 'W')
-	// {
-	// 	cub->player.dirX = -1;
-	// 	cub->player.planeX = -0.66;
-	// }
 }
 
 //kanchvelu a symbolnery stugelu funkciayi mej
@@ -135,6 +115,7 @@ int	main(int argc, char **argv)
 	print_gun(&cub.pistol->img, &cub.img, cub.W, cub.H);
 	mlx_hook(cub.mlx.win, 2, 1L << 0, &key_down, &cub);
 	mlx_hook(cub.mlx.win, 3, 1L << 1, &key_up, &cub);
+	// mlx_hook(cub.mlx.win, 6, 1L << 4, &mouse_move, &cub);
 	// dzel quit_game funkcian, destroy all images, free all mallocs
 	mlx_hook(cub.mlx.win, 17, 1L << 15, &quit_game, &cub);
 	
