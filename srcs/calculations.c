@@ -88,7 +88,7 @@ void	calc_draw_ends(t_cub *cub, t_draw *tex)
 int	calc_texture_x(t_cub *cub)
 {
 	int		texX;
-	double	wallX; //where exactly the wall was hit
+	double	wallX;
 
 	wallX = cub->player.posX + cub->ray.perpWallDist * cub->ray.rayX;
 	if (cub->ray.side == 0)

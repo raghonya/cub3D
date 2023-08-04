@@ -115,11 +115,12 @@ typedef struct s_cub
 	int			mapY;
 	char		**map;
 	t_player	player;
-	t_list		*pistol;
+	t_list		*gun;
 	int			map_width;
-	int			map_height;
 	t_img		*textures;
+	int			map_height;
 	int			bullet_count;
+	char		**gun_pics;
 }	t_cub;
 
 typedef struct s_draw
@@ -140,6 +141,9 @@ void			find_step_dir(t_cub *cub);
 void			DDA_algorithm(t_cub *cub);
 void			initialization(t_cub *cub);
 int				calc_texture_x(t_cub *cub);
+void			wall_textures(t_cub *cub);
+t_list			*ft_lstnew(void *content);
+void			create_wall_img(t_cub *cub);
 t_img			*choose_texture(t_cub *cub);
 int				key_press(int key, t_cub *cub);
 int				key_release(int key, t_cub *cub);
@@ -153,6 +157,7 @@ void			step_fwd_back(t_cub *cub, int side);
 void			calc_ray_pos(t_cub *cub, int pixel);
 void			find_player(t_cub *cub, char player);
 void			calc_draw_ends(t_cub *cub, t_draw *tex);
+void			ft_lstadd_back(t_list **lst, t_list *new);
 void			draw_texture(t_cub *cub, int x, int texX);
 unsigned int	my_mlx_color_taker(t_img *data, int x, int y);
 void			print_gun(t_cub *cub, t_img *pic, t_img *game, int w, int h);

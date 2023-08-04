@@ -48,7 +48,6 @@ void	file_check(t_cub *cub, char *filename)
 			|| cub->map[i][j] == 'E' || cub->map[i][j] == 'W')
 			player = cub->map[i][j];
 	}
-	printf ("player char: %c\n", player);
 	find_player(cub, player);
 }
 
@@ -108,8 +107,8 @@ int mouse_press(int button, int x, int y, t_cub *cub)
 	// printf ("button: %d, x: %d, y: %d\n", button, x, y);
 	// if (button == 1)
 	// {
-	// 	gun_anim(cub, cub->pistol);
-	// 	print_gun(&cub->pistol->img, &cub->img, cub->W, cub->H);
+	// 	gun_anim(cub, cub->gun);
+	// 	print_gun(&cub->gun->img, &cub->img, cub->W, cub->H);
 	// 	//ekranin cuyc tal bullet neri qanak
 	// 	return (0);
 	// }
@@ -118,7 +117,6 @@ int mouse_press(int button, int x, int y, t_cub *cub)
 
 int	mouse_move(int x, int y, t_cub *cub)
 {
-	printf ("x: %d, y: %d\n", x, y);
 	return (0);
 }
 
@@ -142,17 +140,7 @@ int	main(int argc, char **argv)
 	initialization(&cub);
 	file_check(&cub, argv[1]);
 
-	raycaster(&cub, &cub.pistol->next->next->img);
-	// print_gun(&cub.pistol->img, &cub.img, cub.W, cub.H);
-	// mlx_put_image_to_window(cub.mlx.ptr, cub.mlx.win, cub.img.img, 0, 0);
+	raycaster(&cub, &cub.gun->img);
 	hooks(&cub);
-	// mlx_hook(cub.mlx.win, 2, 1L << 0, &key_press, &cub);
-	// mlx_hook(cub.mlx.win, 3, 1L << 1, &key_release, &cub);
-	// mlx_mouse_hook(cub.mlx.win, &mouse_press, &cub);
-	// // mlx_hook(cub.mlx.win, 4, 1L << 4, &mouse_move, &cub);
-	// // dzel quit_game funkcian, destroy all images, free all mallocs
-	// mlx_hook(cub.mlx.win, 17, 1L << 15, &quit_game, &cub);
-	
-	// mlx_loop(cub.mlx.ptr);
 	return (0);
 }

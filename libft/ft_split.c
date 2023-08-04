@@ -126,11 +126,11 @@ char	**ft_split(char const *s, char c)
 // 		while (s[i] != c && s[i] != 0)
 // 			i++;
 // 	}
-// 	printf ("%d\n", wrdcnt);
+// 	 ("%d\n", wrdcnt);
 // 	i = 0;
 // 	while (i < wrdcnt + 1)
 // 	{
-// 		printf ("%s ,", s1[i]);
+// 		 ("%s ,", s1[i]);
 // 		i++;
 // 	}
 // }

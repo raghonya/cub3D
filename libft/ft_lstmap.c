@@ -45,5 +45,5 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 // 	head->next->next->next->content = "AASFDGASDG";
 // 	head->next->next->next->next = NULL;
 // 	t_list *s = ft_lstmap (head, NULL, NULL);
-// 	printf ("%s\n", s->content);
+// 	 ("%s\n", s->content);
 // }
