@@ -36,6 +36,6 @@ void	raycaster(t_cub *cub, t_img *anim)
 		draw_texture(cub, pixel, calc_texture_x(cub));
 	}
 	// print_gun(TEXS + 3, &cub->img, cub->W, cub->H);
-	print_gun(anim, &cub->img, cub->W, cub->H);
+	print_gun(cub, anim, &cub->img, cub->W, cub->H);
 	mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, cub->img.img, 0, 0);
 }

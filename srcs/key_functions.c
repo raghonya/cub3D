@@ -32,9 +32,9 @@ int	key_press(int key, t_cub *cub)
 		step_fwd_back(cub, KEYA);
 	if (key == SHOOT)
 	{
-		printf ("yes\n");
+		// printf ("yes\n");
 		// printf ("pistol pics: %p\n", cub->pistol->img.img);
-		gun_anim(cub, cub->pistol);
+		gun_anim(cub, cub->pistol->next);
 		mlx_destroy_image(cub->mlx.ptr, cub->img.img);
 		create_img(cub);
 		raycaster(cub, &cub->pistol->img);

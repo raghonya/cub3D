@@ -155,7 +155,7 @@ void			find_player(t_cub *cub, char player);
 void			calc_draw_ends(t_cub *cub, t_draw *tex);
 void			draw_texture(t_cub *cub, int x, int texX);
 unsigned int	my_mlx_color_taker(t_img *data, int x, int y);
-void			print_gun(t_img *pic, t_img *game, int w, int h);
+void			print_gun(t_cub *cub, t_img *pic, t_img *game, int w, int h);
 void			my_mlx_pixel_put(t_img *data, int x, int y, int color);
 void			draw(t_cub *cub, int beginX, int beginY, int endY, int color);
 void			rotate(t_cub *cub, double oDX, double oPX, double rotSpeed);
