@@ -8,13 +8,13 @@ int	quit_game(t_cub *cub)
 	return (0);
 }
 
-int	key_up(int key, t_cub *cub)
+int	key_release(int key, t_cub *cub)
 {
 	// printf ("keyup: %d\n", key);
 	return (0);
 }
 
-int	key_down(int key, t_cub *cub)
+int	key_press(int key, t_cub *cub)
 {
 	if (key == ESC)
 		quit_game(cub);

@@ -91,8 +91,8 @@ void	initialization(t_cub *cub)
 {
 	int havai;
 
-	cub->map_width = 1200;
-	cub->map_height = 800;
+	cub->map_width = 120;
+	cub->map_height = 120;
 	cub->player.dirX = 0;
 	cub->player.dirY = 0;
 	cub->player.planeX = 0;
