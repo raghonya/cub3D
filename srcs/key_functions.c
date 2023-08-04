@@ -32,14 +32,19 @@ int	key_press(int key, t_cub *cub)
 		step_fwd_back(cub, KEYA);
 	if (key == SHOOT)
 	{
+		printf ("yes\n");
+		// printf ("pistol pics: %p\n", cub->pistol->img.img);
 		gun_anim(cub, cub->pistol);
-		print_gun(&cub->pistol->img, &cub->img, cub->W, cub->H);
-		//ekranin cuyc tal bullet neri qanak
+		mlx_destroy_image(cub->mlx.ptr, cub->img.img);
+		create_img(cub);
+		raycaster(cub, &cub->pistol->img);
+		// print_gun(&cub->pistol->img, &cub->img, cub->W, cub->H);
 		return (0);
 	}
 	mlx_destroy_image(cub->mlx.ptr, cub->img.img);
 	create_img(cub);
-	raycaster(cub);
-	print_gun(&cub->pistol->img, &cub->img, cub->W, cub->H);
+	raycaster(cub, &cub->pistol->img);
+	// print_gun(&cub->pistol->img, &cub->img, cub->W, cub->H);
+	// mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, cub->img.img, 0, 0);
 	return (0);
 }

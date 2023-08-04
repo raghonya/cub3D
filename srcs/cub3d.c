@@ -105,14 +105,14 @@ void	find_player(t_cub *cub, char player)
 
 int mouse_press(int button, int x, int y, t_cub *cub)
 {
-	printf ("button: %d, x: %d, y: %d\n", button, x, y);
-	if (button == 1)
-	{
-		gun_anim(cub, cub->pistol);
-		print_gun(&cub->pistol->img, &cub->img, cub->W, cub->H);
-		//ekranin cuyc tal bullet neri qanak
-		return (0);
-	}
+	// printf ("button: %d, x: %d, y: %d\n", button, x, y);
+	// if (button == 1)
+	// {
+	// 	gun_anim(cub, cub->pistol);
+	// 	print_gun(&cub->pistol->img, &cub->img, cub->W, cub->H);
+	// 	//ekranin cuyc tal bullet neri qanak
+	// 	return (0);
+	// }
 	return (0);
 }
 
@@ -127,7 +127,7 @@ void	hooks(t_cub *cub)
 	mlx_hook(cub->mlx.win, 2, 1L << 0, &key_press, cub);
 	mlx_hook(cub->mlx.win, 3, 1L << 1, &key_release, cub);
 	// mlx_mouse_hook(cub->mlx.win, &mouse_press, cub);
-	mlx_hook(cub->mlx.win, 6, 1L << 4, &mouse_move, cub);
+	// mlx_hook(cub->mlx.win, 6, 1L << 4, &mouse_move, cub);
 	// dzel quit_game funkcian, destroy all images, free all mallocs
 	mlx_hook(cub->mlx.win, 17, 1L << 15, &quit_game, cub);
 	mlx_loop(cub->mlx.ptr);
@@ -142,8 +142,9 @@ int	main(int argc, char **argv)
 	initialization(&cub);
 	file_check(&cub, argv[1]);
 
-	raycaster(&cub);
-	print_gun(&cub.pistol->img, &cub.img, cub.W, cub.H);
+	raycaster(&cub, &cub.pistol->img);
+	// print_gun(&cub.pistol->img, &cub.img, cub.W, cub.H);
+	// mlx_put_image_to_window(cub.mlx.ptr, cub.mlx.win, cub.img.img, 0, 0);
 	hooks(&cub);
 	// mlx_hook(cub.mlx.win, 2, 1L << 0, &key_press, &cub);
 	// mlx_hook(cub.mlx.win, 3, 1L << 1, &key_release, &cub);

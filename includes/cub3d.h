@@ -13,6 +13,7 @@ Map i mej
 0 - empty space
 1 - walls with different pictures for all sides
 2 - svastika flag
+3 - prison with skeleton
 */
 
 # ifdef __linux__
@@ -28,15 +29,15 @@ Map i mej
 #  define SHOOT 32
 # else
 #  define ESC 53
-#  define UP 13
-#  define RIGHT 2
-#  define DOWN 1
-#  define LEFT 0
-#  define UP2 126
-#  define RIGHT2 124
-#  define DOWN2 125
-#  define LEFT2 123
-#  define SHOOT 32
+#  define ARRUP 126
+#  define ARRRIGHT 124
+#  define ARRDOWN 125
+#  define ARRLEFT 123
+#  define KEYW 13
+#  define KEYD 2
+#  define KEYS 1
+#  define KEYA 0
+#  define SHOOT 49
 # endif
 
 # define W map_width
@@ -131,8 +132,8 @@ typedef struct s_draw
 	int		drawStart;
 	int		lineHeight;
 }	t_draw;
+
 void			printmap(t_cub cub);
-void			raycaster(t_cub *cub);
 int				quit_game(t_cub *cub);
 void			create_img(t_cub *cub);
 void			find_step_dir(t_cub *cub);
@@ -146,6 +147,7 @@ int				trgb(int t, int r, int g, int b);
 void			change_view(t_cub *cub, int side);
 void			err_msg(int condition, char *msg);
 void			gun_anim(t_cub *cub, t_list *anim);
+void			raycaster(t_cub *cub, t_img *anim);
 void			right(t_cub *cub, double moveSpeed);
 void			step_fwd_back(t_cub *cub, int side);
 void			calc_ray_pos(t_cub *cub, int pixel);
@@ -157,6 +159,5 @@ void			print_gun(t_img *pic, t_img *game, int w, int h);
 void			my_mlx_pixel_put(t_img *data, int x, int y, int color);
 void			draw(t_cub *cub, int beginX, int beginY, int endY, int color);
 void			rotate(t_cub *cub, double oDX, double oPX, double rotSpeed);
-
 
 #endif

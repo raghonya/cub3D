@@ -21,7 +21,7 @@ void	draw_floor_n_ceil(t_cub *cub)
 
 }
 
-void	raycaster(t_cub *cub)
+void	raycaster(t_cub *cub, t_img *anim)
 {
 	int	pixel;
 
@@ -29,10 +29,13 @@ void	raycaster(t_cub *cub)
 	draw_floor_n_ceil(cub);
 	while (++pixel <= cub->W)
 	{
+		// printf ("barev\n");
 		calc_ray_pos(cub, pixel);
 		find_step_dir(cub);
 		DDA_algorithm(cub);
 		draw_texture(cub, pixel, calc_texture_x(cub));
 	}
+	// print_gun(TEXS + 3, &cub->img, cub->W, cub->H);
+	print_gun(anim, &cub->img, cub->W, cub->H);
 	mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, cub->img.img, 0, 0);
 }

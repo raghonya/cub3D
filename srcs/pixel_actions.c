@@ -9,6 +9,7 @@ unsigned int	my_mlx_color_taker(t_img *data, int x, int y)
 		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 		return (*(unsigned int*)dst);
 	}
+	return (0);
 }
 
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color)

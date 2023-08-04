@@ -14,6 +14,7 @@ t_img	*choose_texture(t_cub *cub)
 		return (TEXS + 2);
 	else if (cub->ray.side == 0 &&  cub->ray.rayX <= 0)
 		return (TEXS + 3);
+	return (TEXS);
 }
 
 void	draw_texture(t_cub *cub, int x, int texX)

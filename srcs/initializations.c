@@ -52,47 +52,46 @@ void	textures_init(t_cub *cub)
 	
 	i = -1;
 	wall_textures(cub);
-	while (++i < 4)
-	{
-		cub->pistol = malloc(sizeof(t_list));
-		err_msg(!cub->pistol, "Malloc error");
-		cub->pistol->img.img = mlx_xpm_file_to_image(cub->mlx.ptr, \
-		"pics/pistol_anim1.xpm", &cub->pistol->img.wd, &cub->pistol->img.ht);
-		err_msg(!cub->pistol->img.img, "Image initialization");
-		cub->pistol->img.addr = mlx_get_data_addr(cub->pistol->img.img, \
-		&cub->pistol->img.bits_per_pixel, &cub->pistol->img.line_length, \
-		&cub->pistol->img.endian);
+	cub->pistol = malloc(sizeof(t_list));
+	err_msg(!cub->pistol, "Malloc error");
+	cub->pistol->img.img = mlx_xpm_file_to_image(cub->mlx.ptr, \
+	"pics/pistol_anim1.xpm", &cub->pistol->img.wd, &cub->pistol->img.ht);
+	err_msg(!cub->pistol->img.img, "Image initialization");
+	printf ("%p\n", cub->pistol->img.img);
+	cub->pistol->img.addr = mlx_get_data_addr(cub->pistol->img.img, \
+	&cub->pistol->img.bits_per_pixel, &cub->pistol->img.line_length, \
+	&cub->pistol->img.endian);
 
-		cub->pistol->next = malloc(sizeof(t_list));
-		cub->pistol->next->img.img = mlx_xpm_file_to_image(cub->mlx.ptr, \
-		"pics/pistol_anim2.xpm", &cub->pistol->next->img.wd, &cub->pistol->next->img.ht);
-		cub->pistol->next->img.addr = mlx_get_data_addr(cub->pistol->next->img.img, \
-		&cub->pistol->next->img.bits_per_pixel, &cub->pistol->next->img.line_length, \
-		&cub->pistol->next->img.endian);
-		
-		cub->pistol->next->next = malloc(sizeof(t_list));
-		cub->pistol->next->next->img.img = mlx_xpm_file_to_image(cub->mlx.ptr, \
-		"pics/pistol_anim3.xpm", &cub->pistol->next->next->img.wd, &cub->pistol->next->next->img.ht);
-		cub->pistol->next->next->img.addr = mlx_get_data_addr(cub->pistol->next->next->img.img, \
-		&cub->pistol->next->next->img.bits_per_pixel, &cub->pistol->next->next->img.line_length, \
-		&cub->pistol->next->next->img.endian);
-		
-		cub->pistol->next->next->next = malloc(sizeof(t_list));
-		cub->pistol->next->next->next->img.img = mlx_xpm_file_to_image(cub->mlx.ptr, \
-		"pics/pistol_anim4.xpm", &cub->pistol->next->next->next->img.wd, &cub->pistol->next->next->next->img.ht);
-		cub->pistol->next->next->next->img.addr = mlx_get_data_addr(cub->pistol->next->next->next->img.img, \
-		&cub->pistol->next->next->next->img.bits_per_pixel, &cub->pistol->next->next->next->img.line_length, \
-		&cub->pistol->next->next->next->img.endian);
-		cub->pistol->next->next->next->next = NULL;
-	}
+	cub->pistol->next = malloc(sizeof(t_list));
+	cub->pistol->next->img.img = mlx_xpm_file_to_image(cub->mlx.ptr, \
+	"pics/pistol_anim2.xpm", &cub->pistol->next->img.wd, &cub->pistol->next->img.ht);
+	cub->pistol->next->img.addr = mlx_get_data_addr(cub->pistol->next->img.img, \
+	&cub->pistol->next->img.bits_per_pixel, &cub->pistol->next->img.line_length, \
+	&cub->pistol->next->img.endian);
+	
+	cub->pistol->next->next = malloc(sizeof(t_list));
+	cub->pistol->next->next->img.img = mlx_xpm_file_to_image(cub->mlx.ptr, \
+	"pics/pistol_anim3.xpm", &cub->pistol->next->next->img.wd, &cub->pistol->next->next->img.ht);
+	cub->pistol->next->next->img.addr = mlx_get_data_addr(cub->pistol->next->next->img.img, \
+	&cub->pistol->next->next->img.bits_per_pixel, &cub->pistol->next->next->img.line_length, \
+	&cub->pistol->next->next->img.endian);
+	
+	cub->pistol->next->next->next = malloc(sizeof(t_list));
+	cub->pistol->next->next->next->img.img = mlx_xpm_file_to_image(cub->mlx.ptr, \
+	"pics/pistol_anim4.xpm", &cub->pistol->next->next->next->img.wd, &cub->pistol->next->next->next->img.ht);
+	cub->pistol->next->next->next->img.addr = mlx_get_data_addr(cub->pistol->next->next->next->img.img, \
+	&cub->pistol->next->next->next->img.bits_per_pixel, &cub->pistol->next->next->next->img.line_length, \
+	&cub->pistol->next->next->next->img.endian);
+	cub->pistol->next->next->next->next = NULL;
+	err_msg(!cub->pistol->img.img || !cub->pistol->next->img.img || !cub->pistol->next->next->img.img || !cub->pistol->next->next->next->img.img, "vata");
 }
 
 void	initialization(t_cub *cub)
 {
 	int havai;
 
-	cub->map_width = 120;
-	cub->map_height = 120;
+	cub->map_width = 1200;
+	cub->map_height = 800;
 	cub->player.dirX = 0;
 	cub->player.dirY = 0;
 	cub->player.planeX = 0;

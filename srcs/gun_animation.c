@@ -26,13 +26,16 @@ void	print_gun(t_img *pic, t_img *game, int w, int h)
 
 void	gun_anim(t_cub *cub, t_list *anim)
 {
-	raycaster(cub);
+	// raycaster(cub);
+	// mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, cub->img.img, 0, 0);
 	while (anim && cub->bullet_count)
 	{
-		print_gun(&anim->img, &cub->img, cub->W, cub->H);
+		printf ("nono\n");
+		// printf ("anim address: %p\n", anim->img.img);
 		mlx_destroy_image(cub->mlx.ptr, cub->img.img);
 		create_img(cub);
-		raycaster(cub);
+		raycaster(cub, &anim->img);
+		// print_gun(TEXS + 3, &cub->img, cub->W, cub->H);
 		anim = anim->next;
 	}
 	if (cub->bullet_count > 0)
