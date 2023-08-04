@@ -142,7 +142,7 @@ int	main(int argc, char **argv)
 	initialization(&cub);
 	file_check(&cub, argv[1]);
 
-	raycaster(&cub, &cub.pistol->img);
+	raycaster(&cub, &cub.pistol->next->next->img);
 	// print_gun(&cub.pistol->img, &cub.img, cub.W, cub.H);
 	// mlx_put_image_to_window(cub.mlx.ptr, cub.mlx.win, cub.img.img, 0, 0);
 	hooks(&cub);
