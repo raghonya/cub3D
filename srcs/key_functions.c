@@ -28,6 +28,9 @@ int	key_press(int key, t_cub *cub)
 		gun_anim(cub, cub->gun->next);
 	mlx_destroy_image(cub->mlx.ptr, cub->img.img);
 	create_img(cub);
-	raycaster(cub, &cub->gun->img);
+	if (key == SHOOT)
+		raycaster(cub, &cub->gun->img, 1);
+	else
+		raycaster(cub, &cub->gun->img, 0);
 	return (0);
 }

@@ -28,10 +28,10 @@ OBJS	=	$(SRCS:$(SRCSDIR)/%.c=$(OBJDIR)/%.o)
 
 MLX		=	minilibx-linux
 
-LFLAGS	=	-L libft -lft -L $(MLX) -lmlx -lm -lXext -lX11
+LFLAGS	=	-L libft -lft -L $(MLX) -lmlx -lm -lXext -lX11 -lz
 
 ifeq ($(shell uname -s), Darwin)
-	MLX = minilibx_MacOS
+	MLX = minilibx-MacOS
 	LFLAGS = -L libft -lft -L $(MLX) -lm -lmlx -framework OpenGL -framework AppKit
 endif
 

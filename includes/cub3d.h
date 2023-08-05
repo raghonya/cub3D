@@ -150,7 +150,6 @@ int				trgb(int t, int r, int g, int b);
 void			change_view(t_cub *cub, int side);
 void			err_msg(int condition, char *msg);
 void			gun_anim(t_cub *cub, t_list *anim);
-void			raycaster(t_cub *cub, t_img *anim);
 void			right(t_cub *cub, double moveSpeed);
 void			step_fwd_back(t_cub *cub, int side);
 void			calc_ray_pos(t_cub *cub, int pixel);
@@ -159,9 +158,10 @@ void			calc_draw_ends(t_cub *cub, t_draw *tex);
 void			ft_lstadd_back(t_list **lst, t_list *new);
 void			draw_texture(t_cub *cub, int x, int texX);
 unsigned int	my_mlx_color_taker(t_img *data, int x, int y);
-void			print_gun(t_cub *cub, t_img *pic, t_img *game, int w, int h);
+void			print_gun(t_img *pic, t_img *game, int w, int h);
+void			raycaster(t_cub *cub, t_img *anim, int bullet_change);
 void			my_mlx_pixel_put(t_img *data, int x, int y, int color);
-void			draw(t_cub *cub, int beginX, int beginY, int endY, int color);
 void			rotate(t_cub *cub, double oDX, double oPX, double rotSpeed);
+void			draw(t_cub *cub, int beginX, int beginY, int endY, int color);
 
 #endif

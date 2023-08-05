@@ -1,6 +1,6 @@
 #include <cub3d.h>
 
-void	print_gun(t_cub *cub, t_img *pic, t_img *game, int w, int h)
+void	print_gun(t_img *pic, t_img *game, int w, int h)
 {
 	int	x;
 	int	y;
@@ -30,7 +30,7 @@ void	gun_anim(t_cub *cub, t_list *anim)
 	{
 		mlx_destroy_image(cub->mlx.ptr, cub->img.img);
 		create_img(cub);
-		raycaster(cub, &anim->img);
+		raycaster(cub, &anim->img, 0);
 		anim = anim->next;
 	}
 	if (cub->bullet_count > 0)

@@ -21,7 +21,21 @@ void	draw_floor_n_ceil(t_cub *cub)
 
 }
 
-void	raycaster(t_cub *cub, t_img *anim)
+void	change_bullet_count(t_cub *cub)
+{
+	char	*str;
+
+	str = ft_itoa(cub->bullet_count);
+	err_msg(!str, "Malloc error");
+	mlx_clear_window(cub->mlx.ptr, cub->mlx.win);
+	mlx_string_put(cub->mlx.ptr, cub->mlx.win, 0, \
+	cub->H + 10, 0xFFFFFF, "Bullets left: ");
+	mlx_string_put(cub->mlx.ptr, cub->mlx.win, 100, \
+	cub->H + 10, 0xFFFFFF, str);
+	free(str);
+}
+
+void	raycaster(t_cub *cub, t_img *anim, int bullet_change)
 {
 	int	pixel;
 
@@ -34,6 +48,8 @@ void	raycaster(t_cub *cub, t_img *anim)
 		DDA_algorithm(cub);
 		draw_texture(cub, pixel, calc_texture_x(cub));
 	}
-	print_gun(cub, anim, &cub->img, cub->W, cub->H);
+	print_gun(anim, &cub->img, cub->W, cub->H);
+	if (bullet_change)
+		change_bullet_count(cub);
 	mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, cub->img.img, 0, 0);
 }

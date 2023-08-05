@@ -117,6 +117,13 @@ int mouse_press(int button, int x, int y, t_cub *cub)
 
 int	mouse_move(int x, int y, t_cub *cub)
 {
+	static int	oldX;
+
+	printf  ("x: %d, y: %d\n", x, y);
+	if (x < oldX)
+		change_view(cub, ARRLEFT);
+	if (x > oldX)
+		change_view(cub, ARRRIGHT);
 	return (0);
 }
 
@@ -125,7 +132,7 @@ void	hooks(t_cub *cub)
 	mlx_hook(cub->mlx.win, 2, 1L << 0, &key_press, cub);
 	// mlx_hook(cub->mlx.win, 3, 1L << 1, &key_release, cub);
 	// mlx_mouse_hook(cub->mlx.win, &mouse_press, cub);
-	// mlx_hook(cub->mlx.win, 6, 1L << 4, &mouse_move, cub);
+	mlx_hook(cub->mlx.win, 6, 1L << 4, &mouse_move, cub);
 	// dzel quit_game funkcian, destroy all images, free all mallocs
 	mlx_hook(cub->mlx.win, 17, 1L << 15, &quit_game, cub);
 	mlx_loop(cub->mlx.ptr);
@@ -139,8 +146,7 @@ int	main(int argc, char **argv)
 	err_msg (argc != 2, "Invalid number of arguments, 1 required");
 	initialization(&cub);
 	file_check(&cub, argv[1]);
-
-	raycaster(&cub, &cub.gun->img);
+	raycaster(&cub, &cub.gun->img, 1);
 	hooks(&cub);
 	return (0);
 }

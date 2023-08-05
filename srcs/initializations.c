@@ -47,8 +47,8 @@ void	initialization(t_cub *cub)
 {
 	int havai;
 
-	cub->map_width = 1200;
-	cub->map_height = 800;
+	cub->map_width = 1000;
+	cub->map_height = 700;
 	cub->player.dirX = 0;
 	cub->player.dirY = 0;
 	cub->player.planeX = 0;
@@ -56,7 +56,7 @@ void	initialization(t_cub *cub)
 	cub->bullet_count = 10;
 	cub->mlx.ptr = mlx_init();
 	err_msg(!cub->mlx.ptr, "Mlx init error");
-	cub->mlx.win = mlx_new_window(cub->mlx.ptr, cub->W, cub->H, \
+	cub->mlx.win = mlx_new_window(cub->mlx.ptr, cub->W, cub->H + 100, \
 	"Wolfenstein 3D without guns and enemies");
 	err_msg(!cub->mlx.win, "Can`t open window for you");
 	wall_textures(cub);
