@@ -12,18 +12,18 @@ int	key_press(int key, t_cub *cub)
 {
 	if (key == ESC)
 		quit_game(cub);
-	if (key == ARRRIGHT || key == KEYD)
-		change_view(cub, ARRRIGHT);
-	if (key == ARRLEFT || key == KEYA)
-		change_view(cub, ARRLEFT);
 	if (key == KEYW)
-		step_fwd_back(cub, KEYW);
+		step_fwd_back(cub, KEYW, 0.16);
 	if (key == KEYS)
-		step_fwd_back(cub, KEYS);
+		step_fwd_back(cub, KEYS, 0.16);
 	if (key == KEYD)
-		step_fwd_back(cub, KEYD);
+		step_right_left(cub, 0.12, KEYD);
 	if (key == KEYA)
-		step_fwd_back(cub, KEYA);
+		step_right_left(cub, 0.12, KEYA);
+	if (key == ARRRIGHT)
+		change_view(cub, ARRRIGHT);
+	if (key == ARRLEFT)
+		change_view(cub, ARRLEFT);
 	if (key == SHOOT)
 		gun_anim(cub, cub->gun->next);
 	mlx_destroy_image(cub->mlx.ptr, cub->img.img);
