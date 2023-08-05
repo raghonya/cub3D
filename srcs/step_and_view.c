@@ -2,17 +2,21 @@
 
 void	rotate(t_cub *cub, double oldDirX, double oldPlaneX, double rotSpeed)
 {
-	cub->player.dirX = cub->player.dirX * cos(rotSpeed) - cub->player.dirY * sin(rotSpeed);
-	cub->player.dirY = oldDirX * sin(rotSpeed) + cub->player.dirY * cos(rotSpeed);
-	cub->player.planeX = cub->player.planeX * cos(rotSpeed) - cub->player.planeY * sin(rotSpeed);
-	cub->player.planeY = oldPlaneX * sin(rotSpeed) + cub->player.planeY * cos(rotSpeed);
+	cub->player.dirX = cub->player.dirX * cos(rotSpeed) \
+	- cub->player.dirY * sin(rotSpeed);
+	cub->player.dirY = oldDirX * sin(rotSpeed) \
+	+ cub->player.dirY * cos(rotSpeed);
+	cub->player.planeX = cub->player.planeX * cos(rotSpeed) \
+	- cub->player.planeY * sin(rotSpeed);
+	cub->player.planeY = oldPlaneX * sin(rotSpeed) \
+	+ cub->player.planeY * cos(rotSpeed);
 }
 
 void	change_view(t_cub *cub, int side)
 {
-	double	oldDirX;
-	double	rotSpeed;
 	double	oldPlaneX;
+	double	rotSpeed;
+	double	oldDirX;
 
 	rotSpeed = 0.06;
 	oldDirX = cub->player.dirX;

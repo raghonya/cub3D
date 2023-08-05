@@ -8,11 +8,6 @@ int	quit_game(t_cub *cub)
 	return (0);
 }
 
-int	key_release(int key, t_cub *cub)
-{
-	return (0);
-}
-
 int	key_press(int key, t_cub *cub)
 {
 	if (key == ESC)
@@ -30,18 +25,9 @@ int	key_press(int key, t_cub *cub)
 	if (key == KEYA)
 		step_fwd_back(cub, KEYA);
 	if (key == SHOOT)
-	{
 		gun_anim(cub, cub->gun->next);
-		mlx_destroy_image(cub->mlx.ptr, cub->img.img);
-		create_img(cub);
-		raycaster(cub, &cub->gun->img);
-		// print_gun(&cub->gun->img, &cub->img, cub->W, cub->H);
-		return (0);
-	}
 	mlx_destroy_image(cub->mlx.ptr, cub->img.img);
 	create_img(cub);
 	raycaster(cub, &cub->gun->img);
-	// print_gun(&cub->gun->img, &cub->img, cub->W, cub->H);
-	// mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, cub->img.img, 0, 0);
 	return (0);
 }

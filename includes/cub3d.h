@@ -89,9 +89,9 @@ typedef struct s_img
 	int		ht;
 	void	*img;
 	char	*addr;
+	int		endian;
 	int		bits_per_pixel;
 	int		line_length;
-	int		endian;
 }	t_img;
 
 typedef struct s_list
@@ -113,14 +113,13 @@ typedef struct s_cub
 	t_img		img;
 	int			mapX;
 	int			mapY;
+	t_list		*gun;
 	char		**map;
 	t_player	player;
-	t_list		*gun;
 	int			map_width;
 	t_img		*textures;
 	int			map_height;
 	int			bullet_count;
-	char		**gun_pics;
 }	t_cub;
 
 typedef struct s_draw

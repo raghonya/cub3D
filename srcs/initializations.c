@@ -27,18 +27,20 @@ void	gun_pic_list_init(t_cub *cub, t_list **gun, char *pic)
 
 void	gun_pic_init(t_cub *cub)
 {
+	char	**gun_pics;
 	int		i;
 
 	i = -1;
-	cub->gun_pics = malloc(sizeof(char *) * 4);
-	err_msg(!cub->gun_pics, "Malloc error");
-	*cub->gun_pics = "pics/gun_anim1.xpm";
-	*(cub->gun_pics + 1) = "pics/gun_anim2.xpm";
-	*(cub->gun_pics + 2) = "pics/gun_anim3.xpm";
-	*(cub->gun_pics + 3) = "pics/gun_anim4.xpm";
+	gun_pics = malloc(sizeof(char *) * 4);
+	err_msg(!gun_pics, "Malloc error");
+	*gun_pics = "pics/gun_anim1.xpm";
+	*(gun_pics + 1) = "pics/gun_anim2.xpm";
+	*(gun_pics + 2) = "pics/gun_anim3.xpm";
+	*(gun_pics + 3) = "pics/gun_anim4.xpm";
 	cub->gun = NULL;
 	while (++i < 4)
-		gun_pic_list_init(cub, &cub->gun, *(cub->gun_pics + i));
+		gun_pic_list_init(cub, &cub->gun, *(gun_pics + i));
+	free(gun_pics);
 }
 
 void	initialization(t_cub *cub)

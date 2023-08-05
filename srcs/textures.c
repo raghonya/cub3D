@@ -2,25 +2,28 @@
 
 t_img	*choose_texture(t_cub *cub)
 {
-	if (cub->map[cub->player.mapX][cub->player.mapY] == '2')
+	if (cub->map[cub->player.mapX][cub->player.mapY] == '1')
+	{
+		if (cub->ray.side == 1 && cub->ray.rayY > 0)
+			return (TEXS);
+		else if (cub->ray.side == 1 &&  cub->ray.rayY <= 0)
+			return (TEXS + 1);
+		else if (cub->ray.side == 0 && cub->ray.rayX > 0)
+			return (TEXS + 2);
+		else if (cub->ray.side == 0 &&  cub->ray.rayX <= 0)
+			return (TEXS + 3);
+	}
+	else if (cub->map[cub->player.mapX][cub->player.mapY] == '2')
 		return (TEXS + 4);
 	else if (cub->map[cub->player.mapX][cub->player.mapY] == '3')
 		return (TEXS + 5);
-	if (cub->ray.side == 1 && cub->ray.rayY > 0)
-		return (TEXS);
-	else if (cub->ray.side == 1 &&  cub->ray.rayY <= 0)
-		return (TEXS + 1);
-	else if (cub->ray.side == 0 && cub->ray.rayX > 0)
-		return (TEXS + 2);
-	else if (cub->ray.side == 0 &&  cub->ray.rayX <= 0)
-		return (TEXS + 3);
 	return (TEXS);
 }
 
 void	draw_texture(t_cub *cub, int x, int texX)
 {
-	int		y;
 	t_draw	tex;
+	int		y;
 	
 	if (cub->ray.perpWallDist < 0.000001)
 		cub->ray.perpWallDist = 0.000001;

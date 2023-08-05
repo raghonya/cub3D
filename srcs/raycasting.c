@@ -10,13 +10,13 @@ void	draw_floor_n_ceil(t_cub *cub)
 	{
 		x = -1;
 		while (++x < cub->W)
-			my_mlx_pixel_put(&cub->img, x, y, 0xFF0000);
+			my_mlx_pixel_put(&cub->img, x, y, 0xFFAFFF);
 	}
 	while (++y < cub->H)
 	{
 		x = -1;
 		while (++x < cub->W)
-			my_mlx_pixel_put(&cub->img, x, y, 0x0000FF);
+			my_mlx_pixel_put(&cub->img, x, y, 0x00B000);
 	}
 
 }

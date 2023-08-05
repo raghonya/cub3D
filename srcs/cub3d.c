@@ -123,7 +123,7 @@ int	mouse_move(int x, int y, t_cub *cub)
 void	hooks(t_cub *cub)
 {
 	mlx_hook(cub->mlx.win, 2, 1L << 0, &key_press, cub);
-	mlx_hook(cub->mlx.win, 3, 1L << 1, &key_release, cub);
+	// mlx_hook(cub->mlx.win, 3, 1L << 1, &key_release, cub);
 	// mlx_mouse_hook(cub->mlx.win, &mouse_press, cub);
 	// mlx_hook(cub->mlx.win, 6, 1L << 4, &mouse_move, cub);
 	// dzel quit_game funkcian, destroy all images, free all mallocs
