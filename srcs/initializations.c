@@ -2,7 +2,7 @@
 
 void	create_img(t_cub *cub)
 {
-	cub->img.img = mlx_new_image(cub->mlx.ptr, cub->W, cub->H);
+	cub->img.img = mlx_new_image(MLX.ptr, cub->W, cub->H);
 	err_msg(!cub->img.img, "Can`t create image for you");
 	cub->img.addr = mlx_get_data_addr(cub->img.img, &cub->img.bits_per_pixel, \
 	&cub->img.line_length, &cub->img.endian);
@@ -16,7 +16,7 @@ void	gun_pic_list_init(t_cub *cub, t_list **gun, char *pic)
 
 	new = ft_lstnew("");
 	err_msg(!new, "Malloc error");
-	new->img.img = mlx_xpm_file_to_image(cub->mlx.ptr, \
+	new->img.img = mlx_xpm_file_to_image(MLX.ptr, \
 	pic, &new->img.wd, &new->img.ht);
 	err_msg(!new->img.img, "Image initialization");
 	new->img.addr = mlx_get_data_addr(new->img.img, \
@@ -45,20 +45,18 @@ void	gun_pic_init(t_cub *cub)
 
 void	initialization(t_cub *cub)
 {
-	int havai;
-
 	cub->map_width = 1000;
 	cub->map_height = 700;
-	cub->player.dirX = 0;
-	cub->player.dirY = 0;
-	cub->player.planeX = 0;
-	cub->player.planeY = 0;
+	PLAYER.dirX = 0;
+	PLAYER.dirY = 0;
+	PLAYER.planeX = 0;
+	PLAYER.planeY = 0;
 	cub->bullet_count = 10;
-	cub->mlx.ptr = mlx_init();
-	err_msg(!cub->mlx.ptr, "Mlx init error");
-	cub->mlx.win = mlx_new_window(cub->mlx.ptr, cub->W, cub->H + 100, \
+	MLX.ptr = mlx_init();
+	err_msg(!MLX.ptr, "Mlx init error");
+	MLX.win = mlx_new_window(MLX.ptr, cub->W, cub->H + 100, \
 	"Wolfenstein 3D without guns and enemies");
-	err_msg(!cub->mlx.win, "Can`t open window for you");
+	err_msg(!MLX.win, "Can`t open window for you");
 	wall_textures(cub);
 	gun_pic_init(cub);
 	create_img(cub);

@@ -4,6 +4,15 @@ int	quit_game(t_cub *cub)
 {
 	(void)cub;
 	//free mallocs, destroy images etc.
+	
+	destroy_gun_imgs(cub);
+	destroy_textures(cub);
+	destroy_map(cub->map);
+
+	mlx_destroy_image(MLX.ptr, cub->img.img);
+	mlx_clear_window(MLX.ptr, MLX.win);
+	mlx_destroy_window(MLX.ptr, MLX.win);
+	
 	exit(0);
 	return (0);
 }
@@ -26,7 +35,7 @@ int	key_press(int key, t_cub *cub)
 		change_view(cub, ARRLEFT);
 	if (key == SHOOT)
 		gun_anim(cub, cub->gun->next);
-	mlx_destroy_image(cub->mlx.ptr, cub->img.img);
+	mlx_destroy_image(MLX.ptr, cub->img.img);
 	create_img(cub);
 	if (key == SHOOT)
 		raycaster(cub, &cub->gun->img, 1);

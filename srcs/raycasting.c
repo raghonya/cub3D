@@ -27,10 +27,10 @@ void	change_bullet_count(t_cub *cub)
 
 	str = ft_itoa(cub->bullet_count);
 	err_msg(!str, "Malloc error");
-	mlx_clear_window(cub->mlx.ptr, cub->mlx.win);
-	mlx_string_put(cub->mlx.ptr, cub->mlx.win, 0, \
+	mlx_clear_window(MLX.ptr, MLX.win);
+	mlx_string_put(MLX.ptr, MLX.win, 0, \
 	cub->H + 10, 0xFFFFFF, "Bullets left: ");
-	mlx_string_put(cub->mlx.ptr, cub->mlx.win, 100, \
+	mlx_string_put(MLX.ptr, MLX.win, 100, \
 	cub->H + 10, 0xFFFFFF, str);
 	free(str);
 }
@@ -51,5 +51,5 @@ void	raycaster(t_cub *cub, t_img *anim, int bullet_change)
 	print_gun(anim, &cub->img, cub->W, cub->H);
 	if (bullet_change)
 		change_bullet_count(cub);
-	mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, cub->img.img, 0, 0);
+	mlx_put_image_to_window(MLX.ptr, MLX.win, cub->img.img, 0, 0);
 }

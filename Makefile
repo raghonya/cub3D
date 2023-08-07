@@ -1,6 +1,6 @@
 NAME	=	cub3D
 
-CFLAGS	=	#-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra -Werror
 
 f		=	-fsanitize=address -g
 
@@ -13,6 +13,7 @@ OBJDIR	=	obj
 SRCSDIR	=	srcs
 
 SRCS	=	srcs/cub3d.c \
+			srcs/destroy.c \
 			srcs/textures.c \
 			srcs/raycasting.c \
 			srcs/init_walls.c \

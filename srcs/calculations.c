@@ -2,78 +2,78 @@
 
 void	calc_ray_pos(t_cub *cub, int pixel)
 {
-	cub->ray.cameraX = 2.0 * pixel / (double)cub->W - 1.0;
-	cub->ray.rayX = cub->player.dirX + cub->player.planeX * cub->ray.cameraX;
-	cub->ray.rayY = cub->player.dirY + cub->player.planeY * cub->ray.cameraX;
-	cub->player.mapX = (int)cub->player.posX;
-	cub->player.mapY = (int)cub->player.posY;
-	if (cub->ray.rayX == 0)
-		cub->ray.deltaDistX = 1e30;
+	RAY.cameraX = 2.0 * pixel / (double)cub->W - 1.0;
+	RAY.rayX = PLAYER.dirX + PLAYER.planeX * RAY.cameraX;
+	RAY.rayY = PLAYER.dirY + PLAYER.planeY * RAY.cameraX;
+	PLAYER.mapX = (int)PLAYER.posX;
+	PLAYER.mapY = (int)PLAYER.posY;
+	if (RAY.rayX == 0)
+		RAY.deltaDistX = 1e30;
 	else
-		cub->ray.deltaDistX = fabs(1 / cub->ray.rayX);
-	if (cub->ray.rayY == 0)
-		cub->ray.deltaDistY = 1e30;
+		RAY.deltaDistX = fabs(1 / RAY.rayX);
+	if (RAY.rayY == 0)
+		RAY.deltaDistY = 1e30;
 	else
-		cub->ray.deltaDistY = fabs(1 / cub->ray.rayY);
+		RAY.deltaDistY = fabs(1 / RAY.rayY);
 }
 
 void	find_step_dir(t_cub *cub)
 {
-	if (cub->ray.rayX < 0)
+	if (RAY.rayX < 0)
 	{
-		cub->player.stepX = -1;
-		cub->ray.sideDistX = \
-		(cub->player.posX - cub->player.mapX) * cub->ray.deltaDistX;
+		PLAYER.stepX = -1;
+		RAY.sideDistX = \
+		(PLAYER.posX - PLAYER.mapX) * RAY.deltaDistX;
 	}
 	else
 	{
-		cub->player.stepX = 1;
-		cub->ray.sideDistX = \
-		(cub->player.mapX + 1.0 - cub->player.posX) * cub->ray.deltaDistX;
+		PLAYER.stepX = 1;
+		RAY.sideDistX = \
+		(PLAYER.mapX + 1.0 - PLAYER.posX) * RAY.deltaDistX;
 	}
-	if (cub->ray.rayY < 0)
+	if (RAY.rayY < 0)
 	{
-		cub->player.stepY = -1;
-		cub->ray.sideDistY = \
-		(cub->player.posY - cub->player.mapY) * cub->ray.deltaDistY;
+		PLAYER.stepY = -1;
+		RAY.sideDistY = \
+		(PLAYER.posY - PLAYER.mapY) * RAY.deltaDistY;
 	}
 	else
 	{
-		cub->player.stepY = 1;
-		cub->ray.sideDistY = \
-		(cub->player.mapY + 1.0 - cub->player.posY) * cub->ray.deltaDistY;
+		PLAYER.stepY = 1;
+		RAY.sideDistY = \
+		(PLAYER.mapY + 1.0 - PLAYER.posY) * RAY.deltaDistY;
 	}
 }
 
 void	DDA_algorithm(t_cub *cub)
 {
-	cub->ray.hit = 0;
-	while (cub->ray.hit == 0)
+	RAY.hit = 0;
+	while (RAY.hit == 0)
 	{
-		if (cub->ray.sideDistX < cub->ray.sideDistY)
+		if (RAY.sideDistX < RAY.sideDistY)
 		{
-			cub->ray.sideDistX += cub->ray.deltaDistX;
-			cub->player.mapX += cub->player.stepX;
-			cub->ray.side = 0;
+			RAY.sideDistX += RAY.deltaDistX;
+			PLAYER.mapX += PLAYER.stepX;
+			RAY.side = 0;
 		}
 		else
 		{
-			cub->ray.sideDistY += cub->ray.deltaDistY;
-			cub->player.mapY += cub->player.stepY;
-			cub->ray.side = 1;
+			RAY.sideDistY += RAY.deltaDistY;
+			PLAYER.mapY += PLAYER.stepY;
+			RAY.side = 1;
 		}
-		if (cub->map[cub->player.mapX][cub->player.mapY] > '0')
-			cub->ray.hit = 1;
+		if (cub->map[PLAYER.mapX][PLAYER.mapY] > '0')
+			RAY.hit = 1;
 	}
-	if (cub->ray.side == 0)
-		cub->ray.perpWallDist = (cub->ray.sideDistX - cub->ray.deltaDistX);
+	if (RAY.side == 0)
+		RAY.perpWallDist = (RAY.sideDistX - RAY.deltaDistX);
 	else
-		cub->ray.perpWallDist = (cub->ray.sideDistY - cub->ray.deltaDistY);
+		RAY.perpWallDist = (RAY.sideDistY - RAY.deltaDistY);
 }
 
 void	calc_draw_ends(t_cub *cub, t_draw *tex)
 {
-	tex->lineHeight = (int)(cub->H / cub->ray.perpWallDist);
+	tex->lineHeight = (int)(cub->H / RAY.perpWallDist);
 	tex->drawStart = -tex->lineHeight / 2 + cub->H / 2;
 	if (tex->drawStart < 0)
 		tex->drawStart = 0;
@@ -90,13 +90,13 @@ int	calc_texture_x(t_cub *cub)
 	int		texX;
 	double	wallX;
 
-	wallX = cub->player.posX + cub->ray.perpWallDist * cub->ray.rayX;
-	if (cub->ray.side == 0)
-		wallX = cub->player.posY + cub->ray.perpWallDist * cub->ray.rayY;
+	wallX = PLAYER.posX + RAY.perpWallDist * RAY.rayX;
+	if (RAY.side == 0)
+		wallX = PLAYER.posY + RAY.perpWallDist * RAY.rayY;
 	wallX -= floor((wallX));
 	texX = (int)(wallX * (double)(TEXWIDTH));
-	if ((cub->ray.side == 0 && cub->ray.rayX > 0) \
-	|| (cub->ray.side == 1 && cub->ray.rayY < 0))
+	if ((RAY.side == 0 && RAY.rayX > 0) \
+	|| (RAY.side == 1 && RAY.rayY < 0))
 		texX = TEXWIDTH - texX - 1;
 	return (texX);
 }

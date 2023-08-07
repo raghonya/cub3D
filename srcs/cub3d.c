@@ -56,23 +56,23 @@ void	set_dir_and_pos(t_cub *cub, char player)
 {
 	if (player == 'N')
 	{
-		cub->player.dirX = -1;
-		cub->player.planeY = 0.66;
+		PLAYER.dirX = -1;
+		PLAYER.planeY = 0.66;
 	}
 	else if (player == 'S')
 	{
-		cub->player.dirX = 1;
-		cub->player.planeY = -0.66;
+		PLAYER.dirX = 1;
+		PLAYER.planeY = -0.66;
 	}
 	else if (player == 'E')
 	{
-		cub->player.dirY = 1;
-		cub->player.planeX = 0.66;
+		PLAYER.dirY = 1;
+		PLAYER.planeX = 0.66;
 	}
 	else if (player == 'W')
 	{
-		cub->player.dirY = -1;
-		cub->player.planeX = -0.66;
+		PLAYER.dirY = -1;
+		PLAYER.planeX = -0.66;
 	}
 }
 
@@ -92,8 +92,8 @@ void	find_player(t_cub *cub, char player)
 		{
 			if (cub->map[i][j] == player)
 			{
-				cub->player.posX = i + 0.5;
-				cub->player.posY = j + 0.5;
+				PLAYER.posX = i + 0.5;
+				PLAYER.posY = j + 0.5;
 				cub->map[i][j] = '0';
 				break ;
 			}
@@ -102,18 +102,18 @@ void	find_player(t_cub *cub, char player)
 	set_dir_and_pos(cub, player);
 }
 
-int mouse_press(int button, int x, int y, t_cub *cub)
-{
-	// printf ("button: %d, x: %d, y: %d\n", button, x, y);
-	// if (button == 1)
-	// {
-	// 	gun_anim(cub, cub->gun);
-	// 	print_gun(&cub->gun->img, &cub->img, cub->W, cub->H);
-	// 	//ekranin cuyc tal bullet neri qanak
-	// 	return (0);
-	// }
-	return (0);
-}
+// int mouse_press(int button, int x, int y, t_cub *cub)
+// {
+// 	// printf ("button: %d, x: %d, y: %d\n", button, x, y);
+// 	// if (button == 1)
+// 	// {
+// 	// 	gun_anim(cub, cub->gun);
+// 	// 	print_gun(&cub->gun->img, &cub->img, cub->W, cub->H);
+// 	// 	//ekranin cuyc tal bullet neri qanak
+// 	// 	return (0);
+// 	// }
+// 	return (0);
+// }
 
 int	mouse_move(int x, int y, t_cub *cub)
 {
@@ -129,13 +129,13 @@ int	mouse_move(int x, int y, t_cub *cub)
 
 void	hooks(t_cub *cub)
 {
-	mlx_hook(cub->mlx.win, 2, 1L << 0, &key_press, cub);
-	// mlx_hook(cub->mlx.win, 3, 1L << 1, &key_release, cub);
-	// mlx_mouse_hook(cub->mlx.win, &mouse_press, cub);
-	mlx_hook(cub->mlx.win, 6, 1L << 4, &mouse_move, cub);
+	mlx_hook(MLX.win, 2, 1L << 0, &key_press, cub);
+	// mlx_hook(MLX.win, 3, 1L << 1, &key_release, cub);
+	// mlx_mouse_hook(MLX.win, &mouse_press, cub);
+	mlx_hook(MLX.win, 6, 1L << 4, &mouse_move, cub);
 	// dzel quit_game funkcian, destroy all images, free all mallocs
-	mlx_hook(cub->mlx.win, 17, 1L << 15, &quit_game, cub);
-	mlx_loop(cub->mlx.ptr);
+	mlx_hook(MLX.win, 17, 1L << 15, &quit_game, cub);
+	mlx_loop(MLX.ptr);
 
 }
 

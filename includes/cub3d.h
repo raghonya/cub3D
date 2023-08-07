@@ -42,17 +42,23 @@ Map i mej
 
 # define W map_width
 # define H map_height
+# define MLX cub->mlx
+# define RAY cub->ray
+# define PLAYER cub->player
 # define TEXS cub->textures
 # define TEXWIDTH TEXS[0].wd
 # define TEXHEIGHT TEXS[0].ht
 
-typedef struct s_view
+typedef struct s_draw
 {
-	void	*north;
-	void	*south;
-	void	*west;
-	void	*east;
-}	t_view;
+	int		texX;
+	int		texY;
+	double	step;
+	double	texPos;
+	int		drawEnd;
+	int		drawStart;
+	int		lineHeight;
+}	t_draw;
 
 typedef struct s_ray
 {
@@ -70,7 +76,6 @@ typedef struct s_ray
 
 typedef struct s_player
 {
-	t_view	view;
 	double	posX;
 	double	posY;
 	int		mapX;
@@ -122,28 +127,20 @@ typedef struct s_cub
 	int			bullet_count;
 }	t_cub;
 
-typedef struct s_draw
-{
-	int		texX;
-	int		texY;
-	double	step;
-	double	texPos;
-	int		drawEnd;
-	int		drawStart;
-	int		lineHeight;
-}	t_draw;
-
 void			printmap(t_cub cub);
 int				quit_game(t_cub *cub);
 void			create_img(t_cub *cub);
+void			destroy_map(char **map);
+void			wall_textures(t_cub *cub);
+t_list			*ft_lstnew(void *content);
 void			find_step_dir(t_cub *cub);
 void			DDA_algorithm(t_cub *cub);
 void			initialization(t_cub *cub);
 int				calc_texture_x(t_cub *cub);
-void			wall_textures(t_cub *cub);
-t_list			*ft_lstnew(void *content);
 void			create_wall_img(t_cub *cub);
 t_img			*choose_texture(t_cub *cub);
+void			destroy_gun_imgs(t_cub *cub);
+void			destroy_textures(t_cub *cub);
 int				key_press(int key, t_cub *cub);
 int				key_release(int key, t_cub *cub);
 int				trgb(int t, int r, int g, int b);
