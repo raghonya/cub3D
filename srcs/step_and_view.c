@@ -1,94 +1,100 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   step_and_view.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: raghonya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/08 16:07:09 by raghonya          #+#    #+#             */
+/*   Updated: 2023/08/08 16:07:12 by raghonya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <cub3d.h>
 
-void	rotate(t_cub *cub, double oldDirX, double oldPlaneX, double rotSpeed)
+void	rotate(t_cub *cub, double olddir_x, double oldplane_x, double rotSpeed)
 {
-	PLAYER.dirX = PLAYER.dirX * cos(rotSpeed) \
-	- PLAYER.dirY * sin(rotSpeed);
-	PLAYER.dirY = oldDirX * sin(rotSpeed) \
-	+ PLAYER.dirY * cos(rotSpeed);
-	PLAYER.planeX = PLAYER.planeX * cos(rotSpeed) \
-	- PLAYER.planeY * sin(rotSpeed);
-	PLAYER.planeY = oldPlaneX * sin(rotSpeed) \
-	+ PLAYER.planeY * cos(rotSpeed);
+	cub->player.dir_x = cub->player.dir_x * cos(rotSpeed) \
+	- cub->player.dir_y * sin(rotSpeed);
+	cub->player.dir_y = olddir_x * sin(rotSpeed) \
+	+ cub->player.dir_y * cos(rotSpeed);
+	cub->player.plane_x = cub->player.plane_x * cos(rotSpeed) \
+	- cub->player.plane_y * sin(rotSpeed);
+	cub->player.plane_y = oldplane_x * sin(rotSpeed) \
+	+ cub->player.plane_y * cos(rotSpeed);
 }
 
-void	change_view(t_cub *cub, int side)
+void	change_view(t_cub *cub, int side, double rotSpeed)
 {
-	double	oldPlaneX;
-	double	rotSpeed;
-	double	oldDirX;
+	double	oldplane_x;
+	double	olddir_x;
 
-	rotSpeed = 0.06;
-	oldDirX = PLAYER.dirX;
-	oldPlaneX = PLAYER.planeX;
+	olddir_x = cub->player.dir_x;
+	oldplane_x = cub->player.plane_x;
 	if (side == ARRRIGHT)
-		rotate(cub, oldDirX, oldPlaneX, -rotSpeed);
+		rotate(cub, olddir_x, oldplane_x, -rotSpeed);
 	else
-		rotate(cub, oldDirX, oldPlaneX, rotSpeed);
+		rotate(cub, olddir_x, oldplane_x, rotSpeed);
 }
 
-void	 choose_direction(t_cub *cub)
+void	choose_direction(t_cub *cub)
 {
-	if (PLAYER.dirX < 0 && PLAYER.dirY > 0)
+	if (cub->player.dir_x < 0 && cub->player.dir_y > 0)
 	{
-		PLAYER.dirX = 1 - pow(PLAYER.dirX, 2);
-		PLAYER.dirY = 1 - pow(PLAYER.dirY, 2);
+		cub->player.dir_x = 1 - pow(cub->player.dir_x, 2);
+		cub->player.dir_y = 1 - pow(cub->player.dir_y, 2);
 	}
-	else if (PLAYER.dirX > 0 && PLAYER.dirY > 0)
+	else if (cub->player.dir_x > 0 && cub->player.dir_y > 0)
 	{
-		PLAYER.dirX = 1 - pow(PLAYER.dirX, 2);
-		PLAYER.dirY = -(1 - pow(PLAYER.dirY, 2));
+		cub->player.dir_x = 1 - pow(cub->player.dir_x, 2);
+		cub->player.dir_y = -(1 - pow(cub->player.dir_y, 2));
 	}
-	else if (PLAYER.dirX > 0 && PLAYER.dirY < 0)
+	else if (cub->player.dir_x > 0 && cub->player.dir_y < 0)
 	{
-		PLAYER.dirX = -(1 - pow(PLAYER.dirX, 2));
-		PLAYER.dirY = -(1 - pow(PLAYER.dirY, 2));
+		cub->player.dir_x = -(1 - pow(cub->player.dir_x, 2));
+		cub->player.dir_y = -(1 - pow(cub->player.dir_y, 2));
 	}
 	else
 	{
-		PLAYER.dirX = -(1 - pow(PLAYER.dirX, 2));
-		PLAYER.dirY = 1 - pow(PLAYER.dirY, 2);
+		cub->player.dir_x = -(1 - pow(cub->player.dir_x, 2));
+		cub->player.dir_y = 1 - pow(cub->player.dir_y, 2);
 	}
 }
 
 void	step_right_left(t_cub *cub, double moveSpeed, int move)
 {
-	double	oldX;
-	double	oldY;
+	double	old_x;
+	double	old_y;
 
-	oldX = PLAYER.dirX;
-	oldY = PLAYER.dirY;
+	old_x = cub->player.dir_x;
+	old_y = cub->player.dir_y;
 	choose_direction(cub);
 	if (move == KEYD)
 		step_fwd_back(cub, KEYW, moveSpeed);
 	else
 		step_fwd_back(cub, KEYS, moveSpeed);
-	PLAYER.dirX = oldX;
-	PLAYER.dirY = oldY;
+	cub->player.dir_x = old_x;
+	cub->player.dir_y = old_y;
 }
 
 void	step_fwd_back(t_cub *cub, int side, double moveSpeed)
 {
 	if (side == KEYW)
 	{
-		if(cub->map\
-		[(int)(PLAYER.posX + PLAYER.dirX * moveSpeed)]\
-		[(int)(PLAYER.posY)] == '0')
-			PLAYER.posX += PLAYER.dirX * moveSpeed;
-		if(cub->map\
-		[(int)(PLAYER.posX)]\
-		[(int)(PLAYER.posY + PLAYER.dirY * moveSpeed)] == '0')
-			PLAYER.posY += PLAYER.dirY * moveSpeed;
+		if (cub->map[(int)(cub->player.pos_x + \
+		cub->player.dir_x * moveSpeed)][(int)(cub->player.pos_y)] == '0')
+			cub->player.pos_x += cub->player.dir_x * moveSpeed;
+		if (cub->map[(int)(cub->player.pos_x)][(int)(cub->player.pos_y \
+		+ cub->player.dir_y * moveSpeed)] == '0')
+			cub->player.pos_y += cub->player.dir_y * moveSpeed;
 	}
 	else if (side == KEYS)
 	{
-		if(cub->map\
-		[(int)(PLAYER.posX - PLAYER.dirX * moveSpeed)]\
-		[(int)(PLAYER.posY)] == '0')
-			PLAYER.posX -= PLAYER.dirX * moveSpeed;
-		if(cub->map\
-		[(int)(PLAYER.posX)]\
-		[(int)(PLAYER.posY - PLAYER.dirY * moveSpeed)] == '0')
-			PLAYER.posY -= PLAYER.dirY * moveSpeed;
+		if (cub->map[(int)(cub->player.pos_x - \
+		cub->player.dir_x * moveSpeed)][(int)(cub->player.pos_y)] == '0')
+			cub->player.pos_x -= cub->player.dir_x * moveSpeed;
+		if (cub->map[(int)(cub->player.pos_x)][(int)(cub->player.pos_y - \
+		cub->player.dir_y * moveSpeed)] == '0')
+			cub->player.pos_y -= cub->player.dir_y * moveSpeed;
 	}
 }

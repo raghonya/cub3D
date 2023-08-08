@@ -23,6 +23,7 @@ SRCS	=	srcs/cub3d.c \
 			srcs/step_and_view.c \
 			srcs/gun_animation.c \
 			srcs/list_functions.c \
+			srcs/mouse_functions.c \
 			srcs/initializations.c
 
 OBJS	=	$(SRCS:$(SRCSDIR)/%.c=$(OBJDIR)/%.o)

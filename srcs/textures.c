@@ -1,39 +1,51 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   textures.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: raghonya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/08 16:08:03 by raghonya          #+#    #+#             */
+/*   Updated: 2023/08/08 16:08:05 by raghonya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <cub3d.h>
 
 t_img	*choose_texture(t_cub *cub)
 {
-	if (cub->map[PLAYER.mapX][PLAYER.mapY] == '1')
+	if (cub->map[cub->player.map_x][cub->player.map_y] == '1')
 	{
-		if (RAY.side == 1 && RAY.rayY > 0)
-			return (TEXS);
-		else if (RAY.side == 1 &&  RAY.rayY <= 0)
-			return (TEXS + 1);
-		else if (RAY.side == 0 && RAY.rayX > 0)
-			return (TEXS + 2);
-		else if (RAY.side == 0 &&  RAY.rayX <= 0)
-			return (TEXS + 3);
+		if (cub->ray.side == 1 && cub->ray.ray_y > 0)
+			return (cub->texs);
+		else if (cub->ray.side == 1 && cub->ray.ray_y <= 0)
+			return (cub->texs + 1);
+		else if (cub->ray.side == 0 && cub->ray.ray_x > 0)
+			return (cub->texs + 2);
+		else if (cub->ray.side == 0 && cub->ray.ray_x <= 0)
+			return (cub->texs + 3);
 	}
-	else if (cub->map[PLAYER.mapX][PLAYER.mapY] == '2')
-		return (TEXS + 4);
-	else if (cub->map[PLAYER.mapX][PLAYER.mapY] == '3')
-		return (TEXS + 5);
-	return (TEXS);
+	else if (cub->map[cub->player.map_x][cub->player.map_y] == '2')
+		return (cub->texs + 4);
+	else if (cub->map[cub->player.map_x][cub->player.map_y] == '3')
+		return (cub->texs + 5);
+	return (cub->texs);
 }
 
-void	draw_texture(t_cub *cub, int x, int texX)
+void	draw_texture(t_cub *cub, int x, int tex_x)
 {
 	t_draw	tex;
 	int		y;
-	
-	if (RAY.perpWallDist < 0.000001)
-		RAY.perpWallDist = 0.000001;
+
+	if (cub->ray.perp_wall_dist < 0.000001)
+		cub->ray.perp_wall_dist = 0.000001;
 	calc_draw_ends(cub, &tex);
-	y = tex.drawStart - 1;
-	while (++y < tex.drawEnd)
+	y = tex.draw_start - 1;
+	while (++y < tex.draw_end)
 	{
-		tex.texY = (int)tex.texPos & (TEXHEIGHT - 1);
-		tex.texPos += tex.step;
+		tex.tex_y = (int)tex.tex_pos & (TEXHEIGHT - 1);
+		tex.tex_pos += tex.step;
 		my_mlx_pixel_put(&cub->img, x, y, \
-		my_mlx_color_taker(choose_texture(cub), texX, tex.texY));
+		my_mlx_color_taker(choose_texture(cub), tex_x, tex.tex_y));
 	}
 }

@@ -1,34 +1,43 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: raghonya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/08 16:14:28 by raghonya          #+#    #+#             */
+/*   Updated: 2023/08/08 16:14:30 by raghonya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <cub3d.h>
 
 void	err_msg(int condition, char *msg)
 {
 	if (condition)
 	{
-		printf ("Error: %s\n", msg);
+		ft_putstr_fd("Error: ", 2);
+		ft_putendl_fd(msg, 2);
 		exit (1);
 	}
 }
 
-void	printmap(t_cub cub)
-{
-	int	i =  -1;
-	while (cub.map[++i])
-		printf ("%s\n", cub.map[i]);
-	printf ("\n");
-}
-
+//check check
+//check datark file
+//check symbols in map
 void	file_check(t_cub *cub, char *filename)
 {
 	int		fd;
 	char	*line;
 	char	*joined;
+	char	player;
+	int		i;
+	int		j;
 
+	i = -1;
 	fd = open(filename, O_RDONLY);
 	err_msg(fd < 0, "File error");
 	joined = NULL;
-	//check check
-	//check datark file
-	//check symbols in map
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -39,7 +48,6 @@ void	file_check(t_cub *cub, char *filename)
 	}
 	cub->map = ft_split(joined, '\n');
 	free(joined);
-	int i = -1, j, player;
 	while (cub->map[++i])
 	{
 		j = -1;
@@ -56,35 +64,35 @@ void	set_dir_and_pos(t_cub *cub, char player)
 {
 	if (player == 'N')
 	{
-		PLAYER.dirX = -1;
-		PLAYER.planeY = 0.66;
+		cub->player.dir_x = -1;
+		cub->player.plane_y = 0.66;
 	}
 	else if (player == 'S')
 	{
-		PLAYER.dirX = 1;
-		PLAYER.planeY = -0.66;
+		cub->player.dir_x = 1;
+		cub->player.plane_y = -0.66;
 	}
 	else if (player == 'E')
 	{
-		PLAYER.dirY = 1;
-		PLAYER.planeX = 0.66;
+		cub->player.dir_y = 1;
+		cub->player.plane_x = 0.66;
 	}
 	else if (player == 'W')
 	{
-		PLAYER.dirY = -1;
-		PLAYER.planeX = -0.66;
+		cub->player.dir_y = -1;
+		cub->player.plane_x = -0.66;
 	}
 }
 
 //kanchvelu a symbolnery stugelu funkciayi mej
 //erb parz lini playeri charactery
+//arden stugac pti lini player symbolneri qanaky
 void	find_player(t_cub *cub, char player)
 {
 	int	i;
 	int	j;
-	
+
 	i = -1;
-	//arden stugac pti lini player symbolneri qanaky
 	while (cub->map[++i])
 	{
 		j = -1;
@@ -92,8 +100,8 @@ void	find_player(t_cub *cub, char player)
 		{
 			if (cub->map[i][j] == player)
 			{
-				PLAYER.posX = i + 0.5;
-				PLAYER.posY = j + 0.5;
+				cub->player.pos_x = i + 0.5;
+				cub->player.pos_y = j + 0.5;
 				cub->map[i][j] = '0';
 				break ;
 			}
@@ -102,42 +110,13 @@ void	find_player(t_cub *cub, char player)
 	set_dir_and_pos(cub, player);
 }
 
-int mouse_press(int button, int x, int y, t_cub *cub)
-{
-	(void)x;
-	(void)y;
-	if (button == 1)
-		gun_anim(cub, cub->gun->next);
-	mlx_destroy_image(MLX.ptr, cub->img.img);
-	create_img(cub);
-	if (button == 1)
-		raycaster(cub, &cub->gun->img, 1);
-	else
-		raycaster(cub, &cub->gun->img, 0);
-	return (0);
-}
-
-int	mouse_move(int x, int y, t_cub *cub)
-{
-	static int	oldX;
-
-	(void)y;
-	if (x < oldX)
-		change_view(cub, ARRLEFT);
-	if (x > oldX)
-		change_view(cub, ARRRIGHT);
-	return (0);
-}
-
 void	hooks(t_cub *cub)
 {
-	mlx_hook(MLX.win, 2, 1L << 0, &key_press, cub);
-	mlx_hook(MLX.win, 4, 1L << 2, &mouse_press, cub);
-	mlx_hook(MLX.win, 6, 1L << 4, &mouse_move, cub);
-	// mlx_mouse_hook(MLX.win, &mouse_press, cub);
-	mlx_hook(MLX.win, 6, 1L << 4, &mouse_move, cub);
-	mlx_hook(MLX.win, 17, 1L << 15, &quit_game, cub);
-	mlx_loop(MLX.ptr);
+	mlx_hook(cub->mlx.win, 2, 1L << 0, &key_press, cub);
+	mlx_hook(cub->mlx.win, 4, 1L << 2, &mouse_press, cub);
+	mlx_hook(cub->mlx.win, 6, 1L << 4, &mouse_move, cub);
+	mlx_hook(cub->mlx.win, 17, 1L << 15, &quit_game, cub);
+	mlx_loop(cub->mlx.ptr);
 }
 
 int	main(int argc, char **argv)

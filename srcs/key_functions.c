@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   key_functions.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: raghonya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/08 15:59:03 by raghonya          #+#    #+#             */
+/*   Updated: 2023/08/08 15:59:05 by raghonya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <cub3d.h>
 
 int	quit_game(t_cub *cub)
@@ -5,11 +17,9 @@ int	quit_game(t_cub *cub)
 	destroy_gun_imgs(cub);
 	destroy_textures(cub);
 	destroy_map(cub->map);
-
-	mlx_destroy_image(MLX.ptr, cub->img.img);
-	mlx_clear_window(MLX.ptr, MLX.win);
-	mlx_destroy_window(MLX.ptr, MLX.win);
-	
+	mlx_destroy_image(cub->mlx.ptr, cub->img.img);
+	mlx_clear_window(cub->mlx.ptr, cub->mlx.win);
+	mlx_destroy_window(cub->mlx.ptr, cub->mlx.win);
 	exit(0);
 	return (0);
 }
@@ -18,21 +28,23 @@ int	key_press(int key, t_cub *cub)
 {
 	if (key == ESC)
 		quit_game(cub);
-	if (key == KEYW)
+	else if (key == KEYW)
 		step_fwd_back(cub, KEYW, 0.16);
-	if (key == KEYS)
+	else if (key == KEYS)
 		step_fwd_back(cub, KEYS, 0.16);
-	if (key == KEYD)
+	else if (key == KEYD)
 		step_right_left(cub, 0.12, KEYD);
-	if (key == KEYA)
+	else if (key == KEYA)
 		step_right_left(cub, 0.12, KEYA);
-	if (key == ARRRIGHT)
-		change_view(cub, ARRRIGHT);
-	if (key == ARRLEFT)
-		change_view(cub, ARRLEFT);
-	if (key == SHOOT)
+	else if (key == ARRRIGHT)
+		change_view(cub, ARRRIGHT, 0.06);
+	else if (key == ARRLEFT)
+		change_view(cub, ARRLEFT, 0.06);
+	else if (key == SHOOT)
 		gun_anim(cub, cub->gun->next);
-	mlx_destroy_image(MLX.ptr, cub->img.img);
+	else
+		return (1);
+	mlx_destroy_image(cub->mlx.ptr, cub->img.img);
 	create_img(cub);
 	if (key == SHOOT)
 		raycaster(cub, &cub->gun->img, 1);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: raghonya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/08 15:51:53 by raghonya          #+#    #+#             */
+/*   Updated: 2023/08/08 15:51:54 by raghonya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -40,52 +52,46 @@ Map i mej
 #  define SHOOT 49
 # endif
 
-# define W map_width
-# define H map_height
-# define MLX cub->mlx
-# define RAY cub->ray
-# define PLAYER cub->player
-# define TEXS cub->textures
-# define TEXWIDTH TEXS[0].wd
-# define TEXHEIGHT TEXS[0].ht
+# define TEXWIDTH 64
+# define TEXHEIGHT 64
 
 typedef struct s_draw
 {
-	int		texX;
-	int		texY;
+	int		tex_x;
+	int		tex_y;
 	double	step;
-	double	texPos;
-	int		drawEnd;
-	int		drawStart;
-	int		lineHeight;
+	double	tex_pos;
+	int		draw_end;
+	int		draw_start;
+	int		line_height;
 }	t_draw;
 
 typedef struct s_ray
 {
 	int		hit;
 	int		side;
-	double	rayX;
-	double	rayY;
-	double	cameraX;
-	double	sideDistX;
-	double	sideDistY;
-	double	deltaDistX;
-	double	deltaDistY;
-	double	perpWallDist;
+	double	ray_x;
+	double	ray_y;
+	double	camera_x;
+	double	sidedist_x;
+	double	sidedist_y;
+	double	deltadist_x;
+	double	deltadist_y;
+	double	perp_wall_dist;
 }	t_ray;
 
 typedef struct s_player
 {
-	double	posX;
-	double	posY;
-	int		mapX;
-	int		mapY;
-	double	dirX;
-	double	dirY;
-	int		stepX;
-	int		stepY;
-	double	planeX;
-	double	planeY;
+	double	pos_x;
+	double	pos_y;
+	int		map_x;
+	int		map_y;
+	double	dir_x;
+	double	dir_y;
+	int		step_x;
+	int		step_y;
+	double	plane_x;
+	double	plane_y;
 }	t_player;
 
 typedef struct s_img
@@ -116,14 +122,12 @@ typedef struct s_cub
 	t_ray		ray;
 	t_mlx		mlx;
 	t_img		img;
-	int			mapX;
-	int			mapY;
 	t_list		*gun;
 	char		**map;
+	int			map_wd;
+	int			map_ht;
 	t_player	player;
-	int			map_width;
-	t_img		*textures;
-	int			map_height;
+	t_img		*texs;
 	int			bullet_count;
 }	t_cub;
 
@@ -134,7 +138,7 @@ void			destroy_map(char **map);
 void			wall_textures(t_cub *cub);
 t_list			*ft_lstnew(void *content);
 void			find_step_dir(t_cub *cub);
-void			DDA_algorithm(t_cub *cub);
+void			dda_algorithm(t_cub *cub);
 void			initialization(t_cub *cub);
 int				calc_texture_x(t_cub *cub);
 void			create_wall_img(t_cub *cub);
@@ -144,21 +148,22 @@ void			destroy_textures(t_cub *cub);
 int				key_press(int key, t_cub *cub);
 int				key_release(int key, t_cub *cub);
 int				trgb(int t, int r, int g, int b);
-void			change_view(t_cub *cub, int side);
 void			err_msg(int condition, char *msg);
 void			gun_anim(t_cub *cub, t_list *anim);
 void			calc_ray_pos(t_cub *cub, int pixel);
+int				mouse_move(int x, int y, t_cub *cub);
 void			find_player(t_cub *cub, char player);
 void			calc_draw_ends(t_cub *cub, t_draw *tex);
 void			ft_lstadd_back(t_list **lst, t_list *new);
-void			draw_texture(t_cub *cub, int x, int texX);
+void			draw_texture(t_cub *cub, int x, int tex_x);
 unsigned int	my_mlx_color_taker(t_img *data, int x, int y);
 void			print_gun(t_img *pic, t_img *game, int w, int h);
+int				mouse_press(int button, int x, int y, t_cub *cub);
+void			change_view(t_cub *cub, int side, double rotSpeed);
 void			step_fwd_back(t_cub *cub, int side, double moveSpeed);
 void			raycaster(t_cub *cub, t_img *anim, int bullet_change);
 void			my_mlx_pixel_put(t_img *data, int x, int y, int color);
 void			step_right_left(t_cub *cub, double moveSpeed, int move);
 void			rotate(t_cub *cub, double oDX, double oPX, double rotSpeed);
-void			draw(t_cub *cub, int beginX, int beginY, int endY, int color);
 
 #endif
