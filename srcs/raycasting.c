@@ -12,7 +12,7 @@ void	draw_floor_n_ceil(t_cub *cub)
 		while (++x < cub->W)
 			my_mlx_pixel_put(&cub->img, x, y, 0xFFAFFF);
 	}
-	while (++y < cub->H)
+	while (++y < cub->H - 1)
 	{
 		x = -1;
 		while (++x < cub->W)

@@ -2,9 +2,6 @@
 
 int	quit_game(t_cub *cub)
 {
-	(void)cub;
-	//free mallocs, destroy images etc.
-	
 	destroy_gun_imgs(cub);
 	destroy_textures(cub);
 	destroy_map(cub->map);

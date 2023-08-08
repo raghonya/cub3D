@@ -9,11 +9,11 @@ void	print_gun(t_img *pic, t_img *game, int w, int h)
 
 	px = 0;
 	x = w / 2 - pic->wd / 2 - 1;
-	while (++x < w / 2 + pic->wd / 2)
+	while (++x <= w / 2 + pic->wd / 2)
 	{
 		y = h - pic->ht - 1;
 		py = 0;
-		while (++y < h)
+		while (++y <= h)
 		{
 			if (my_mlx_color_taker(pic, px, py) != 4278190080)
 				my_mlx_pixel_put(game, x, y, \

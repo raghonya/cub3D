@@ -54,7 +54,7 @@ void	initialization(t_cub *cub)
 	cub->bullet_count = 10;
 	MLX.ptr = mlx_init();
 	err_msg(!MLX.ptr, "Mlx init error");
-	MLX.win = mlx_new_window(MLX.ptr, cub->W, cub->H + 100, \
+	MLX.win = mlx_new_window(MLX.ptr, cub->W, cub->H + 20, \
 	"Wolfenstein 3D without guns and enemies");
 	err_msg(!MLX.win, "Can`t open window for you");
 	wall_textures(cub);

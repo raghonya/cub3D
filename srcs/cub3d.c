@@ -102,24 +102,26 @@ void	find_player(t_cub *cub, char player)
 	set_dir_and_pos(cub, player);
 }
 
-// int mouse_press(int button, int x, int y, t_cub *cub)
-// {
-// 	// printf ("button: %d, x: %d, y: %d\n", button, x, y);
-// 	// if (button == 1)
-// 	// {
-// 	// 	gun_anim(cub, cub->gun);
-// 	// 	print_gun(&cub->gun->img, &cub->img, cub->W, cub->H);
-// 	// 	//ekranin cuyc tal bullet neri qanak
-// 	// 	return (0);
-// 	// }
-// 	return (0);
-// }
+int mouse_press(int button, int x, int y, t_cub *cub)
+{
+	(void)x;
+	(void)y;
+	if (button == 1)
+		gun_anim(cub, cub->gun->next);
+	mlx_destroy_image(MLX.ptr, cub->img.img);
+	create_img(cub);
+	if (button == 1)
+		raycaster(cub, &cub->gun->img, 1);
+	else
+		raycaster(cub, &cub->gun->img, 0);
+	return (0);
+}
 
 int	mouse_move(int x, int y, t_cub *cub)
 {
 	static int	oldX;
 
-	printf  ("x: %d, y: %d\n", x, y);
+	(void)y;
 	if (x < oldX)
 		change_view(cub, ARRLEFT);
 	if (x > oldX)
@@ -130,13 +132,12 @@ int	mouse_move(int x, int y, t_cub *cub)
 void	hooks(t_cub *cub)
 {
 	mlx_hook(MLX.win, 2, 1L << 0, &key_press, cub);
-	// mlx_hook(MLX.win, 3, 1L << 1, &key_release, cub);
+	mlx_hook(MLX.win, 4, 1L << 2, &mouse_press, cub);
+	mlx_hook(MLX.win, 6, 1L << 4, &mouse_move, cub);
 	// mlx_mouse_hook(MLX.win, &mouse_press, cub);
 	mlx_hook(MLX.win, 6, 1L << 4, &mouse_move, cub);
-	// dzel quit_game funkcian, destroy all images, free all mallocs
 	mlx_hook(MLX.win, 17, 1L << 15, &quit_game, cub);
 	mlx_loop(MLX.ptr);
-
 }
 
 int	main(int argc, char **argv)
