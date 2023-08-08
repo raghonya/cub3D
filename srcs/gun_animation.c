@@ -43,7 +43,6 @@ void	gun_anim(t_cub *cub, t_list *anim)
 		mlx_destroy_image(cub->mlx.ptr, cub->img.img);
 		create_img(cub);
 		raycaster(cub, &anim->img, 0);
-		usleep(10000);
 		anim = anim->next;
 	}
 	if (cub->bullet_count > 0)
