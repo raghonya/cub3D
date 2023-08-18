@@ -21,9 +21,9 @@ int	mouse_press(int button, int x, int y, t_cub *cub)
 	mlx_destroy_image(cub->mlx.ptr, cub->img.img);
 	create_img(cub);
 	if (button == 1)
-		raycaster(cub, &cub->gun->img, 1);
+		re_render(cub, &cub->gun->img, 1);
 	else
-		raycaster(cub, &cub->gun->img, 0);
+		re_render(cub, &cub->gun->img, 0);
 	return (0);
 }
 
@@ -36,9 +36,7 @@ int	mouse_move(int x, int y, t_cub *cub)
 		change_view(cub, ARRLEFT, 0.09);
 	else if (x > old_x)
 		change_view(cub, ARRRIGHT, 0.09);
-	mlx_destroy_image(cub->mlx.ptr, cub->img.img);
-	create_img(cub);
-	raycaster(cub, &cub->gun->img, 0);
+	re_render(cub, &cub->gun->img, 0);
 	old_x = x;
 	return (0);
 }

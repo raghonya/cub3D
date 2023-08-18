@@ -12,6 +12,13 @@
 
 #include <cub3d.h>
 
+void	re_render(t_cub *cub, t_img *img, int bul_change)
+{
+	mlx_destroy_image(cub->mlx.ptr, cub->img.img);
+	create_img(cub);
+	raycaster(cub, img, bul_change);
+}
+
 void	draw_floor_n_ceil(t_cub *cub)
 {
 	int	x;

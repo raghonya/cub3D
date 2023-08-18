@@ -157,6 +157,7 @@ void			calc_draw_ends(t_cub *cub, t_draw *tex);
 void			ft_lstadd_back(t_list **lst, t_list *new);
 void			draw_texture(t_cub *cub, int x, int tex_x);
 unsigned int	my_mlx_color_taker(t_img *data, int x, int y);
+void			re_render(t_cub *cub,t_img *img, int bul_change);
 void			print_gun(t_img *pic, t_img *game, int w, int h);
 int				mouse_press(int button, int x, int y, t_cub *cub);
 void			change_view(t_cub *cub, int side, double rotSpeed);
