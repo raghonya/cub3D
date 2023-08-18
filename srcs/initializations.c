@@ -12,14 +12,14 @@
 
 #include <cub3d.h>
 
-void	create_img(t_cub *cub)
+void	create_img(t_cub *cub, t_img *img, int wd, int ht)
 {
-	cub->img.img = mlx_new_image(cub->mlx.ptr, cub->map_wd, cub->map_ht);
+	img->img = mlx_new_image(cub->mlx.ptr, wd, ht);
 	err_msg(!cub->img.img, "Can`t create image for you");
-	cub->img.addr = mlx_get_data_addr(cub->img.img, &cub->img.bits_per_pixel, \
-	&cub->img.line_length, &cub->img.endian);
-	cub->img.wd = cub->map_wd;
-	cub->img.ht = cub->map_ht;
+	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, \
+	&img->line_length, &img->endian);
+	img->wd = wd;
+	img->ht = ht;
 }
 
 void	gun_pic_list_init(t_cub *cub, t_list **gun, char *pic)
@@ -71,5 +71,5 @@ void	initialization(t_cub *cub)
 	err_msg(!cub->mlx.win, "Can`t open window for you");
 	wall_textures(cub);
 	gun_pic_init(cub);
-	create_img(cub);
+	create_img(cub, &cub->img, cub->map_wd, cub->map_ht);
 }

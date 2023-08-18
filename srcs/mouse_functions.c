@@ -19,7 +19,7 @@ int	mouse_press(int button, int x, int y, t_cub *cub)
 	if (button == 1)
 		gun_anim(cub, cub->gun->next);
 	mlx_destroy_image(cub->mlx.ptr, cub->img.img);
-	create_img(cub);
+	create_img(cub, &cub->img, cub->map_wd, cub->map_ht);
 	if (button == 1)
 		re_render(cub, &cub->gun->img, 1);
 	else

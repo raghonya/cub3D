@@ -126,12 +126,12 @@ typedef struct s_cub
 	int			map_wd;
 	int			map_ht;
 	t_player	player;
+	t_img		minimap;
 	int			bullet_count;
 }	t_cub;
 
 void			printmap(t_cub cub);
 int				quit_game(t_cub *cub);
-void			create_img(t_cub *cub);
 void			destroy_map(char **map);
 void			wall_textures(t_cub *cub);
 t_list			*ft_lstnew(void *content);
@@ -159,6 +159,7 @@ void			re_render(t_cub *cub,t_img *img, int bul_change);
 void			print_gun(t_img *pic, t_img *game, int w, int h);
 int				mouse_press(int button, int x, int y, t_cub *cub);
 void			change_view(t_cub *cub, int side, double rotSpeed);
+void			create_img(t_cub *cub, t_img *img, int wd, int ht);
 void			step_fwd_back(t_cub *cub, int side, double moveSpeed);
 void			raycaster(t_cub *cub, t_img *anim, int bullet_change);
 void			my_mlx_pixel_put(t_img *data, int x, int y, int color);

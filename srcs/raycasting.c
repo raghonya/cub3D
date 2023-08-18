@@ -15,7 +15,7 @@
 void	re_render(t_cub *cub, t_img *img, int bul_change)
 {
 	mlx_destroy_image(cub->mlx.ptr, cub->img.img);
-	create_img(cub);
+	create_img(cub, &cub->img, cub->map_wd, cub->map_ht);
 	raycaster(cub, img, bul_change);
 }
 
