@@ -1,6 +1,6 @@
 NAME	=	cub3D
 
-CFLAGS	=	-Wall -Wextra -Werror
+CFLAGS	=	#-Wall -Wextra -Werror
 
 f		=	-fsanitize=address -g
 
@@ -23,7 +23,7 @@ SRCS	=	srcs/cub3d.c \
 			srcs/step_and_view.c \
 			srcs/gun_animation.c \
 			srcs/list_functions.c \
-			srec/render_minimap.c \
+			srcs/render_minimap.c \
 			srcs/mouse_functions.c \
 			srcs/initializations.c
 

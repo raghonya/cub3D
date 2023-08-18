@@ -15,9 +15,10 @@
 void	create_img(t_cub *cub, t_img *img, int wd, int ht)
 {
 	img->img = mlx_new_image(cub->mlx.ptr, wd, ht);
-	err_msg(!cub->img.img, "Can`t create image for you");
+	err_msg(!img->img, "Can`t create image for you");
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, \
 	&img->line_length, &img->endian);
+	err_msg(!img->addr, "Address initialization");
 	img->wd = wd;
 	img->ht = ht;
 }
@@ -34,6 +35,7 @@ void	gun_pic_list_init(t_cub *cub, t_list **gun, char *pic)
 	new->img.addr = mlx_get_data_addr(new->img.img, \
 	&new->img.bits_per_pixel, &new->img.line_length, \
 	&new->img.endian);
+	err_msg(!new->img.addr, "Address initialization");
 	ft_lstadd_back(gun, new);
 }
 
@@ -57,8 +59,8 @@ void	gun_pic_init(t_cub *cub)
 
 void	initialization(t_cub *cub)
 {
-	cub->map_wd = 1200;
-	cub->map_ht = 800;
+	cub->map_wd = 1000;
+	cub->map_ht = 700;
 	cub->player.dir_x = 0;
 	cub->player.dir_y = 0;
 	cub->player.plane_x = 0;

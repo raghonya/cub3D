@@ -126,7 +126,7 @@ int	main(int argc, char **argv)
 	err_msg (argc != 2, "Invalid number of arguments, 1 required");
 	initialization(&cub);
 	file_check(&cub, argv[1]);
-	// raycaster(&cub, &cub.gun->img, 1);
-	// hooks(&cub);
+	raycaster(&cub, &cub.gun->img, 1);
+	hooks(&cub);
 	return (0);
 }
