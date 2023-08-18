@@ -24,8 +24,6 @@
 Map i mej
 0 - empty space
 1 - walls with different pictures for all sides
-2 - svastika flag
-3 - prison with skeleton
 */
 
 # ifdef __linux__
@@ -123,11 +121,11 @@ typedef struct s_cub
 	t_mlx		mlx;
 	t_img		img;
 	t_list		*gun;
+	t_img		*texs;
 	char		**map;
 	int			map_wd;
 	int			map_ht;
 	t_player	player;
-	t_img		*texs;
 	int			bullet_count;
 }	t_cub;
 

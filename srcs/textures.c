@@ -14,21 +14,17 @@
 
 t_img	*choose_texture(t_cub *cub)
 {
-	if (cub->map[cub->player.map_x][cub->player.map_y] == '1')
-	{
-		if (cub->ray.side == 1 && cub->ray.ray_y > 0)
-			return (cub->texs);
-		else if (cub->ray.side == 1 && cub->ray.ray_y <= 0)
-			return (cub->texs + 1);
-		else if (cub->ray.side == 0 && cub->ray.ray_x > 0)
-			return (cub->texs + 2);
-		else if (cub->ray.side == 0 && cub->ray.ray_x <= 0)
-			return (cub->texs + 3);
-	}
-	else if (cub->map[cub->player.map_x][cub->player.map_y] == '2')
-		return (cub->texs + 4);
-	else if (cub->map[cub->player.map_x][cub->player.map_y] == '3')
-		return (cub->texs + 5);
+	// if (cub->map[cub->player.map_x][cub->player.map_y] == '1')
+	// {
+	if (cub->ray.side == 1 && cub->ray.ray_y > 0)
+		return (cub->texs);
+	else if (cub->ray.side == 1 && cub->ray.ray_y <= 0)
+		return (cub->texs + 1);
+	else if (cub->ray.side == 0 && cub->ray.ray_x > 0)
+		return (cub->texs + 2);
+	else if (cub->ray.side == 0 && cub->ray.ray_x <= 0)
+		return (cub->texs + 3);
+	// }
 	return (cub->texs);
 }
 
