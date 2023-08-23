@@ -14,18 +14,13 @@
 
 t_img	*choose_texture(t_cub *cub)
 {
-	// if (cub->map[cub->player.map_x][cub->player.map_y] == '1')
-	// {
-	if (cub->ray.side == 1 && cub->ray.ray_y > 0)
+	if (cub->ray.side == 1 && cub->ray.ray_y <= 0)
 		return (cub->texs);
-	else if (cub->ray.side == 1 && cub->ray.ray_y <= 0)
-		return (cub->texs + 1);
 	else if (cub->ray.side == 0 && cub->ray.ray_x > 0)
-		return (cub->texs + 2);
+		return (cub->texs + 1);
 	else if (cub->ray.side == 0 && cub->ray.ray_x <= 0)
-		return (cub->texs + 3);
-	// }
-	return (cub->texs);
+		return (cub->texs + 2);
+	return (cub->texs + 3);
 }
 
 void	draw_texture(t_cub *cub, int x, int tex_x)
