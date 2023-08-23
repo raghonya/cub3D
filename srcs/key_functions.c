@@ -42,10 +42,12 @@ int	key_press(int key, t_cub *cub)
 		change_view(cub, ARRLEFT, 0.06);
 	else if (key == SHOOT)
 		gun_anim(cub, cub->gun->next);
+	else if (key == MMAP_HIDE)
+		cub->show_map = !cub->show_map;
 	else
 		return (1);
 	if (key == SHOOT)
-		re_render(cub, &cub->gun->img, 1);
+		re_render(cub, &cub->gun->img, BULL_CHANGE);
 	else
 		re_render(cub, &cub->gun->img, 0);
 	return (0);

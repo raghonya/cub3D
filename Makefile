@@ -12,7 +12,8 @@ OBJDIR	=	obj
 
 SRCSDIR	=	srcs
 
-SRCS	=	srcs/cub3d.c \
+SRCS	=	$(wildcard srcs/*.c)
+#srcs/cub3d.c \
 			srcs/destroy.c \
 			srcs/textures.c \
 			srcs/raycasting.c \

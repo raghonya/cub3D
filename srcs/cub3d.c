@@ -119,6 +119,7 @@ void	hooks(t_cub *cub)
 	mlx_loop(cub->mlx.ptr);
 }
 
+
 int	main(int argc, char **argv)
 {
 	t_cub	cub;
@@ -126,6 +127,37 @@ int	main(int argc, char **argv)
 	err_msg (argc != 2, "Invalid number of arguments, 1 required");
 	initialization(&cub);
 	file_check(&cub, argv[1]);
+	
+	// t_news	*news;
+	// char	**map;
+	// char	**map_maze;
+	// int		fd;
+	
+	// news = NULL;
+	// map_maze = NULL;
+	// fd = check_file_name(argc, argv);	
+	// make_news(&news);
+	// map = create_all_map(fd);
+	// check_before_map(map, &news);
+	// map_maze = creat_map_maze(argv, map);
+	// err_msg (!map_maze || !*map_maze, "Incorrect map");
+	// check_count_player(map_maze);
+	// check_map_simbols(map_maze);
+	// replac_player(map_maze);
+	// replace_first_tab(map_maze);
+	// check_empty(map_maze);
+	// cub.map = map_maze;
+
+	// int i = -1;
+	// // while (news)
+	// // {
+	// // 	printf ("%s\n", news->line);
+	// // 	news = news->next;
+	// // 	}
+	// while (map_maze[++i])
+	// printf ("%s\n", map_maze[i]);
+	// 	printf ("%s\n", map[i]);
+	// file_check(&cub, argv[1]);
 	raycaster(&cub, &cub.gun->img, 1);
 	hooks(&cub);
 	return (0);

@@ -17,8 +17,9 @@
 # include <math.h>
 # include <stdio.h>
 # include <libft.h>
-# include <stdlib.h>
 # include <fcntl.h>
+# include <stdlib.h>
+# include <get_next_line.h>
 
 /*
 Map i mej
@@ -37,6 +38,7 @@ Map i mej
 #  define KEYS 115
 #  define KEYA 97
 #  define SHOOT 32
+#  define MMAP_HIDE 109
 # else
 #  define ESC 53
 #  define ARRUP 126
@@ -48,10 +50,13 @@ Map i mej
 #  define KEYS 1
 #  define KEYA 0
 #  define SHOOT 49
+// avelacnel minimap i hamar M tary
 # endif
 
 # define TEXWIDTH 64
 # define TEXHEIGHT 64
+# define MMAP_ICON 10
+# define BULL_CHANGE 1
 
 typedef struct s_draw
 {
@@ -115,6 +120,13 @@ typedef struct s_mlx
 	void	*win;
 }	t_mlx;
 
+typedef struct s_news
+{
+	struct s_news	*next;
+	char			*line;
+	struct s_news	*prev;
+}	t_news;
+
 typedef struct s_cub
 {
 	t_ray		ray;
@@ -127,12 +139,48 @@ typedef struct s_cub
 	int			map_ht;
 	t_player	player;
 	t_img		minimap;
+	int			show_map;
 	int			bullet_count;
 }	t_cub;
+
+/// @brief //////////////////////////////////////////////
+
+
+t_news	*fine_node(t_news **news, char *line);
+// int		ft_strcmp(char *s1, char *s2);
+// int		ft_strcmp(char *s1, char *s2);
+// int		ft_atoi(const char *str);
+int		splited_len(char **splited);
+int		lst_siz(t_news *news);
+int		check_file_name(int argc, char **argv);
+void	check_empty(char **map_maze);
+// void	ft_putendl_fd(char	*s, int fd);
+void	free_2d(char **s);
+void	replace_first_tab(char **map_maze);
+void	check_map_simbols(char **map_maze);
+void	make_news(t_news **news);
+void	check_color_line(char **splited);
+void	replac_player(char **map_maze);
+void	lst_pop(t_news **news, t_news *remov);
+void	check_before_map(char **map, t_news **news);
+void	check_count_player(char **map_maze);
+char	*ft_strstr(char *str, char *to_find);
+// char	*ft_strrchr(const char	*str, int ch);
+// char	*ft_strdup(const char *s);
+// char	*ft_substr(char const *s, unsigned int start, size_t len);
+// char	**ft_split(char const	*s, char c);
+char	**ft_allocate_matrix(char const	*s, char c);
+char	**ft_fill_matrix(char const	*s, char c, char	**res);
+// char	*ft_strtrim(char *s1, char *set);
+char	**creat_map_maze(char **argv, char **map);
+char	**create_all_map(int fd);
+
+//////////////////////////////////////////////////////////////
 
 void			printmap(t_cub cub);
 int				quit_game(t_cub *cub);
 void			destroy_map(char **map);
+void			draw_minimap(t_cub *cub);
 void			wall_textures(t_cub *cub);
 t_list			*ft_lstnew(void *content);
 void			find_step_dir(t_cub *cub);

@@ -69,5 +69,7 @@ void	raycaster(t_cub *cub, t_img *anim, int bullet_change)
 	print_gun(anim, &cub->img, cub->map_wd, cub->map_ht);
 	if (bullet_change)
 		change_bullet_count(cub);
+	if (cub->show_map)
+		draw_minimap(cub);
 	mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, cub->img.img, 0, 0);
 }
