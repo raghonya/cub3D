@@ -15,10 +15,10 @@
 void	calc_ray_pos(t_cub *cub, int pixel)
 {
 	cub->ray.camera_x = 2.0 * pixel / (double)cub->map_wd - 1.0;
-	cub->ray.ray_x = \
-	cub->player.dir_x + cub->player.plane_x * cub->ray.camera_x;
-	cub->ray.ray_y = \
-	cub->player.dir_y + cub->player.plane_y * cub->ray.camera_x;
+	cub->ray.ray_x = cub->player.dir_x + \
+	cub->player.plane_x * cub->ray.camera_x;
+	cub->ray.ray_y = cub->player.dir_y + \
+	cub->player.plane_y * cub->ray.camera_x;
 	cub->player.map_x = (int)cub->player.pos_x;
 	cub->player.map_y = (int)cub->player.pos_y;
 	if (cub->ray.ray_x == 0)

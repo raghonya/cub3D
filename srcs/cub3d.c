@@ -158,7 +158,7 @@ int	main(int argc, char **argv)
 	// printf ("%s\n", map_maze[i]);
 	// 	printf ("%s\n", map[i]);
 	// file_check(&cub, argv[1]);
-	raycaster(&cub, &cub.gun->img, 1);
+	raycaster(&cub, &cub.gun->img, BULL_CHANGE);
 	hooks(&cub);
 	return (0);
 }
