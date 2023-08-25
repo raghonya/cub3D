@@ -50,6 +50,8 @@ void	change_bullet_count(t_cub *cub)
 	cub->map_ht + 10, 0xFFFFFF, "Bullets left: ");
 	mlx_string_put(cub->mlx.ptr, cub->mlx.win, 100, \
 	cub->map_ht + 10, 0xFFFFFF, str);
+	mlx_string_put(cub->mlx.ptr, cub->mlx.win, cub->map_wd / 3, \
+	cub->map_ht + 10, 0xFFFFFF, "Press M to show/hide minimap");
 	free(str);
 }
 
@@ -72,5 +74,5 @@ void	raycaster(t_cub *cub, t_img *anim, int bullet_change)
 	if (cub->show_map)
 		draw_minimap(cub);
 	mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, cub->img.img, 0, 0);
-	// printf ("dirx: %f ,diry: %f\n", cub->player.dir_x, cub->player.dir_y);
+	printf ("dirx: %f ,diry: %f\n", cub->player.dir_x, cub->player.dir_y);
 }

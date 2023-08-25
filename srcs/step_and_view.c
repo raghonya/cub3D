@@ -39,17 +39,17 @@ void	change_view(t_cub *cub, int side, double rotSpeed)
 
 void	choose_direction(t_cub *cub)
 {
-	if (cub->player.dir_x < 0 && cub->player.dir_y > 0)
+	if (cub->player.dir_x <= 0 && cub->player.dir_y >= 0)
 	{
 		cub->player.dir_x = 1 - pow(cub->player.dir_x, 2);
 		cub->player.dir_y = 1 - pow(cub->player.dir_y, 2);
 	}
-	else if (cub->player.dir_x > 0 && cub->player.dir_y > 0)
+	else if (cub->player.dir_x >= 0 && cub->player.dir_y >= 0)
 	{
 		cub->player.dir_x = 1 - pow(cub->player.dir_x, 2);
 		cub->player.dir_y = -(1 - pow(cub->player.dir_y, 2));
 	}
-	else if (cub->player.dir_x > 0 && cub->player.dir_y < 0)
+	else if (cub->player.dir_x >= 0 && cub->player.dir_y <= 0)
 	{
 		cub->player.dir_x = -(1 - pow(cub->player.dir_x, 2));
 		cub->player.dir_y = -(1 - pow(cub->player.dir_y, 2));

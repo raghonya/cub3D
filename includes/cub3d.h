@@ -50,6 +50,7 @@ Map i mej
 #  define KEYS 1
 #  define KEYA 0
 #  define SHOOT 49
+#  define MMAP_HIDE 46
 # endif
 
 # define TEXWIDTH 64
@@ -146,43 +147,13 @@ typedef struct s_cub
 	int			bullet_count;
 }	t_cub;
 
-/// @brief //////////////////////////////////////////////
-
-
-t_news	*find_node(t_news **news, char *line);
-// int		ft_strcmp(char *s1, char *s2);
-// int		ft_strcmp(char *s1, char *s2);
-// int		ft_atoi(const char *str);
-int		splited_len(char **splited);
-int		lst_siz(t_news *news);
-int		check_file_name(char **argv);
-void	check_empty(char **map_maze);
-// void	ft_putendl_fd(char	*s, int fd);
-void	free_2d(char **s);
-void	replace_first_tab(char **map_maze);
-void	check_map_simbols(char **map_maze);
-void	make_news(t_news **news);
-void	check_color_line(t_cub *cub, char **splited);
-void	replace_player(t_cub *cub, char **map_maze);
-void	lst_pop(t_news **news, t_news *remove);
-void	check_before_map(t_cub *cub, char **map, t_news **news);
-void	check_count_player(char **map_maze);
-char	*ft_strstr(char *str, char *to_find);
-// char	*ft_strrchr(const char	*str, int ch);
-// char	*ft_strdup(const char *s);
-// char	*ft_substr(char const *s, unsigned int start, size_t len);
-// char	**ft_split(char const	*s, char c);
-char	**ft_allocate_matrix(char const	*s, char c);
-char	**ft_fill_matrix(char const	*s, char c, char	**res);
-// char	*ft_strtrim(char *s1, char *set);
-char	**create_map_maze(char **argv, char **map);
-char	**create_all_map(int fd);
-
-//////////////////////////////////////////////////////////////
-
+void			free_2d(char **s);
 void			printmap(t_cub cub);
+int				lst_siz(t_news *news);
 int				quit_game(t_cub *cub);
 void			destroy_map(char **map);
+void			make_news(t_news **news);
+char			**create_all_map(int fd);
 void			draw_minimap(t_cub *cub);
 void			wall_textures(t_cub *cub);
 t_list			*ft_lstnew(void *content);
@@ -192,6 +163,9 @@ void			initialization(t_cub *cub);
 int				calc_texture_x(t_cub *cub);
 void			create_wall_img(t_cub *cub);
 t_img			*choose_texture(t_cub *cub);
+int				splited_len(char **splited);
+int				check_file_name(char **argv);
+void			check_empty(char **map_maze);
 void			destroy_gun_imgs(t_cub *cub);
 void			destroy_textures(t_cub *cub);
 int				key_press(int key, t_cub *cub);
@@ -199,13 +173,22 @@ int				key_release(int key, t_cub *cub);
 int				trgb(int t, int r, int g, int b);
 void			err_msg(int condition, char *msg);
 void			gun_anim(t_cub *cub, t_list *anim);
+void			replace_first_tab(char **map_maze);
+void			check_map_simbols(char **map_maze);
+void			check_count_player(char **map_maze);
 void			calc_ray_pos(t_cub *cub, int pixel);
+char			*ft_strstr(char *str, char *to_find);
 int				mouse_move(int x, int y, t_cub *cub);
 void			find_player(t_cub *cub, char player);
+t_news			*find_node(t_news **news, char *line);
+void			lst_pop(t_news **news, t_news *remove);
 void			calc_draw_ends(t_cub *cub, t_draw *tex);
 void			set_dir_and_pos(t_cub *cub, char player);
 void			ft_lstadd_back(t_list **lst, t_list *new);
+char			**create_map_maze(char **argv, char **map);
 void			draw_texture(t_cub *cub, int x, int tex_x);
+void			replace_player(t_cub *cub, char **map_maze);
+void			check_color_line(t_cub *cub, char **splited);
 unsigned int	my_mlx_color_taker(t_img *data, int x, int y);
 void			re_render(t_cub *cub,t_img *img, int bul_change);
 void			print_gun(t_img *pic, t_img *game, int w, int h);
@@ -216,6 +199,7 @@ void			step_fwd_back(t_cub *cub, int side, double moveSpeed);
 void			raycaster(t_cub *cub, t_img *anim, int bullet_change);
 void			my_mlx_pixel_put(t_img *data, int x, int y, int color);
 void			step_right_left(t_cub *cub, double moveSpeed, int move);
+void			check_before_map(t_cub *cub, char **map, t_news **news);
 void			rotate(t_cub *cub, double oDX, double oPX, double rotSpeed);
 
 #endif
