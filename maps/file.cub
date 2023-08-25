@@ -1,9 +1,9 @@
 
              F             128,                       128, 129
-        NO       ./xpm/NO.xpm
+        NO       ./pics/bluestone.xpm
 
 
-      SO      ./xpm/SO.xpm          
+      SO      ./pics/eagle.xpm          
 	                          
 
 
@@ -11,33 +11,8 @@
 
 C                                          65,                105,     225
 
-WE             ./xpm/WE.xpm
-            EA              ./xpm/EA.xpm
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+WE             ./pics/redbrick.xpm
+            EA              ./pics/greystone.xpm
             1111111111111111111111111
             1000000000110000000000001
             1011000001110000000000001                          111111

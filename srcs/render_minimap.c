@@ -37,12 +37,17 @@ void	calc_icon_pos(t_cub *cub, int wall, int space, int player)
 
 	y = 0;
 	map_h = ft_matlen(cub->map);
-	map_w = ft_strlen(*cub->map);
 	while (y < map_h)
 	{
 		x = 0;
+		map_w = ft_strlen(cub->map[y]);
 		while (x < map_w)
 		{
+			if (cub->map[y][x] == ' ')
+			{
+				x++;
+				continue ;
+			}
 			draw_sq(&cub->img, x * MMAP_ICON, y * MMAP_ICON, space);
 			if (cub->map[y][x] == '1')
 				draw_sq(&cub->img, x * MMAP_ICON, y * MMAP_ICON, wall);

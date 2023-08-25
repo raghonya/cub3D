@@ -62,10 +62,6 @@ void	initialization(t_cub *cub)
 	cub->map_wd = 1000;
 	cub->map_ht = 700;
 	cub->show_map = 1;
-	cub->player.dir_x = 0;
-	cub->player.dir_y = 0;
-	cub->player.plane_x = 0;
-	cub->player.plane_y = 0;
 	cub->bullet_count = 10;
 	cub->mlx.ptr = mlx_init();
 	err_msg(!cub->mlx.ptr, "Mlx init error");

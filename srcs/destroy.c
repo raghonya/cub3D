@@ -31,9 +31,7 @@ void	destroy_map(char **map)
 
 	i = -1;
 	while (map[++i])
-	{
 		free(map[i]);
-	}
 	free(map);
 }
 
@@ -45,6 +43,8 @@ void	destroy_textures(t_cub *cub)
 	while (++i < 4)
 	{
 		mlx_destroy_image(cub->mlx.ptr, cub->texs[i].img);
+		free(cub->texs_path[i]);
 	}
 	free(cub->texs);
+	free(cub->texs_path);
 }
