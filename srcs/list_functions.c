@@ -60,12 +60,17 @@ void	push_back(t_news **news, char *line)
 
 	tp = NULL;
 	new = NULL;
+	err_msg(!line, MALLOC);
 	if (!*news)
+	{
 		*news = make_new(line);
+		err_msg(!*news, MALLOC);
+	}
 	else
 	{
 		tp = *news;
 		new = make_new(line);
+		err_msg(!new, MALLOC);
 		while (tp->next != NULL)
 			tp = tp->next;
 		tp->next = new;

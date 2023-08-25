@@ -14,20 +14,14 @@
 
 void	check_firs_last(char *line)
 {
-	int		i;
 	char	*res;
+	int		i;
 
-	i = 0;
+	i = -1;
 	res = ft_strtrim(line, " \t");
-	while (res[i])
-	{
-		if (res[i] != '1' && res[i] != ' ')
-		{
-			ft_putendl_fd("Error: wrong map", 2);
-			exit(EXIT_FAILURE);
-		}
-		i++;
-	}
+	err_msg (!res, MALLOC);
+	while (res[++i])
+		err_msg (res[i] != '1' && res[i] != ' ', "Wrong map borders");
 	if (res)
 		free(res);
 }
@@ -39,19 +33,12 @@ void	check_middle_line(char *line)
 
 	i = 0;
 	res = ft_strtrim(line, " \t");
-	if (res[i] != '1' || res[ft_strlen(res) - 1] != '1')
-	{
-		ft_putendl_fd("Error: wrong map", 2);
-		exit(EXIT_FAILURE);
-	}
+	err_msg(!res, MALLOC);
+	err_msg (res[i] != '1' || res[ft_strlen(res) - 1] != '1', "Wrong map borders");
 	while (res[i])
 	{
-		if (res[i] != '1' && res[i] != '0' && res[i] != ' ' && res[i] != 'N'
-			&& res[i] != 'S' && res[i] != 'W' && res[i] != 'E')
-		{
-			ft_putendl_fd("Error: wrong map", 2);
-			exit(EXIT_FAILURE);
-		}	
+		err_msg (res[i] != '1' && res[i] != '0' && res[i] != ' ' && res[i] != 'N'
+			&& res[i] != 'S' && res[i] != 'W' && res[i] != 'E', "Wrong map symbols");
 		i++;
 	}
 	if (res)

@@ -38,7 +38,6 @@ void	replace_player(t_cub *cub, char **map_maze)
 			if (map_maze[i][j] == 'N' || map_maze[i][j] == 'S'
 				|| map_maze[i][j] == 'E' || map_maze[i][j] == 'W')
 				{
-					printf ("aaa\n");
 					cub->player.pos_x = i + 0.5;
 					cub->player.pos_y = j + 0.5;
 					set_dir_and_pos(cub, map_maze[i][j]);
@@ -61,9 +60,11 @@ void	replace_first_tab(char **map_maze)
 	{
 		if (map_maze[i][0] == '\t')
 		{
-			line = ft_strjoin(ft_strdup("    "), map_maze[i]);
+			line = strjoin_w_free(ft_strdup("    "), map_maze[i]);
+			err_msg (!line, MALLOC);
 			free(map_maze[i]);
 			map_maze[i] = ft_strdup(line);
+			err_msg (!map_maze[i], MALLOC);
 			free(line);
 		}
 		i++;

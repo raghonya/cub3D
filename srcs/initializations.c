@@ -28,7 +28,7 @@ void	gun_pic_list_init(t_cub *cub, t_list **gun, char *pic)
 	t_list	*new;
 
 	new = ft_lstnew("");
-	err_msg(!new, "Malloc error");
+	err_msg(!new, MALLOC);
 	new->img.img = mlx_xpm_file_to_image(cub->mlx.ptr, \
 	pic, &new->img.wd, &new->img.ht);
 	err_msg(!new->img.img, "Image initialization");
@@ -46,7 +46,7 @@ void	gun_pic_init(t_cub *cub)
 
 	i = -1;
 	gun_pics = malloc(sizeof(char *) * 4);
-	err_msg(!gun_pics, "Malloc error");
+	err_msg(!gun_pics, MALLOC);
 	*gun_pics = "pics/gun_anim1.xpm";
 	*(gun_pics + 1) = "pics/gun_anim2.xpm";
 	*(gun_pics + 2) = "pics/gun_anim3.xpm";

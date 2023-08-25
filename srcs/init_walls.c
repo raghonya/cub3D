@@ -15,7 +15,7 @@
 void	create_wall_img(t_cub *cub)
 {
 	cub->texs = malloc(sizeof(t_img) * 4);
-	err_msg(!cub->texs, "Malloc Error");
+	err_msg(!cub->texs, MALLOC);
 	cub->texs[0].img = mlx_xpm_file_to_image(cub->mlx.ptr, \
 	cub->texs_path[0], &cub->texs[0].wd, &cub->texs[0].ht);
 	cub->texs[1].img = mlx_xpm_file_to_image(cub->mlx.ptr, \

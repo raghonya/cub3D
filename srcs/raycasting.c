@@ -29,13 +29,13 @@ void	draw_floor_n_ceil(t_cub *cub)
 	{
 		x = -1;
 		while (++x < cub->map_wd)
-			my_mlx_pixel_put(&cub->img, x, y, 0xFFAFFF);
+			my_mlx_pixel_put(&cub->img, x, y, cub->ceil_color);
 	}
 	while (++y < cub->map_ht - 1)
 	{
 		x = -1;
 		while (++x < cub->map_wd)
-			my_mlx_pixel_put(&cub->img, x, y, 0x00B000);
+			my_mlx_pixel_put(&cub->img, x, y, cub->floor_color);
 	}
 }
 
@@ -44,7 +44,7 @@ void	change_bullet_count(t_cub *cub)
 	char	*str;
 
 	str = ft_itoa(cub->bullet_count);
-	err_msg(!str, "Malloc error");
+	err_msg(!str, MALLOC);
 	mlx_clear_window(cub->mlx.ptr, cub->mlx.win);
 	mlx_string_put(cub->mlx.ptr, cub->mlx.win, 0, \
 	cub->map_ht + 10, 0xFFFFFF, "Bullets left: ");

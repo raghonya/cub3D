@@ -16,16 +16,10 @@ void	check_new_line(char *line)
 {
 	int	i;
 
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] == '\n' && line[i + 1] == '\n')
-		{
-			ft_putendl_fd("Error: new line", 2);
-			exit(EXIT_FAILURE);
-		}
-		i++;
-	}
+	i = -1;
+	while (line[++i])
+		err_msg (line[i] == '\n' && line[i + 1] == '\n', \
+		"Found new line in maze");
 }
 
 char	**return_map_maze(char *line, char **map)
@@ -35,18 +29,22 @@ char	**return_map_maze(char *line, char **map)
 	char	**map_maze;
 
 	last = ft_strdup(map[5]);
+	err_msg (!last, MALLOC);
 	res = ft_strdup((ft_strstr(line, last) + ft_strlen(last)));
+	err_msg (!res, MALLOC);
 	free(line);
 	free(last);
 	line = ft_strtrim(res, "\n");
+	err_msg (!line, MALLOC);
 	free(res);
 	check_new_line(line);
 	map_maze = ft_split(line, '\n');
+	err_msg (!map_maze, MALLOC);
 	free(line);
 	return (map_maze);
 }
 
-char	**creat_map_maze(char **argv, char **map)
+char	**create_map_maze(char **argv, char **map)
 {
 	char	*line;
 	char	*joined;
@@ -61,6 +59,7 @@ char	**creat_map_maze(char **argv, char **map)
 		if (!joined)
 			break ;
 		line = strjoin_w_free(line, joined);
+		err_msg(!line, MALLOC);
 		free(joined);
 	}
 	close(fd);

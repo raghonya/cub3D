@@ -123,6 +123,30 @@ void	hooks(t_cub *cub)
 	mlx_loop(cub->mlx.ptr);
 }
 
+void	file_parsing(t_cub *cub, char **argv)
+{
+	t_news	*news;
+	char	**map;
+	int		fd;
+	
+	news = NULL;
+	cub->map = NULL;
+	cub->texs_path = malloc(sizeof(char *) * 4);
+	err_msg(!cub->texs_path, MALLOC);
+	fd = check_file_name(argv);
+	make_news(&news);
+	map = create_all_map(fd);
+	err_msg(!map, MALLOC);
+	check_before_map(cub, map, &news);
+	cub->map = create_map_maze(argv, map);
+	err_msg (!cub->map || !*cub->map, "Incorrect map");
+	check_count_player(cub->map);
+	check_map_simbols(cub->map);
+	replace_player(cub, cub->map);
+	replace_first_tab(cub->map);
+	check_empty(cub->map);
+	free_2d(map);
+}
 
 int	main(int argc, char **argv)
 {
@@ -130,27 +154,7 @@ int	main(int argc, char **argv)
 
 	err_msg (argc != 2, "Invalid number of arguments, 1 required");
 	
-	t_news	*news;
-	char	**map;
-	char	**map_maze;
-	int		fd;
-	
-	news = NULL;
-	map_maze = NULL;
-	cub.texs_path = malloc(sizeof(char *) * 4);
-	err_msg(!cub.texs_path, "Malloc error");
-	fd = check_file_name(argc, argv);	
-	make_news(&news);
-	map = create_all_map(fd);
-	check_before_map(&cub, map, &news);
-	map_maze = creat_map_maze(argv, map);
-	err_msg (!map_maze || !*map_maze, "Incorrect map");
-	check_count_player(map_maze);
-	check_map_simbols(map_maze);
-	replace_player(&cub, map_maze);
-	replace_first_tab(map_maze);
-	check_empty(map_maze);
-	cub.map = map_maze;
+	file_parsing(&cub, argv);
 	initialization(&cub);
 	// file_check(&cub, argv[1]);
 	raycaster(&cub, &cub.gun->img, BULL_CHANGE);

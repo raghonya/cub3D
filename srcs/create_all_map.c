@@ -16,7 +16,6 @@ void	check_last_line(char *line)
 {
 	char	*last;
 
-	last = NULL;
 	last = ft_strrchr(line, '\n');
 	err_msg (ft_strlen(last) == 1, "New line");
 }
@@ -28,19 +27,16 @@ char	**create_all_map(int fd)
 	char	*res;
 	char	**splited;
 
-	joined = NULL;
 	line = NULL;
-	res = NULL;
-	splited = NULL;
 	while (1)
 	{
 		joined = get_next_line(fd);
 		if (!joined)
 			break ;
 		res = ft_strtrim(joined, "\t ");
-		free(joined);
-		joined = line;
-		line = ft_strjoin(line, res);
+		err_msg(!res, MALLOC);
+		line = strjoin_w_free(line, res);
+		err_msg(!line, MALLOC);
 		free(joined);
 		free(res);
 	}

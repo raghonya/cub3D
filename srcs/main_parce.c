@@ -61,17 +61,12 @@ void	check_empty(char **map_maze)
 			{
 				if (j > (int)(ft_strlen(map_maze[i + 1]) - 1)
 					|| j > (int)(ft_strlen(map_maze[i - 1]) - 1))
-				{
-					ft_putendl_fd("Error: wrong map22", 2);
-					exit(EXIT_FAILURE);
-				}
+					err_msg(1, "Wrong map borders");
 				else
-				{
 					err_msg (map_maze[i + 1][j] == ' ' || map_maze[i - 1][j] == ' ' \
 					|| map_maze[i][j + 1] == ' ' || map_maze[i][j - 1] == ' ' \
 					|| map_maze[i + 1][j] == '\t' \
-					|| map_maze[i - 1][j] == '\t', "Wrong map42");
-				}
+					|| map_maze[i - 1][j] == '\t', "Wrong map maze");
 			}	
 		}
 	}

@@ -46,36 +46,35 @@ void	check_splited(t_cub *cub, char **splited, t_news **news)
 				choose_wall(cub, splited);
 			}
 			if (ft_strlen(tp->line) == 1)
-				check_color_line(splited);
+				check_color_line(cub, splited);
 			lst_pop(news, fine_node(news, tp->line));
 			return ;
 		}
 		tp = tp->next;
 	}
-	if (!tp)
-	{
-		ft_putendl_fd("Error: incorect name2", 2);
-		exit(EXIT_FAILURE);
-	}
+	err_msg (!tp, "incorect name of instructions");
 }
 
 void	make_splited(t_cub *cub, char *line, t_news **news)
 {
 	char	**splited;
 	char	*res;
-	int		j;
+	int		i;
 
+	i = -1;
 	res = NULL;
-	j = 0;
 	splited = ft_split(line, ' ');
-	while (splited[j])
+	err_msg(!splited, MALLOC);
+	while (splited[++i])
 	{
-		res = strjoin_w_free(res, splited[j]);
+		res = strjoin_w_free(res, splited[i]);
+		err_msg(!res, MALLOC);
 		res = strjoin_w_free(res, "\t");
-		j++;
+		err_msg(!res, MALLOC);
 	}
 	free_2d(splited);
 	splited = ft_split(res, '\t');
+	err_msg(!splited, MALLOC);
 	free(res);
 	res = NULL;
 	check_splited(cub, splited, news);

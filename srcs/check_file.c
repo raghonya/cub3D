@@ -12,27 +12,22 @@
 
 #include <cub3d.h>
 
-int	check_file_name(int argc, char **argv)
+int	check_file_name(char **argv)
 {
 	int	fd;
 
 	fd = 0;
-	if (argc > 2 || argc <= 1)
-	{
-		ft_putendl_fd("Error: less or more argc", 2);
-		exit(EXIT_FAILURE);
-	}
-	if (ft_strcmp(ft_strrchr(argv[1], '.'), ".cub") != 0
+	if (/*ft_strlen(argv[1]) < 4 || */ft_strcmp(ft_strrchr(argv[1], '.'), ".cub") != 0
 		|| ft_strlen(argv[1]) == 4)
 	{
+		//Dav es inch a , xi a strlen hashvum
+		//Petq a strrchr ov / man gal, u et filename vekalel stugeluc
+		//bayc open anel argv[1] y
+		//bayc petq chi stugel length == 4, petq a stugel length < 4 
 		ft_putendl_fd("Error: bad file name!", 2);
 		exit(EXIT_FAILURE);
 	}
 	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
-	{
-		ft_putendl_fd("Error: bad file discriptor", 2);
-		exit(EXIT_FAILURE);
-	}
+	err_msg (fd == -1, "Bad file discriptor");
 	return (fd);
 }

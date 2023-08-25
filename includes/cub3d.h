@@ -50,13 +50,13 @@ Map i mej
 #  define KEYS 1
 #  define KEYA 0
 #  define SHOOT 49
-// avelacnel minimap i hamar M tary
 # endif
 
 # define TEXWIDTH 64
 # define TEXHEIGHT 64
 # define MMAP_ICON 10
 # define BULL_CHANGE 1
+# define MALLOC "Malloc error"
 
 typedef struct s_draw
 {
@@ -155,14 +155,14 @@ t_news	*fine_node(t_news **news, char *line);
 // int		ft_atoi(const char *str);
 int		splited_len(char **splited);
 int		lst_siz(t_news *news);
-int		check_file_name(int argc, char **argv);
+int		check_file_name(char **argv);
 void	check_empty(char **map_maze);
 // void	ft_putendl_fd(char	*s, int fd);
 void	free_2d(char **s);
 void	replace_first_tab(char **map_maze);
 void	check_map_simbols(char **map_maze);
 void	make_news(t_news **news);
-void	check_color_line(char **splited);
+void	check_color_line(t_cub *cub, char **splited);
 void	replace_player(t_cub *cub, char **map_maze);
 void	lst_pop(t_news **news, t_news *remov);
 void	check_before_map(t_cub *cub, char **map, t_news **news);
@@ -175,7 +175,7 @@ char	*ft_strstr(char *str, char *to_find);
 char	**ft_allocate_matrix(char const	*s, char c);
 char	**ft_fill_matrix(char const	*s, char c, char	**res);
 // char	*ft_strtrim(char *s1, char *set);
-char	**creat_map_maze(char **argv, char **map);
+char	**create_map_maze(char **argv, char **map);
 char	**create_all_map(int fd);
 
 //////////////////////////////////////////////////////////////
