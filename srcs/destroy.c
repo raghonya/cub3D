@@ -27,12 +27,7 @@ void	destroy_gun_imgs(t_cub *cub)
 
 void	destroy_map(char **map)
 {
-	int	i;
-
-	i = -1;
-	while (map[++i])
-		free(map[i]);
-	free(map);
+	free_2d(map);
 }
 
 void	destroy_textures(t_cub *cub)

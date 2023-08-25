@@ -64,7 +64,6 @@ int	main(int argc, char **argv)
 	
 	file_parsing(&cub, argv);
 	initialization(&cub);
-	// file_check(&cub, argv[1]);
 	raycaster(&cub, &cub.gun->img, BULL_CHANGE);
 	hooks(&cub);
 	return (0);

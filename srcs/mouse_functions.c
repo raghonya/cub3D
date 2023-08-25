@@ -33,9 +33,9 @@ int	mouse_move(int x, int y, t_cub *cub)
 
 	(void)y;
 	if (x < old_x)
-		change_view(cub, ARRLEFT, 0.09);
+		change_view(cub, ARRLEFT, ROTATE_MOUSE);
 	else if (x > old_x)
-		change_view(cub, ARRRIGHT, 0.09);
+		change_view(cub, ARRRIGHT, ROTATE_MOUSE);
 	re_render(cub, &cub->gun->img, !BULL_CHANGE);
 	old_x = x;
 	return (0);

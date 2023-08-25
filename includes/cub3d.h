@@ -53,6 +53,10 @@ Map i mej
 #  define MMAP_HIDE 46
 # endif
 
+# define STEP_FB 0.16
+# define STEP_LR 0.12
+# define ROTATE_ARROW 0.06
+# define ROTATE_MOUSE 0.09
 # define TEXWIDTH 64
 # define TEXHEIGHT 64
 # define MMAP_ICON 10

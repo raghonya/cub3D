@@ -22,7 +22,6 @@ void	calc_ray_pos(t_cub *cub, int pixel)
 	cub->player.plane_y * cub->ray.camera_x;
 	cub->player.map_x = (int)cub->player.pos_x;
 	cub->player.map_y = (int)cub->player.pos_y;
-	// printf ("rayx: %f, rayy: %f\n", cub->ray.ray_x, cub->ray.ray_x);
 	if (cub->ray.ray_x == 0)
 		cub->ray.deltadist_x = 1e30;
 	else
@@ -31,7 +30,6 @@ void	calc_ray_pos(t_cub *cub, int pixel)
 		cub->ray.deltadist_y = 1e30;
 	else
 		cub->ray.deltadist_y = fabs(1 / cub->ray.ray_y);
-	// printf ("deltax: %f, deltay: %f\n", cub->ray.deltadist_x, cub->ray.deltadist_y);
 }
 
 void	find_step_dir(t_cub *cub)
@@ -60,8 +58,6 @@ void	find_step_dir(t_cub *cub)
 		cub->ray.sidedist_y = \
 		(cub->player.map_y + 1.0 - cub->player.pos_y) * cub->ray.deltadist_y;
 	}
-	// printf ("posx: %f, posy: %f, mapx: %d, mapy: %d\n", cub->player.pos_x, cub->player.pos_y, cub->player.map_x, cub->player.map_y);
-		// printf ("sidex: %f, sidey: %f, deltax: %f, deltay: %f\n", cub->ray.sidedist_x, cub->ray.sidedist_y, cub->ray.deltadist_x, cub->ray.deltadist_y);
 }
 
 void	dda_algorithm(t_cub *cub)
@@ -88,7 +84,6 @@ void	dda_algorithm(t_cub *cub)
 		cub->ray.perp_wall_dist = (cub->ray.sidedist_x - cub->ray.deltadist_x);
 	else
 		cub->ray.perp_wall_dist = (cub->ray.sidedist_y - cub->ray.deltadist_y);
-	// printf ("ht: %d, pwd: %f\n", cub->map_ht, cub->ray.perp_wall_dist);
 	
 }
 

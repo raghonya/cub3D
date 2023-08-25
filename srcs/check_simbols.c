@@ -12,7 +12,7 @@
 
 #include <cub3d.h>
 
-void	check_firs_last(char *line)
+void	check_first_last(char *line)
 {
 	char	*res;
 	int		i;
@@ -53,7 +53,7 @@ void	check_map_simbols(char **map_maze)
 	while (map_maze[i])
 	{
 		if (i == 0 || i == ft_matlen(map_maze) - 1)
-			check_firs_last(map_maze[i]);
+			check_first_last(map_maze[i]);
 		check_middle_line(map_maze[i]);
 		i++;
 	}
