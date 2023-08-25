@@ -14,22 +14,20 @@
 
 void	check_path_line(char **splited)
 {
-	if (splited_len(splited) != 2 || ft_strcmp(ft_strrchr(splited[1], '.'), ".xpm") != 0)
-	{
-		ft_putendl_fd("Error: incorect name1", 2);
-		exit(EXIT_FAILURE);
-	}
+	err_msg (splited_len(splited) != 2 \
+	|| ft_strcmp(ft_strrchr(splited[1], '.'), ".xpm") != 0, \
+	"Incorrect instruction name or image  format");
 }
 
 void	choose_wall(t_cub *cub, char **splited)
 {
-	if (ft_strcmp(*splited, "EA") == 0)
+	if (ft_strcmp(*splited, "WE") == 0)
 		cub->texs_path[0] = ft_strdup(*(splited + 1));
-	else if (ft_strcmp(*splited, "NO") == 0)
-		cub->texs_path[1] = ft_strdup(*(splited + 1));
 	else if (ft_strcmp(*splited, "SO") == 0)
+		cub->texs_path[1] = ft_strdup(*(splited + 1));
+	else if (ft_strcmp(*splited, "NO") == 0)
 		cub->texs_path[2] = ft_strdup(*(splited + 1));
-	else if (ft_strcmp(*splited, "WE") == 0)
+	else if (ft_strcmp(*splited, "EA") == 0)
 		cub->texs_path[3] = ft_strdup(*(splited + 1));
 }
 
@@ -67,7 +65,6 @@ void	make_splited(t_cub *cub, char *line, t_news **news)
 	char	*res;
 	int		j;
 
-	splited = NULL;
 	res = NULL;
 	j = 0;
 	splited = ft_split(line, ' ');
@@ -87,22 +84,16 @@ void	make_splited(t_cub *cub, char *line, t_news **news)
 
 void	check_before_map(t_cub *cub, char **map, t_news **news)
 {
-	char	**splited;
-	char	*res;
 	int		i;
-	int		j;
 
-	splited = NULL;
-	res = NULL;
 	i = 0;
 	while (i < 6)
 	{
-		j = 0;
 		if (map[i])
 			make_splited(cub, map[i], news);
 		else
 			break ;
 		i++;
 	}
-	err_msg (i != 6, "New line");
+	err_msg (i != 6, "New line in maze");
 }
