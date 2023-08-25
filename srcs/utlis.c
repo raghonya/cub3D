@@ -12,16 +12,42 @@
 
 #include <cub3d.h>
 
-int	splited_len(char **splited)
+int	ft_matlen(char **matrix)
 {
-	int	i;
-
+	int i;
+	
 	i = 0;
-	if (!splited)
-		return (i);
-	while (splited[i])
+	while (matrix[i])
 		i++;
 	return (i);
+}
+
+void	set_dir_and_pos(t_cub *cub, char player)
+{
+	cub->player.dir_x = 0;
+	cub->player.dir_y = 0;
+	cub->player.plane_x = 0;
+	cub->player.plane_y = 0;
+	if (player == 'N')
+	{
+		cub->player.dir_x = -1;
+		cub->player.plane_y = 0.66;
+	}
+	else if (player == 'S')
+	{
+		cub->player.dir_x = 1;
+		cub->player.plane_y = -0.66;
+	}
+	else if (player == 'E')
+	{
+		cub->player.dir_y = 1;
+		cub->player.plane_x = 0.66;
+	}
+	else if (player == 'W')
+	{
+		cub->player.dir_y = -1;
+		cub->player.plane_x = -0.66;
+	}
 }
 
 void	replace_player(t_cub *cub, char **map_maze)

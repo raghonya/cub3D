@@ -36,7 +36,7 @@ void	check_color_nub(t_cub *cub, char *line, int side)
 
 	i = -1;
 	nubs = ft_split(line, ',');
-	err_msg (splited_len(nubs) != 3, "Incorrect number of color args");
+	err_msg (ft_matlen(nubs) != 3, "Incorrect number of color args");
 	while (nubs[++i])
 	{
 		j = -1;
@@ -70,7 +70,7 @@ char	*make_color_line(char **splited, int *comma)
 	{
 		printf ("%s\n", splited[i]);
 		line = strjoin_w_free(line, splited[i]);
-		if (i != splited_len(splited) - 1)
+		if (i != ft_matlen(splited) - 1)
 		{
 			line = strjoin_w_free(line, ",");
 			(*comma)++;

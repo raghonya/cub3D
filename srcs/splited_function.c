@@ -14,7 +14,7 @@
 
 void	check_path_line(char **splited)
 {
-	err_msg (splited_len(splited) != 2 \
+	err_msg (ft_matlen(splited) != 2 \
 	|| ft_strcmp(ft_strrchr(splited[1], '.'), ".xpm") != 0, \
 	"Incorrect instruction name or image  format");
 }

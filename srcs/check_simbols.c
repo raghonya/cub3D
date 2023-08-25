@@ -52,7 +52,7 @@ void	check_map_simbols(char **map_maze)
 	i = 0;
 	while (map_maze[i])
 	{
-		if (i == 0 || i == splited_len(map_maze) - 1)
+		if (i == 0 || i == ft_matlen(map_maze) - 1)
 			check_firs_last(map_maze[i]);
 		check_middle_line(map_maze[i]);
 		i++;

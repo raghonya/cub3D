@@ -1,15 +1,5 @@
 #include <cub3d.h>
 
-int	ft_matlen(char **matrix)
-{
-	int i;
-	
-	i = 0;
-	while (matrix[i])
-		i++;
-	return (i);
-}
-
 void	draw_sq(t_img *img, int x, int y, int color)
 {
 	int	oldx;
