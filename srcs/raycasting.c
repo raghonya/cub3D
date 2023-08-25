@@ -72,5 +72,5 @@ void	raycaster(t_cub *cub, t_img *anim, int bullet_change)
 	if (cub->show_map)
 		draw_minimap(cub);
 	mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, cub->img.img, 0, 0);
-	printf ("dirx: %f ,diry: %f\n", cub->player.dir_x, cub->player.dir_y);
+	// printf ("dirx: %f ,diry: %f\n", cub->player.dir_x, cub->player.dir_y);
 }

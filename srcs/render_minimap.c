@@ -28,11 +28,6 @@ void	draw_sq(t_img *img, int x, int y, int color)
 	}
 }
 
-// void	draw_dir(t_cub *cub)
-// {
-	
-// }
-
 void	calc_icon_pos(t_cub *cub, int wall, int space, int player)
 {
 	int	map_w;
@@ -57,7 +52,6 @@ void	calc_icon_pos(t_cub *cub, int wall, int space, int player)
 	}
 	draw_sq(&cub->img, (int)cub->player.pos_y * MMAP_ICON, \
 	(int)cub->player.pos_x * MMAP_ICON, player);
-	draw_dir(cub);
 }
 
 void	draw_minimap(t_cub *cub)

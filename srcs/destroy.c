@@ -42,7 +42,7 @@ void	destroy_textures(t_cub *cub)
 	int	i;
 
 	i = -1;
-	while (++i < 6)
+	while (++i < 4)
 	{
 		mlx_destroy_image(cub->mlx.ptr, cub->texs[i].img);
 	}
