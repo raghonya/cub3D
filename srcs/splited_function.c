@@ -47,7 +47,7 @@ void	check_splited(t_cub *cub, char **splited, t_news **news)
 			}
 			if (ft_strlen(tp->line) == 1)
 				check_color_line(cub, splited);
-			lst_pop(news, fine_node(news, tp->line));
+			lst_pop(news, find_node(news, tp->line));
 			return ;
 		}
 		tp = tp->next;

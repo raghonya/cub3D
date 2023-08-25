@@ -149,7 +149,7 @@ typedef struct s_cub
 /// @brief //////////////////////////////////////////////
 
 
-t_news	*fine_node(t_news **news, char *line);
+t_news	*find_node(t_news **news, char *line);
 // int		ft_strcmp(char *s1, char *s2);
 // int		ft_strcmp(char *s1, char *s2);
 // int		ft_atoi(const char *str);
@@ -164,7 +164,7 @@ void	check_map_simbols(char **map_maze);
 void	make_news(t_news **news);
 void	check_color_line(t_cub *cub, char **splited);
 void	replace_player(t_cub *cub, char **map_maze);
-void	lst_pop(t_news **news, t_news *remov);
+void	lst_pop(t_news **news, t_news *remove);
 void	check_before_map(t_cub *cub, char **map, t_news **news);
 void	check_count_player(char **map_maze);
 char	*ft_strstr(char *str, char *to_find);

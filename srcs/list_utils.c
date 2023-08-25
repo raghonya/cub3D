@@ -27,7 +27,7 @@ int	lst_siz(t_news *news)
 	return (i);
 }
 
-t_news	*fine_node(t_news **news, char *line)
+t_news	*find_node(t_news **news, char *line)
 {
 	t_news	*tp;
 
@@ -47,23 +47,23 @@ void	lst_del(t_news *del)
 	free(del);
 }
 
-void	lst_pop(t_news **news, t_news *remov)
+void	lst_pop(t_news **news, t_news *remove)
 {
 	t_news	*next;
 	t_news	*prev;
 
-	if (remov)
+	if (remove)
 	{
-		next = remov->next;
-		prev = remov->prev;
-		lst_del(remov);
+		next = remove->next;
+		prev = remove->prev;
+		lst_del(remove);
 		if (news && *news)
 		{
 			if (prev)
 				prev->next = next;
 			if (next)
 				next->prev = prev;
-			if (*news == remov)
+			if (*news == remove)
 				*news = next;
 		}
 	}
