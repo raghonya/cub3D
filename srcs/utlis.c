@@ -6,7 +6,7 @@
 /*   By: dohanyan <dohanyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 19:24:24 by dohanyan          #+#    #+#             */
-/*   Updated: 2023/08/21 20:04:39 by dohanyan         ###   ########.fr       */
+/*   Updated: 2023/08/26 18:03:10 by dohanyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,22 @@ int	ft_matlen(char **matrix)
 	while (matrix[i])
 		i++;
 	return (i);
+}
+
+int	len_ignore_zero(char *str)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = 0;
+	if (!str)
+		return (0);
+	while (str[i] && str[i] == '0')
+		i++;
+	while (str[i + len])
+		len++;
+	return (len);
 }
 
 void	set_dir_and_pos(t_cub *cub, char player)

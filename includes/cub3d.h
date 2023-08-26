@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raghonya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dohanyan <dohanyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 15:51:53 by raghonya          #+#    #+#             */
-/*   Updated: 2023/08/08 15:51:54 by raghonya         ###   ########.fr       */
+/*   Updated: 2023/08/26 18:07:25 by dohanyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ t_list			*ft_lstnew(void *content);
 void			find_step_dir(t_cub *cub);
 void			dda_algorithm(t_cub *cub);
 void			initialization(t_cub *cub);
+int				len_ignore_zero(char *str);
 int				calc_texture_x(t_cub *cub);
 void			create_wall_img(t_cub *cub);
 t_img			*choose_texture(t_cub *cub);
@@ -193,7 +194,7 @@ void			draw_texture(t_cub *cub, int x, int tex_x);
 void			replace_player(t_cub *cub, char **map_maze);
 void			check_color_line(t_cub *cub, char **splited);
 unsigned int	my_mlx_color_taker(t_img *data, int x, int y);
-void			re_render(t_cub *cub,t_img *img, int bul_change);
+void			re_render(t_cub *cub, t_img *img, int bul_change);
 void			print_gun(t_img *pic, t_img *game, int w, int h);
 int				mouse_press(int button, int x, int y, t_cub *cub);
 void			change_view(t_cub *cub, int side, double rotSpeed);

@@ -6,7 +6,7 @@
 /*   By: dohanyan <dohanyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 19:27:29 by dohanyan          #+#    #+#             */
-/*   Updated: 2023/08/21 20:08:46 by dohanyan         ###   ########.fr       */
+/*   Updated: 2023/08/26 18:02:29 by dohanyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	check_color_nub(t_cub *cub, char *line, int side)
 		j = -1;
 		while (nubs[i][++j])
 		{
-			if (nubs[i][j] < '0' || nubs[i][j] > '9' || ft_strlen(nubs[i]) > 3)
+			if (nubs[i][j] < '0' || nubs[i][j] > '9' || len_ignore_zero(nubs[i]) > 3)
 			{
 				ft_putendl_fd("Error: bad color argument", 2);
 				exit(EXIT_FAILURE);
