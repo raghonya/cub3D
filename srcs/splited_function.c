@@ -16,7 +16,7 @@ void	check_path_line(char **splited)
 {
 	err_msg (ft_matlen(splited) != 2 \
 	|| ft_strcmp(ft_strrchr(splited[1], '.'), ".xpm") != 0, \
-	"Incorrect instruction name or image  format");
+	"Incorrect option name or image format");
 }
 
 void	choose_wall(t_cub *cub, char **splited)
@@ -52,7 +52,7 @@ void	check_splited(t_cub *cub, char **splited, t_news **news)
 		}
 		tp = tp->next;
 	}
-	err_msg (!tp, "incorect name of instructions");
+	err_msg (!tp, "incorect name of options");
 }
 
 void	make_splited(t_cub *cub, char *line, t_news **news)

@@ -68,7 +68,6 @@ char	*make_color_line(char **splited, int *comma)
 	i = 1;
 	while (splited[i])
 	{
-		printf ("%s\n", splited[i]);
 		line = strjoin_w_free(line, splited[i]);
 		if (i != ft_matlen(splited) - 1)
 		{
@@ -77,7 +76,6 @@ char	*make_color_line(char **splited, int *comma)
 		}
 		i++;
 	}
-	// printf ("%s\n", line);
 	return (line);
 }
 
@@ -99,7 +97,6 @@ void	check_color_line(t_cub *cub, char **splited)
 		i++;
 	}
 	err_msg (count - comma != 2, "Incorrect number of commas");
-	printf ("splited: %s\n", *splited);
 	check_color_nub(cub, line, **splited);
 	free(line);
 }
