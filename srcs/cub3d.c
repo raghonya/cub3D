@@ -22,12 +22,26 @@ void	err_msg(int condition, char *msg)
 	}
 }
 
+int	loop(t_cub *cub)
+{
+	static int	stat = 0;
+
+	// printf ("%d\n", stat);
+	if (stat % 600 == 0)
+		re_render(cub, &cub->gun->img, !BULL_CHANGE, 10);
+	else if (stat % 1200 == 0)
+		re_render(cub, &cub->gun->img, !BULL_CHANGE, 0);
+	stat++;
+	return (0);
+}
+
 void	hooks(t_cub *cub)
 {
 	mlx_hook(cub->mlx.win, 2, 1L << 0, &key_press, cub);
 	mlx_hook(cub->mlx.win, 4, 1L << 2, &mouse_press, cub);
 	mlx_hook(cub->mlx.win, 6, 1L << 4, &mouse_move, cub);
 	mlx_hook(cub->mlx.win, 17, 1L << 15, &quit_game, cub);
+	mlx_loop_hook(cub->mlx.ptr, &loop, cub);
 	mlx_loop(cub->mlx.ptr);
 }
 
@@ -61,10 +75,9 @@ int	main(int argc, char **argv)
 	t_cub	cub;
 
 	err_msg (argc != 2, "Invalid number of arguments, 1 required");
-	
 	file_parsing(&cub, argv);
 	initialization(&cub);
-	raycaster(&cub, &cub.gun->img, BULL_CHANGE);
+	raycaster(&cub, &cub.gun->img, BULL_CHANGE, 0);
 	hooks(&cub);
 	return (0);
 }

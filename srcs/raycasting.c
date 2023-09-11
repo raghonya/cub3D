@@ -12,11 +12,11 @@
 
 #include <cub3d.h>
 
-void	re_render(t_cub *cub, t_img *img, int bul_change)
+void	re_render(t_cub *cub, t_img *img, int bul_change, int b)
 {
 	mlx_destroy_image(cub->mlx.ptr, cub->img.img);
 	create_img(cub, &cub->img, cub->map_wd, cub->map_ht);
-	raycaster(cub, img, bul_change);
+	raycaster(cub, img, bul_change, b);
 }
 
 void	draw_floor_n_ceil(t_cub *cub)
@@ -55,7 +55,7 @@ void	change_bullet_count(t_cub *cub)
 	free(str);
 }
 
-void	raycaster(t_cub *cub, t_img *anim, int bullet_change)
+void	raycaster(t_cub *cub, t_img *anim, int bullet_change, int b)
 {
 	int	pixel;
 
@@ -68,11 +68,10 @@ void	raycaster(t_cub *cub, t_img *anim, int bullet_change)
 		dda_algorithm(cub);
 		draw_texture(cub, pixel, calc_texture_x(cub));
 	}
-	print_gun(anim, &cub->img, cub->map_wd, cub->map_ht);
+	print_gun(anim, &cub->img, b);
 	if (bullet_change)
 		change_bullet_count(cub);
 	if (cub->show_map)
 		draw_minimap(cub);
 	mlx_put_image_to_window(cub->mlx.ptr, cub->mlx.win, cub->img.img, 0, 0);
-	// printf ("dirx: %f ,diry: %f\n", cub->player.dir_x, cub->player.dir_y);
 }
