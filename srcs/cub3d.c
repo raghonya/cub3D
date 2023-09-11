@@ -25,15 +25,12 @@ void	err_msg(int condition, char *msg)
 int	loop(t_cub *cub)
 {
 	static int	stat1 = 0;
-	static int	stat2 = 0;
 
-	// printf ("%d\n", stat);
 	if (stat1 % 1500 == 0)
 		re_render(cub, &cub->gun->img, !BULL_CHANGE, 10);
-	if (stat2 % 3000 == 0)
+	if (stat1 % 3000 == 0)
 		re_render(cub, &cub->gun->img, !BULL_CHANGE, 0);
 	stat1++;
-	stat2++;
 	return (0);
 }
 
