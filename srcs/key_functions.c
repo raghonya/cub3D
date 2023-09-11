@@ -54,8 +54,8 @@ int	key_press(int key, t_cub *cub)
 	else
 		return (1);
 	if (key == SHOOT)
-		re_render(cub, &cub->gun->img, BULL_CHANGE, 0);
+		re_render(cub, &cub->gun->img, BULL_CHANGE, 5);
 	else
-		re_render(cub, &cub->gun->img, !BULL_CHANGE, 0);
+		re_render(cub, &cub->gun->img, !BULL_CHANGE, 5);
 	return (0);
 }

@@ -40,7 +40,7 @@ void	gun_anim(t_cub *cub, t_list *anim)
 {
 	while (anim && cub->bullet_count)
 	{
-		re_render(cub, &anim->img, !BULL_CHANGE, 0);
+		re_render(cub, &anim->img, !BULL_CHANGE, 5);
 		anim = anim->next;
 	}
 	if (cub->bullet_count > 0)
